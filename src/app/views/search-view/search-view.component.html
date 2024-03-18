@@ -1,0 +1,39 @@
+<div class="container">
+
+    <!-- searchbar -->
+    <app-searchbar (onResultsEvent)="getSearchResults($event)"
+        class="animate__animated animate__fadeInUp"></app-searchbar>
+
+    <!-- Afficher les resultats -->
+    <div class="movies-details">
+        @for(result of results; track result.id) {
+        <div class="animate__animated animate__fadeIn">
+
+            @switch (result.media_type) {
+            @case ('movie') {
+            <app-card [routerLink]="['/movies', result.id]" [item]="result"></app-card>
+            }
+            @case ('tv') {
+            <app-card [routerLink]="['/tv', result.id]" [item]="result"></app-card>
+            }
+            @case ('person') {
+            <app-card [routerLink]="['/person', result.id]" [item]="result"></app-card>
+            }
+
+            }
+
+
+        </div>
+        <!-- Template d'affichage si pas de résultat -->
+        } @empty() {
+        <div class="d-flex justify-content-center">
+            <p>En attente de votre saisie...</p>
+
+        </div>
+        }
+
+    </div>
+
+
+
+</div>

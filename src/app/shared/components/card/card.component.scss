@@ -1,0 +1,23 @@
+.card {
+    background: transparent;
+    transition-duration: .3s;
+    z-index: 999;
+    border: 3px solid transparent;
+    padding: 1px;
+}
+
+.card img {
+    border-radius: 7px;
+}
+
+.card:hover {
+    transform: scale(1.07);
+    border: 3px solid #fff;
+    cursor: pointer;
+}
+
+
+h2 {
+    font-size: 1.2rem;
+    color: #f9f9f9;
+}

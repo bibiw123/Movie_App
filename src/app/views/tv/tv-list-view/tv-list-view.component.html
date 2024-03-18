@@ -1,0 +1,16 @@
+<div class="movies-content" id="movies">
+    <div class="container">
+        <h2 class="label">Tv & séries</h2>
+        <app-dropdown (OnSelectItemEvent)="selectGenre($event)" [items]="genres" />
+        <div class="movies-details">
+
+            @for (itemTvShow of tvshows$ | async; track itemTvShow.id) {
+            <div class="animate__animated animate__fadeIn">
+                <app-card [routerLink]="['/tv', itemTvShow.id]" [item]="itemTvShow"></app-card>
+            </div>
+            }
+
+        </div>
+        <app-actionbar></app-actionbar>
+    </div>
+</div>

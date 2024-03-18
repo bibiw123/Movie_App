@@ -1,0 +1,9 @@
+<div class="movies">
+    @if(item.image_portrait) {
+    <img [src]="getFullImageUrl(item.image_portrait)" alt="" />
+    }
+    @else {
+    <img src="https://place-hold.it/500x750/a903e9/fff?text=image non disponible&fontsize=25&bold"
+        [alt]="'Pas dìmage disponible: ' + item.titre">
+    }
+</div>

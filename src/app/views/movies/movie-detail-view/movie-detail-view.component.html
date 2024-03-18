@@ -1,0 +1,58 @@
+@if(movie$ | async; as movie) {
+
+<div class="container">
+
+    <div class="title-block">
+        <button (click)="location.back()" id="left" class="arrow left-arrow">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1>{{movie.titre}}</h1>
+    </div>
+
+    <div class="row g-4 animate__animated animate__fadeIn">
+
+        <div class="video-block">
+
+            @if(movie.video) {
+            <!-- Integration iframe Ytube-->
+            <div class="video-container">
+                <iframe width="560" height="315" [src]="getFullVideoUrl(movie.video)" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+            </div>
+            }@else {
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <h3>😒 Pas de vidéos disponible</h3>
+            </div>
+            }
+
+        </div>
+
+        <div class="text-block">
+            <!-- contenu details-->
+            <h2>Date de sortie</h2>
+            <p>{{movie.date | date:'dd/MM/yyyy'}}</p>
+
+            <h2>Résumé</h2>
+            <p class="resume">{{movie.resume}}</p>
+
+            <h2>Genres</h2>
+            @for(genre of movie.genres; track genre.id ) {
+            <span class="badge rounded-pill text-bg-light">
+                {{genre.name}}
+            </span>
+            }
+
+            <h2>Durée</h2>
+            <p>{{movie.duration | printduration}}</p>
+
+            <hr>
+            <!-- AFFICHER LE FORMULAIRE DE COMMENTAIRE-->
+            <h2>Avis</h2>
+
+        </div>
+
+    </div>
+
+</div>
+}
