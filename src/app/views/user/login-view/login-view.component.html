@@ -8,23 +8,22 @@
     <div class="container">
         <div class="content">
             <h2>Connexion</h2>
-            <form (submit)="onSubmitUserLoginForm($event)" [formGroup]="userLoginForm">
+            <form [formGroup]="loginForm" (submit)="onSubmitLoginForm()" >
 
                 <div class="input-group">
-                    <input type="text" formControlName="username" type="text" placeholder="E-mail ou nom d'utilisateur">
+                    <input type="text" type="text" formControlName="email" placeholder="E-mail">
                     <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                    @if(userLoginForm.controls['username'].errors && isSubmitted) {
-                    <div class="form-text error">Le champ est requis - min 2 car. max 10 car.</div>
+                    @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
+                        <p class="error">Veuillez indiquer un email valide</p>
                     }
+                  
                 </div>
 
 
                 <div class="input-group">
                     <input type="password" formControlName="password" placeholder="Mot de passe">
                     <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                    @if(userLoginForm.controls['password'].errors && isSubmitted) {
-                    <div class="form-text error">Le champ est requis - min 2 car. max 5 car.</div>
-                    }
+                   
                 </div>
 
                 <div class="extra">

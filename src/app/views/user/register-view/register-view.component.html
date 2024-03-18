@@ -8,23 +8,40 @@
     <div class="container">
         <div class="content">
             <h2>Créer un compte</h2>
-            <form (submit)="onSubmitUserRegisterForm($event)" [formGroup]="userForm">
+            <form [formGroup]="registerForm" (submit)="onSubmitRegisterForm()">
 
                 <div class="input-group">
-                    <input type="text" formControlName="username" type="text" placeholder="E-mail ou nom d'utilisateur">
+                    <input type="text" type="text" formControlName="username" placeholder="Votre pseudo">
                     <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                    @if(userForm.controls['username'].errors && isSubmitted) {
-                    <div class="form-text error">Le champ est requis - min 2 car. max 10 car.</div>
+                    @if (registerForm.controls['username'].hasError("minlength") && isSubmitted) {
+                        <p class="error">Minimum 3 caractères</p>
+                    }
+                    @if (registerForm.controls['username'].hasError("maxlength") && isSubmitted) {
+                        <p class="error">Maximum 26 caractères</p>
+                    }
+                   
+                </div>
+                <div class="input-group">
+                    <input type="text" type="text" formControlName="email" placeholder="E-mail ou nom d'utilisateur">
+                    <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
+                    @if (registerForm.controls['email'].hasError("email") && isSubmitted) {
+                        <p class="error">Veuillez indiquer un email valide</p>
                     }
                 </div>
 
                 <div class="input-group">
                     <input type="password" formControlName="password" placeholder="Mot de passe">
                     <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                    @if(userForm.controls['password'].errors && isSubmitted) {
-                    <div class="form-text error">Le champ est requis - min 2 car. max 5 car.</div>
+                    @if (registerForm.controls['password'].hasError("pattern") && isSubmitted) {
+                        <p class="error"> Majuscule - Minuscule - Nombre - Caractère spécial</p>
                     }
+                    @if (registerForm.controls['password'].hasError("minlength") && isSubmitted) {
+                        <p class="error">Minimum 8 caractères</p>
+                    }
+                    
+                    
                 </div>
+                <!-- {{registerForm.value|json}} -->
                 <div class="extra">
                     <button>Créer mon compte</button>
                 </div>

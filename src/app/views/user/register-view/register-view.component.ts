@@ -9,46 +9,41 @@ import { UserService } from '../../../shared/services/user.service';
 })
 export class RegisterViewComponent {
 
-  userForm!: FormGroup;
-  isSubmitted: boolean = false;
+  registerForm!:FormGroup
+  isSubmitted:boolean=false
 
-  constructor(private _fb: FormBuilder, private _userSvc: UserService) { }
+  constructor(private formbuilder:FormBuilder) { }
 
 
   ngOnInit() {
     /**
      * Créer une instance de FormGroup
      */
-    this.userForm = this._fb.group({
-      username: ['', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(10)
-      ]
-      ],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(5),
-      ]
-      ]
-    })
+  
+    this.registerForm = this.formbuilder.group({
+
+      username:['',[Validators.minLength(3),Validators.maxLength(26)]],
+      email:['',Validators.email],
+      password:['',[
+        Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$"),
+        Validators.minLength(8),  
+      ]]
+
+      })
+
+    
   }
 
   /**
    * Role verifier la validité et appeler 
    * la méthode createUser du UserService
    */
-  onSubmitUserRegisterForm(ev: Event): void {
-    ev.preventDefault(); // couper le comporement de la soumission du form;
-    this.isSubmitted = true;
-    console.log(this.userForm)
+ 
+  onSubmitRegisterForm(){
 
-    if (this.userForm.valid) {
-      this._userSvc.createUser(this.userForm.value)
-        .subscribe(response => console.log(response))
-    }
-
+    this.isSubmitted=true
+    console.log(this.registerForm)
+    console.log(this.registerForm.value)
   }
 
 }
