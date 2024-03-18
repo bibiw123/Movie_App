@@ -6,6 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movies.gateway';
+import { AuthGateway } from '../../../core/ports/auth.gateway';
 
 
 
@@ -24,7 +25,9 @@ export class MovieDetailViewComponent implements OnInit {
     private _route: ActivatedRoute,
     // private _TMDBSvc: TMDBService,
     private _TMDBSvc: APIExternalMoviesGateway,
-    private _sanitize: DomSanitizer) { }
+    private _sanitize: DomSanitizer,
+    public authGateway:AuthGateway
+    ) { }
 
   ngOnInit() {
     //1 On récupere l'id dans l'URL

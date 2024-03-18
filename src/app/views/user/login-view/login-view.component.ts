@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../../shared/services/user.service';
+import { AuthGateway } from '../../../core/ports/auth.gateway';
 
 @Component({
   selector: 'app-login-view',
@@ -12,7 +13,7 @@ export class LoginViewComponent {
   loginForm!:FormGroup
   isSubmitted: boolean = false;
 
-  constructor(private formbuilder:FormBuilder) { }
+  constructor(private formbuilder:FormBuilder, private authGateway:AuthGateway) { }
 
   ngOnInit() {
 
@@ -35,6 +36,11 @@ export class LoginViewComponent {
     this.isSubmitted=true
     console.log(this.loginForm)
     console.log(this.loginForm.value)
+    if(this.loginForm.valid){
+      this.authGateway.login(this.loginForm.value)
+      .subscribe(response => console.log(response))
+    
+    }
   }
 
 }

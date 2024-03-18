@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthGateway } from '../core/ports/auth.gateway';
 
 @Component({
   selector: 'app-navbar',
@@ -6,4 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  constructor(public authGateway:AuthGateway){}
 }

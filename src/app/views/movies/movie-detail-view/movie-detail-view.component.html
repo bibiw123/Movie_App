@@ -13,6 +13,10 @@
 
         <div class="video-block">
 
+            @if(authGateway.isAuth$ | async) {
+                <button>Ajouter le film à ma bibliotheque</button>
+            }
+
             @if(movie.video) {
             <!-- Integration iframe Ytube-->
             <div class="video-container">

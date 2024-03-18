@@ -18,9 +18,18 @@
                 <li><a routerLink="/search" routerLinkActive='active'>Rechercher</a></li>
                 <li><a routerLink="/movies" routerLinkActive='active'>Films</a></li>
                 <li><a routerLink="/tv" routerLinkActive='active'>Séries</a></li>
-                <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
-                <li><a routerLink="/register" routerLinkActive='active'>Inscription</a></li>
-            </ul>
+
+                @if(authGateway.isAuth$ | async) {
+                    <li><a>Angelque</a></li>
+                }
+                @else {
+                    <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
+                    <li><a routerLink="/register" routerLinkActive='active'>Inscription</a></li>
+                
+
+                }
+                </ul>
+                
         </nav>
     </div>
 </div>
