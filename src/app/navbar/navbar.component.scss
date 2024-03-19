@@ -54,7 +54,7 @@ nav.bg-navbar {
         transition-duration: .5s;
     }
 
-    li a.nav-link.active::before {
+    a.nav-link.active::before {
         transform: scaleX(1);
         opacity: 1 !important;
     }
@@ -68,3 +68,129 @@ nav.bg-navbar {
         }
     }
 }
+
+nav ul li a.searchactive {
+  color: #ff00ee;
+}
+
+button.burger-btn, button.close-nav-btn {
+  display: none;
+}
+
+button.burger-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 2em;
+  padding: 5px;
+  background: rgba(0, 0, 0, .1);
+  color: #fff;
+}
+
+button.close-nav-btn {
+  padding: 5px;
+  background: transparent;
+  color: #fff;
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  width: auto;
+  height: auto;
+}
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+nav ul li a {
+  color: var(--light-gray-color);
+  text-decoration: none;
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  font-size: 1.1rem;
+  position: relative;
+}
+
+nav ul li a.active:before {
+  transform: scaleX(1);
+  opacity: 1 !important;
+}
+
+nav ul li a:before {
+  content: "";
+  width: auto;
+  height: 3px;
+  background: linear-gradient(45deg, #c3cbd0, #ff00ee);
+  position: absolute;
+  transform: scaleX(0);
+  visibility: visible;
+  opacity: 0 !important;
+  bottom: 3px;
+  left: 16px;
+  right: 16px;
+  transform-origin: left center;
+  transition-duration: .5s;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+
+/* mediaqueries*/
+@media screen and (max-width: 992px) {
+  button.burger-btn {
+    display: block;
+  }
+  nav {
+    background: #000;
+    height: 100vh;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translateX(-100%);
+    transition-duration: .3s;
+  }
+
+  nav.nav-opened {
+    transform: translateX(0);
+    flex-direction: column;
+    justify-content: center;
+
+    >a {
+      display: none;
+    }
+    li {
+      margin-bottom: 35px;
+    }
+    button.close-nav-btn {
+      display: block;
+      position: absolute;
+      top:10px;
+      left:10px;
+      font-size:2em;
+
+    }
+
+  }
+nav ul {
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+  }
+
+nav ul li {
+    margin-bottom: 10px;
+}
+
+
+
+
+}
+
+

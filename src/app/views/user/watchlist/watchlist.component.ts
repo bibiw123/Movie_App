@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MovieModel } from '../../../core/models/movie.model';
 
 @Component({
   selector: 'app-watchlist',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './watchlist.component.scss'
 })
 export class WatchlistComponent {
+
+  movies:MovieModel[] = [
+
+  ]
 
 }

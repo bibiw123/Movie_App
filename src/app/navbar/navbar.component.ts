@@ -7,5 +7,14 @@ import { AuthGateway } from '../core/ports/auth.gateway';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  isMenuOpened:boolean = false;
+
   constructor(public authGateway:AuthGateway){}
+
+  openNav() {
+    this.isMenuOpened = true
+  }
+  closeNav(){
+    this.isMenuOpened = false
+  }
 }
