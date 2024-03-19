@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@a
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { AlertService } from '../services/alert.service';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (err instanceof HttpErrorResponse) {
             switch (err.status) {
               case 400:
-                // if (req.url.includes(this.MY_API+'/users') && req.method=='POST') 
+                // if (req.url.includes(this.MY_API+'/users') && req.method=='POST')
                 this._alert.show(err.error.message);
                 break;
               case 401:

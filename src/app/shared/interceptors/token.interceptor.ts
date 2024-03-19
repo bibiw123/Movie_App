@@ -1,6 +1,6 @@
 import { HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
 import { Utils } from '../utils/utils';
 
@@ -25,10 +25,10 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(private _userSvc: UserService) { }
 
-  /** 
+  /**
    * le rôle de intercept est d'intercepter req (HttpRequest Object)
    * afin dajouter un nom un token (on the fly) selon :
-   * l'API appelée, le endpoint et la méthode 
+   * l'API appelée, le endpoint et la méthode
   */
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     console.log('token interceptor', req);
@@ -52,8 +52,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
 
   /**
-    * Check if 
-    * url called is my api 
+    * Check if
+    * url called is my api
     * url needs user token or not
     * @param request:HttpRequest
     * @returns boolean
@@ -76,8 +76,8 @@ export class TokenInterceptor implements HttpInterceptor {
 
   /**
    * addBearerToken
-   * @param request 
-   * @param token 
+   * @param request
+   * @param token
    * @returns req:HttpRequest
    */
   private addBearerToken(request: HttpRequest<any>, token: string): HttpRequest<any> {

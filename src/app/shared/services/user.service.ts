@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserModel } from '../../core/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 interface ResponseWithToken {
   token: string;
 }
@@ -28,7 +28,7 @@ export class UserService {
   }
 
 
-  /** loginUser 
+  /** loginUser
    *  endpoint /auth/login
    *  @param UserModel
    *  @returns Observable<any>

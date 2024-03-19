@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter, map, mapTo, tap } from 'rxjs';
 import { MovieModel } from '../models/movie.model';
 import { TvShowModel } from '../models/tv-show.model';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { SearchModel } from '../models/search.model';
 import { APIExternalMoviesGateway } from '../ports/api-external-movies.gateway';
 
@@ -29,7 +29,7 @@ export class TMDBService implements APIExternalMoviesGateway {
   /*
     Observable.pipe() return un Observable
 
-    .pipe( ) accepte en parametres des opérateurs de transformation : 
+    .pipe( ) accepte en parametres des opérateurs de transformation :
     map(), filter(), etc....
 
     On utilise pipe() pour donner à nos components un Observable qui contient
