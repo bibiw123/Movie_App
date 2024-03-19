@@ -20,26 +20,37 @@ export class RegisterViewComponent {
     /**
      * Créer une instance de FormGroup
      */
-  
+
     this.registerForm = this.formbuilder.group({
 
-      username:['',[Validators.minLength(3),Validators.maxLength(26)]],
-      email:['',Validators.email],
+      username:['',[
+          Validators.minLength(3),
+          Validators.maxLength(26),
+          Validators.required
+        ]
+      ],
+      email:['',[
+          Validators.email,
+          Validators.required
+        ]
+      ],
       password:['',[
-        Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$"),
-        Validators.minLength(8),  
-      ]]
+          Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$"),
+          Validators.minLength(8),
+          Validators.required
+        ]
+      ]
 
       })
 
-    
+
   }
 
   /**
-   * Role verifier la validité et appeler 
+   * Role verifier la validité et appeler
    * la méthode createUser du UserService
    */
- 
+
   onSubmitRegisterForm(){
 
     this.isSubmitted=true

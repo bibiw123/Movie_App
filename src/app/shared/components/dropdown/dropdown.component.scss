@@ -1,6 +1,6 @@
 button {
     align-items: center;
-    background-color: rgba(182, 182, 182, 0.2);
+    background-color: #917db8;
     border-radius: 18px;
     box-shadow: none;
     cursor: pointer;
@@ -12,7 +12,7 @@ button {
     position: relative;
     transition: all 0.3s ease 0s;
     box-sizing: border-box;
-    color: rgb(249, 249, 249);
+    color:rgb(221, 221, 221);
     border: none;
     padding: 0px 15px 0px 16px;
     height: 36px;
@@ -23,17 +23,17 @@ button {
 }
 
 button:hover {
-    background-color: #272727;
+    background-color: rgb(182, 71, 213);
 }
 
 ul {
-    background-color: rgb(34, 33, 33);
+    background-color: rgb(221, 221, 221);
     padding: 3px 0px;
     position: absolute;
     top: 45px;
     z-index: 999;
     width: 150px;
-    border: 1px solid #545454;
+    border: 1px solid rgb(221, 221, 221);
 }
 
 ul li {
@@ -46,6 +46,6 @@ ul li {
 
 ul li:hover,
 ul li.selected {
-    background-color: rgb(71, 71, 71);
+    background-color:rgb(182, 71, 213);
     cursor: pointer;
 }
