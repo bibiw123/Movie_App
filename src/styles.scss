@@ -187,48 +187,6 @@ button {
     transition: all 0.5s ease-in;
 }
 
-/* pagination */
-.paginations {
-    padding: 4rem 0;
-}
-
-.paginations ul {
-    display: flex;
-    list-style-type: none;
-    justify-content: center;
-}
-
-.paginations ul li {
-    margin: 0 0.7rem;
-    box-shadow: 0 0 10px var(--secondary-color);
-    padding: 0.7rem 1.5rem;
-    cursor: pointer;
-    outline: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: all 0.3s ease-in;
-    color: #ffffff;
-    border: #ffffff solid 0.1px;
-
-}
-
-.paginations ul li:hover{
-
-  background-color:#917db8;
-  transition-duration: 50ms;
-
-
-}
-
-
-.paginations ul li:nth-child(1) {
-    margin-left: 0;
-}
-
-.paginations ul li:active {
-    transform: scale(1.5);
-}
-
 a {
     color: var(--purple_light-color);
 }

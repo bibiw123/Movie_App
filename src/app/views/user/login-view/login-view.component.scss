@@ -1,63 +1,39 @@
-.error {
-    color: #ffe3c8;
-    font-size: 90%;
-}
+.form-box {
+  margin: 0 auto;
+  margin-top: 70px;
+  max-width: 500px;
+  width: 100%;
+  // background: #764bca;
+  background: linear-gradient(45deg, #8035b8, #150e8e);
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.6);
+  padding: 2rem;
 
-.form-container .form-control {
-    margin-bottom: 20px;
-}
+  h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+  }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+  form button {
+      background: #17202a;
+      color: #fff;
+  }
 
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.d-flex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #17202a;
-    padding-top: 100px;
-}
-
-.container {
-    max-width: 500px;
-    width: 100%;
-    // background: #764bca;
-    background: linear-gradient(45deg, #8035b8, #150e8e);
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-
-    h2 {
-        font-size: 2.5rem;
-        margin-bottom: 1.5rem;
-        color: #fff;
-    }
-
-    form button {
-        background: #17202a;
-        color: #fff;
-    }
-
-    form button:hover {
-        background: rgb(36, 49, 64);
-        // padding: 0.5rem 2.5rem;
-    }
+  form button:hover {
+      background: rgb(36, 49, 64);
+      // padding: 0.5rem 2.5rem;
+  }
 }
 
 .rappel {
-    font-size: 85%;
-    margin-top: 1.5rem;
-    margin-bottom: 0;
+  font-size: 85%;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
 
-    a {
-        text-decoration: underline;
-        color: #fff;
-    }
+  a {
+      text-decoration: underline;
+      color: #fff;
+  }
 }
