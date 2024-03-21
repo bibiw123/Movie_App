@@ -148,7 +148,7 @@ export class TMDBService implements APIExternalMoviesGateway {
               .map(
                 (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
               )
-              .filter((tvShow: TvShowModel) => tvShow.resume.length)
+            //.filter((tvShow: TvShowModel) => tvShow.resume.length)
           )
         )
         .subscribe(response => this.tv$$.next(response))
@@ -161,6 +161,7 @@ export class TMDBService implements APIExternalMoviesGateway {
   * endpoint: /tv/{id}
   * queryParam: append_to_response=videos
   * @returns @Observable<TvShowModel>
+  * // https://api.themoviedb.org/3/tv/{series_id}/credits
   */
   getOneTvShowFromApi(id: string): Observable<TvShowModel> {
     const ENDPOINT = `/tv/${id}`;
@@ -173,7 +174,7 @@ export class TMDBService implements APIExternalMoviesGateway {
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map(response => new TvShowModel(response))
-      );
+      )
   }
 
 
