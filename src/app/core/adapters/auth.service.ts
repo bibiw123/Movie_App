@@ -18,7 +18,7 @@ export class AuthService implements AuthGateway{
   public isAuth$: Observable<boolean>=this._isAuth$.asObservable()
 
    register(user:any): Observable<any> {
-    const endpoint = "/api/v1/register"
+    const endpoint = "/register"
     return this.http.post(this.apiurl+endpoint,user)
   }
 
