@@ -6,6 +6,7 @@ import { SearchModel } from "../models/search.model";
 
 export abstract class APIExternalMoviesGateway {
 
+    abstract movies$: Observable<MovieModel[]>;
     abstract getMoviesFromApi(): Observable<MovieModel[]>;
     abstract getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]>
     abstract getPrevMoviesFromApi(): Observable<MovieModel[]>

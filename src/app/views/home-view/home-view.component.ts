@@ -21,7 +21,7 @@ export class HomeViewComponent {
 
   constructor(
     //private _TMDBSvc: TMDBService
-    private _TMDBSvc: APIExternalMoviesGateway,
+    public TMDBSvc: APIExternalMoviesGateway,
     private _sanitize: DomSanitizer
   ) { }
 
@@ -44,27 +44,26 @@ export class HomeViewComponent {
 
   ngOnInit() {
     // recuperer les 5 premiers movies
-    this._TMDBSvc.getMoviesFromApi().subscribe(
+    this.TMDBSvc.getMoviesFromApi()
+    .subscribe(
       data => {
         console.log(data)
-        this.movies = data
         this.sliders = data
-
       }
     )
   }
 
   findNextMoviesAction(pageNumber?: number) {
     if (pageNumber) {
-      this._TMDBSvc.getNextMoviesFromApi(pageNumber)
+      this.TMDBSvc.getNextMoviesFromApi(pageNumber)
     }
     else {
-      this._TMDBSvc.getNextMoviesFromApi()
+      this.TMDBSvc.getNextMoviesFromApi()
     }
   }
 
   findPrevMoviesAction() {
-    this._TMDBSvc.getPrevMoviesFromApi()
+    this.TMDBSvc.getPrevMoviesFromApi()
   }
 
   getFullImageUrl(fragmentUrl: string): string {

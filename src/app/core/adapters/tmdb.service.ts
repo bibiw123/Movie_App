@@ -18,6 +18,7 @@ export class TMDBService implements APIExternalMoviesGateway {
 
   /* on crée un Behabior Subject qui sert de store pour nos MovieModel */
   private movies$$ = new BehaviorSubject<MovieModel[]>([]);
+  public movies$ = this.movies$$.asObservable();
   private tv$$ = new BehaviorSubject<TvShowModel[]>([]);
 
   private searchPageNumber = 1;
@@ -57,10 +58,14 @@ export class TMDBService implements APIExternalMoviesGateway {
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) =>
-            response.results.map(
+            response.results
+            .slice(0,6)
+            .map(
               (movieFromApi: any) => new MovieModel(movieFromApi)
             )
-          )
+          ),
+
+
         )
         //fairela request HTTP
         .subscribe((response: MovieModel[]) => this.movies$$.next(response))
