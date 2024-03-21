@@ -5,9 +5,9 @@ import { SearchModel } from '../../../core/models/search.model';
 
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  selector: 'ui-card',
+  templateUrl: './ui-card.component.html',
+  styleUrl: './ui-card.component.scss'
 })
 export class CardComponent {
   @Input() item!: MovieModel | TvShowModel | SearchModel;

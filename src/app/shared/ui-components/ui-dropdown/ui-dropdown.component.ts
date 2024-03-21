@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Genre } from '../../data/genres.data';
 
 @Component({
-  selector: 'app-dropdown',
-  templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.scss'
+  selector: 'ui-dropdown',
+  templateUrl: './ui-dropdown.component.html',
+  styleUrl: './ui-dropdown.component.scss'
 })
 export class DropdownComponent {
   @Input({ required: true }) items!: Genre[];

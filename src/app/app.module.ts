@@ -15,9 +15,9 @@ import { RegisterViewComponent } from './views/user/register-view/register-view.
 import { LoginViewComponent } from './views/user/login-view/login-view.component';
 
 import { ActionbarComponent } from './views/movies/movie-list-view/actionbar/actionbar.component';
-import { SearchbarComponent } from './shared/components/searchbar/searchbar.component';
-import { CardComponent } from './shared/components/card/card.component';
-import { DropdownComponent } from './shared/components/dropdown/dropdown.component';
+import { SearchbarComponent } from './shared/ui-components/ui-searchbar/ui-searchbar.component';
+import { CardComponent } from './shared/ui-components/ui-card/ui-card.component';
+import { DropdownComponent } from './shared/ui-components/ui-dropdown/ui-dropdown.component';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';

@@ -16,10 +16,12 @@ export class TMDBService implements APIExternalMoviesGateway {
 
   private TMDB_URL: string = environment.TMDB_API_URL;
 
-  /* on crée un Behabior Subject qui sert de store pour nos MovieModel */
-  private movies$$ = new BehaviorSubject<MovieModel[]>([]);
-  public movies$ = this.movies$$.asObservable();
-  private tv$$ = new BehaviorSubject<TvShowModel[]>([]);
+  /* on crée un BehaviorSubject qui sert de store pour nos MovieModel */
+  private _movies$ = new BehaviorSubject<MovieModel[]>([]);
+  public movies$: Observable<MovieModel[]> = this._movies$.asObservable();
+
+  private _tv$ = new BehaviorSubject<TvShowModel[]>([]);
+  public tv$ = this._tv$.asObservable();
 
   private searchPageNumber = 1;
   private searchResults$$ = new BehaviorSubject<SearchModel[]>([]);
@@ -46,8 +48,8 @@ export class TMDBService implements APIExternalMoviesGateway {
    * @returns @Observable<MovieModel>
    */
   getMoviesFromApi(): Observable<MovieModel[]> {
-    if (this.movies$$.getValue().length > 0) {
-      return this.movies$$.asObservable();
+    if (this._movies$.getValue().length > 0) {
+      return this._movies$.asObservable();
     }
     else {
       const ENDPOINT = `/discover/movie`;
@@ -59,18 +61,18 @@ export class TMDBService implements APIExternalMoviesGateway {
         .pipe(
           map((response: any) =>
             response.results
-            .slice(0,6)
-            .map(
-              (movieFromApi: any) => new MovieModel(movieFromApi)
-            )
+              .slice(0, 6)
+              .map(
+                (movieFromApi: any) => new MovieModel(movieFromApi)
+              )
           ),
 
 
         )
         //fairela request HTTP
-        .subscribe((response: MovieModel[]) => this.movies$$.next(response))
+        .subscribe((response: MovieModel[]) => this._movies$.next(response))
 
-      return this.movies$$.asObservable()
+      return this._movies$.asObservable()
     }
 
   }
@@ -94,10 +96,10 @@ export class TMDBService implements APIExternalMoviesGateway {
       .subscribe((response: MovieModel[]) => {
         //let movies = this.movies$$.getValue();
         let newMovies = [...response];
-        this.movies$$.next(newMovies);
+        this._movies$.next(newMovies);
       })
 
-    return this.movies$$.asObservable()
+    return this._movies$.asObservable()
   }
 
 
@@ -124,10 +126,10 @@ export class TMDBService implements APIExternalMoviesGateway {
       .subscribe((response: MovieModel[]) => {
         //let movies = this.movies$$.getValue();
         let newMovies = [...response];
-        this.movies$$.next(newMovies);
+        this._movies$.next(newMovies);
       })
 
-    return this.movies$$.asObservable()
+    return this._movies$.asObservable()
 
 
   }
@@ -138,8 +140,8 @@ export class TMDBService implements APIExternalMoviesGateway {
    * @returns @Observable<TvShowModel[]>
    */
   getTvShowFromApi(): Observable<TvShowModel[]> {
-    if (this.tv$$.getValue().length > 0) {
-      return this.tv$$.asObservable()
+    if (this._tv$.getValue().length > 0) {
+      return this._tv$.asObservable()
     }
     else {
       const ENDPOINT = `/discover/tv`;
@@ -150,14 +152,15 @@ export class TMDBService implements APIExternalMoviesGateway {
         .pipe(
           map((response: any) =>
             response.results
+              .slice(0, 6)
               .map(
                 (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
               )
             //.filter((tvShow: TvShowModel) => tvShow.resume.length)
           )
         )
-        .subscribe(response => this.tv$$.next(response))
-      return this.tv$$.asObservable()
+        .subscribe(response => this._tv$.next(response))
+      return this._tv$.asObservable()
     }
   }
 

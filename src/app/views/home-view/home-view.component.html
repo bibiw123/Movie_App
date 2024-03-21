@@ -1,6 +1,7 @@
 <!-- slider-->
-<header class="slider" [style.background-image]="getFullImageUrl(sliders[activeSlide].image_landscape)">
-    <div class="slider-container" *ngIf="movies.length>0">
+@if(TMDBSvc.movies$ | async; as slider) {
+<header class="slider" [style.background-image]="getFullImageUrl(slider[activeSlide].image_landscape)">
+    <div class="slider-container">
         @for (itemMovie of sliders; track itemMovie.id; let i = $index) {
         <div class="slide" [class.active]="activeSlide===i"
             [style.background-image]="getFullImageUrl(itemMovie.image_landscape)">
@@ -11,12 +12,7 @@
                     {{itemMovie.resume}}
                 </p>
                 <div class="m_details">
-                    <!-- <p class="category">Action</p>
-                    <p class="category">Trhiller</p> -->
-                    <!-- <p class="year">{{itemMovie.date | date:'yyyy'}}</p> -->
-                    <!--<button type="button">
-                        <i class="fas fa-circle-play"></i>Regarder
-                    </button>-->
+
                 </div>
 
             </div>
@@ -31,16 +27,18 @@
         </button>
     </div>
 </header>
+}
+
 
 <!-- cards movies-->
 <section id="movies">
     <div class="container">
-        <h2 class="label">Par ici les nouveautés</h2>
+        <h2 class="label">Par ici les nouveautés films</h2>
         <div class="row">
 
-            @for (itemMovie of (TMDBSvc.movies$|async); track itemMovie.id) {
+            @for (itemMovie of (TMDBSvc.movies$ | async); track itemMovie.id) {
             <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
-                <app-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></app-card>
+                <ui-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></ui-card>
             </div>
             }
 
@@ -48,7 +46,23 @@
     </div>
 </section>
 
-<!-- pagination -->
+<!-- cards series-->
+<section id="movies">
+    <div class="container">
+        <h2 class="label">Par ici les nouveautés séries</h2>
+        <div class="row">
+
+            @for (itemSerie of (TMDBSvc.tv$ | async); track itemSerie.id) {
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
+                <ui-card [routerLink]="['/movies', itemSerie.id]" [item]="itemSerie"></ui-card>
+            </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+<!-- pagination
 <div class="container">
     <div class="paginations">
         <ul>
@@ -62,4 +76,4 @@
             <li (click)="findNextMoviesAction()">Next</li>
         </ul>
     </div>
-</div>
+</div> -->

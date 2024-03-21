@@ -4,6 +4,7 @@ import { TvShowModel } from '../../core/models/tv-show.model';
 import { TMDBService } from '../../core/adapters/tmdb.service';
 import { APIExternalMoviesGateway } from '../../core/ports/api-external-movies.gateway';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-view',
@@ -18,6 +19,8 @@ export class HomeViewComponent {
 
   activeSlide = 0;
   sliders!: MovieModel[];
+
+  subscription!: Subscription;
 
   constructor(
     //private _TMDBSvc: TMDBService
@@ -44,13 +47,9 @@ export class HomeViewComponent {
 
   ngOnInit() {
     // recuperer les 5 premiers movies
-    this.TMDBSvc.getMoviesFromApi()
-    .subscribe(
-      data => {
-        console.log(data)
-        this.sliders = data
-      }
-    )
+    this.TMDBSvc.getMoviesFromApi();
+    // récuperer les 5 premieres series
+    this.TMDBSvc.getTvShowFromApi(); // request à TMDB -> this.tv$.subscribe()
   }
 
   findNextMoviesAction(pageNumber?: number) {
@@ -71,8 +70,8 @@ export class HomeViewComponent {
   }
 
 
-
   ngOnDestroy() {
+    this.subscription.unsubscribe();
     console.log('ceci va s\'executer juste avant la destruction du component HomeView')
   }
 

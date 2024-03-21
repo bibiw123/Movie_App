@@ -7,9 +7,9 @@ import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movie
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-searchbar',
-  templateUrl: './searchbar.component.html',
-  styleUrl: './searchbar.component.scss'
+  selector: 'ui-searchbar',
+  templateUrl: './ui-searchbar.component.html',
+  styleUrl: './ui-searchbar.component.scss'
 })
 export class SearchbarComponent {
 

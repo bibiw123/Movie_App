@@ -1,8 +1,8 @@
 <div class="container">
 
     <!-- searchbar -->
-    <app-searchbar (onResultsEvent)="getSearchResults($event)"
-        class="animate__animated animate__fadeInUp"></app-searchbar>
+    <ui-searchbar (onResultsEvent)="getSearchResults($event)"
+        class="animate__animated animate__fadeInUp"></ui-searchbar>
 
     <!-- Afficher les resultats -->
     <section class="row">
@@ -11,13 +11,13 @@
 
             @switch (result.media_type) {
             @case ('movie') {
-            <app-card [routerLink]="['/movies', result.id]" [item]="result"></app-card>
+            <ui-card [routerLink]="['/movies', result.id]" [item]="result"></ui-card>
             }
             @case ('tv') {
-            <app-card [routerLink]="['/tv', result.id]" [item]="result"></app-card>
+            <ui-card [routerLink]="['/tv', result.id]" [item]="result"></ui-card>
             }
             @case ('person') {
-            <app-card [routerLink]="['/person', result.id]" [item]="result"></app-card>
+            <ui-card [routerLink]="['/person', result.id]" [item]="result"></ui-card>
             }
 
             }

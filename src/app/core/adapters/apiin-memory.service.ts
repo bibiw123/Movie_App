@@ -13,6 +13,8 @@ import { searchData } from '../data/search.data'
 })
 export class APIInMemoryService implements APIExternalMoviesGateway {
 
+  tv$!: Observable<TvShowModel[]>
+  movies$!: Observable<MovieModel[]>;
   movies: MovieModel[] = moviesData;
   tvShows: TvShowModel[] = tvShowsData;
   searchData: SearchModel[] = searchData;
