@@ -11,8 +11,8 @@ export class AlertService {
   show(message: string, type?: 'error' | 'success' | 'info') {
     this.snackbar.open(message, 'Fermer', {
       duration: 10000,
-      verticalPosition: 'bottom',
-      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
       panelClass: 'showbar'
     })
   }

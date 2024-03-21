@@ -1,79 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
-// importer bootstrap
-// @import 'bootstrap/dist/css/bootstrap-grid.min.css';
+/*
+    CSS global Angelique & Fathia / Projet EPITA 2024
+    Nous décidons d'organiser le CSS global par fragments
+    afin que le CSS reste maintenable et scalable.
+    - les CSS globaux : _variables.scss, _reset.scss, _grid.scss
+    - les composants  : _button.scss, _form.scss, _navbar.scss, _pagination.scss, _slider.scss
+*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
+
+@import 'assets/scss/_variables.scss';
+@import 'assets/scss/_reset.scss';
+@import 'assets/scss/_grid.scss';
+
+/* CSS Dependencies */
 @import 'animate.css/animate.css';
-@import 'bootstrap-icons/font/bootstrap-icons.min.css';
-@import 'assets/scss/slider.scss';
-// @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+/* Design system */
+@import 'assets/scss/_alert-bar.scss';
+@import 'assets/scss/_button.scss';
+@import 'assets/scss/_form.scss';
+@import 'assets/scss/_navbar.scss';
+@import 'assets/scss/_pagination.scss';
+@import 'assets/scss/_slider.scss';
 
 body {
     background-color: #13151c;
     background: url('/assets/body-bkg.png') 50%/cover no-repeat fixed;
 }
 
-html,
-body {
-    height: 100%;
+section {
+    padding: 50px 0;
 }
 
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.showbar {
-    z-index: 9999999 !important;
-}
-
-/* CSS global Angelique*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
-
-:root {
-    --primary-color: #17202a;
-    --secondary-color: #273746;
-    --light-gray-color: #ddd;
-    --white-color: #fff;
-    --purple-color: #423693;
-    --purple_light-color: #917db8;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-.label {
-    background: var(--secondary-color);
-    color: var(--light-gray-color);
-    padding: 0.5rem;
-    border-left: 7px var(--purple_light-color) solid;
-}
-
-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-
-.menus {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-    padding: 1rem 0;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
+    color: #fff;
 }
 
 .logo {
@@ -83,20 +50,9 @@ img {
 }
 
 
-.menus .logo img {
-    width: 130px;
-}
 
 
-#form input {
-    width: 650px;
-    outline: none;
-    border: none;
-    border-radius: 20px;
-    padding: 0.8rem 1.5rem;
-    font-family: inherit;
-    background: var(--light-gray-color);
-}
+
 
 header {
     display: flex;
@@ -125,15 +81,6 @@ body {
     background: var(--primary-color);
 }
 
-header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(to top, #000000, rgba(37, 37, 37, 0.45));
-}
 
 .arrow {
     position: absolute;
@@ -180,11 +127,6 @@ button {
     background: var(--purple-color);
     padding: 0.5rem;
     border-radius: 20px;
-}
-
-
-.label {
-    margin: 2rem 0;
 }
 
 .movies-details,
@@ -272,7 +214,7 @@ button {
 
 .paginations ul li:hover{
 
-  background-color:#735e9c;
+  background-color:#917db8;
   transition-duration: 50ms;
 
 
@@ -291,76 +233,45 @@ a {
     color: var(--purple_light-color);
 }
 
-.error {
 
-    font-size: 80%;
 
-}
 /* Scrollbar  */
 *::-webkit-scrollbar {
-  width: 1em !important;
+    width: 0.85em !important;
 }
 
 *::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3) !important;
-  border-radius: 30px;
-  background: #fff;
+    box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 30px;
+    background: #fff;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: darkgrey !important;
-  outline: 0px solid slategrey !important;
-  border-radius: 30px;
+    background-color: darkgrey !important;
+    outline: 0px solid slategrey !important;
+    border-radius: 30px;
 }
+
 /* Media Queries */
 
-@media screen and (max-width: 1500px) {
-    .container {
-        width: 1200px;
-    }
-}
 
 
-@media screen and (max-width: 1200px) {
-    .container {
-        width: 992px;
-    }
-}
+
+
 
 
 @media screen and (max-width: 992px) {
-    .container {
-        width: 100%;
-        padding: 20px;
+
+
+
+    .paginations ul {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
-
-    .menus .logo img {
-        width: 100px;
+    .paginations ul li {
+        margin: 5px;
     }
-
-    .movies,
-    .tvShows {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-    }
-
-    .movies,
-    .tvShows img {
-        width: 100%;
-        height: auto;
-    }
-
-
-.paginations ul {
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.paginations ul li {
-    margin: 5px;
-}
 
     .paginations ul li {
         font-size: 0.9rem;
@@ -390,6 +301,3 @@ a {
 
 
 }
-
-
-

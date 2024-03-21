@@ -33,20 +33,20 @@
 </header>
 
 <!-- cards movies-->
-<div class="movies-content" id="movies">
+<section id="movies">
     <div class="container">
         <h2 class="label">Par ici les nouveautés</h2>
-        <div class="movies-details">
+        <div class="row">
 
             @for (itemMovie of movies; track itemMovie.id) {
-            <div class="animate__animated animate__fadeIn">
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
                 <app-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></app-card>
             </div>
             }
 
         </div>
     </div>
-</div>
+</section>
 
 <!-- pagination -->
 <div class="container">

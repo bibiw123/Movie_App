@@ -1,5 +1,5 @@
 .error {
-    color: white;
+    color: #ffe3c8;
     font-size: 90%;
 }
 
@@ -27,73 +27,37 @@
 .container {
     max-width: 500px;
     width: 100%;
-    background: #917db8;
+    // background: #764bca;
+    background: linear-gradient(45deg, #8035b8, #150e8e);
     color: #fff;
     border-radius: 5px;
     box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.6);
-}
-
-.content {
     padding: 2rem;
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        color: #fff;
+    }
+
+    form button {
+        background: #17202a;
+        color: #fff;
+    }
+
+    form button:hover {
+        background: rgb(36, 49, 64);
+        // padding: 0.5rem 2.5rem;
+    }
 }
 
-.content h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
+.rappel {
+    font-size: 85%;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
 
-.input-group {
-    margin-bottom: 1rem;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 0.6rem 2.8rem;
-    border: none;
-    outline: none;
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.input-group .error {
-    margin-top: 0px
-}
-
-.icons {
-    position: relative;
-    color: #388e3c;
-    font-size: 1.8rem;
-}
-
-.icon {
-    position: absolute;
-    left: 10px;
-    top: 06px;
-}
-
-.container .content form button {
-    padding: 0.5rem 2rem;
-    border: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-    background: #bd2e99;
-    color: #fff;
-    transition: all 0.5s ease;
-}
-
-.container .content form button:hover {
-    background: #814872;
-    padding: 0.5rem 2.5rem;
-}
-
-.extra {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 1.6rem 0rem;
-}
-
-a {
-    text-decoration: none;
-    color: #fff;
+    a {
+        text-decoration: underline;
+        color: #fff;
+    }
 }

@@ -1,40 +1,32 @@
-<div class="d-flex">
-
-    <!-- <a href="index.html">
+<!-- <a href="index.html">
         <div class="logo">
             <img src="assets/logo.png" alt="">
         </div>
     </a> -->
-    <div class="container">
-        <div class="content">
-            <h2>Connexion</h2>
-            <form [formGroup]="loginForm" (submit)="onSubmitLoginForm()" >
+<div class="form-box">
 
-                <div class="input-group">
-                    <input type="text" type="text" formControlName="email" placeholder="E-mail">
-                    <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                    @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
-                        <p class="error">Veuillez indiquer un email valide</p>
-                    }
-                  
-                </div>
+    <h2>Connexion</h2>
+    <form [formGroup]="loginForm" (submit)="onSubmitLoginForm()">
 
-
-                <div class="input-group">
-                    <input type="password" formControlName="password" placeholder="Mot de passe">
-                    <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-                   
-                </div>
-
-                <div class="extra">
-                    <button>Connexion</button>
-                </div>
-                <p>
-                    Vous n'avez pas de compte ?
-                    <a routerLink="/register">Créer un compte</a>
-                </p>
-            </form>
+        <div>
+            <label>Email</label>
+            <input type="text" type="text" formControlName="email" placeholder="hello@gmail.com">
+            <!-- paragraphe erreur -->
+            @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
+            <p class="error">Veuillez indiquer un email valide</p>
+            }
         </div>
-    </div>
 
+        <div>
+            <label>Mot de passe</label>
+            <input type="password" formControlName="password">
+        </div>
+
+        <button type="submit">Connexion</button>
+
+        <p class="rappel">
+            Vous n'avez pas de compte ?
+            <a routerLink="/register">Créer un compte</a>
+        </p>
+    </form>
 </div>

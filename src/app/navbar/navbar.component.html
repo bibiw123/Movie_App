@@ -1,83 +1,52 @@
-
-
-
-<div class="menus">
+<nav class="navbar">
     <div class="container">
-        <button (click)="openNav()" class="burger-btn"><i class="fa-solid fa-bars"></i></button>
-        <nav [class.nav-opened]="isMenuOpened">
-            <!-- Button close nav mobile -->
-            <button (click)="closeNav()" class="close-nav-btn"><i class="fa-solid fa-xmark"></i></button>
-            <a href="index.html">
-                <div class="logo">
+        <div class="navbar-content">
+
+            <!-- navbar part 1: logo + navigation-->
+            <div>
+                <a href="index.html">
                     <img src="assets/logo.png" alt="" />
-                </div>
-            </a>
-            <!-- <form id="form">
+                </a>
+                <ul>
+                    <li><a routerLink="/" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{ exact: true }">Accueil</a></li>
+                    <li><a routerLink="/movies" routerLinkActive='active'>Films</a></li>
+                    <li><a routerLink="/tv" routerLinkActive='active'>Séries</a></li>
+                    <li><a routerLink="/watchlist" routerLinkActive='active'>Ma liste</a></li>
+                    <li><a routerLink="/search" routerLinkActive='searchactive'><i
+                                class="fa-solid fa-magnifying-glass"></i></a></li>
+                </ul>
+            </div>
+
+            <!-- navbar part 2: inscription + connexion-->
+            <div>
+                <ul>
+                    @if(authGateway.isAuth$ | async) {
+                    <li><a>Angelique</a></li>
+                    }
+                    @else {
+                    <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
+                    <li><a class="btn" routerLink="/register" routerLinkActive='active'>Inscription</a></li>
+                    }
+                </ul>
+            </div>
+
+
+        </div>
+        <!-- <button (click)="openNav()" class="burger-btn"><i class="fa-solid fa-bars"></i></button> -->
+        <!-- <nav [class.nav-opened]="isMenuOpened"> -->
+
+        <!-- Button close nav mobile -->
+        <!-- <button (click)="closeNav()" class="close-nav-btn"><i class="fa-solid fa-xmark"></i></button> -->
+
+
+
+
+        <!-- <form id="form">
                 <input type="text" placeholder="Rechercher" id="search" />
             </form> -->
 
-            <ul>
-                <li><a routerLink="/" routerLinkActive='active' [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
-                </li>
-                <li><a routerLink="/search" routerLinkActive='searchactive'><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                <li><a routerLink="/watchlist" routerLinkActive='active'>Ma liste</a></li>
-                <li><a routerLink="/movies" routerLinkActive='active'>Films</a></li>
-                <li><a routerLink="/tv" routerLinkActive='active'>Séries</a></li>
 
-                @if(authGateway.isAuth$ | async) {
-                    <li><a>Angelque</a></li>
-                }
-                @else {
-                    <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
-                    <li><a routerLink="/register" routerLinkActive='active'>Inscription</a></li>
-
-
-                }
-                </ul>
-
-        </nav>
+        <!-- </nav> -->
     </div>
-</div>
-
-
-<!-- <nav class="navbar navbar-expand-lg bg-navbar fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">MovieApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a routerLink="/" routerLinkActive='active' [routerLinkActiveOptions]="{ exact: true }"
-                        class="nav-link">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="/search" routerLinkActive='active' class="nav-link">Recherche</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/movies" routerLinkActive='active'>Films</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="/tv" routerLinkActive='active' class="nav-link">TV</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="/watchlist" routerLinkActive='active' class="nav-link">Ma liste</a>
-                </li>
-            </ul>
-
-
-            <ul class="navbar-nav">
-
-                <li class="nav-item">
-                    <a routerLink="/login" routerLinkActive='active' class="nav-link">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a routerLink="/register" routerLinkActive='active' class="nav-link">Créer un compte</a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav> -->
+</nav>
