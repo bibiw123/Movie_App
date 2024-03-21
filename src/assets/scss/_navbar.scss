@@ -1,0 +1,80 @@
+@import '_variables.scss';
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 1rem 0;
+    display: flex;
+
+    img {
+        width: 130px;
+    }
+
+    div.navbar-content {
+        display: flex;
+        justify-content: space-between;
+
+        >div {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+
+    ul {
+        display: flex;
+        list-style: none;
+
+        li {
+            a {
+                color: var(--light-gray-color);
+                text-decoration: none;
+                padding: 0.4rem 1rem;
+                font-size: 1.1rem;
+                position: relative
+            }
+
+            a:before {
+                content: "";
+                width: auto;
+                height: 3px;
+                background: linear-gradient(45deg, #c3cbd0, #ff00ee);
+                position: absolute;
+                transform: scaleX(0);
+                visibility: visible;
+                opacity: 0 !important;
+                bottom: 3px;
+                left: 16px;
+                right: 16px;
+                transform-origin: left center;
+                transition-duration: .5s;
+            }
+
+            a.active:before {
+                transform: scaleX(1);
+                opacity: 1 !important;
+            }
+
+            a.btn.active {
+                background: var(--secondary-color);
+            }
+
+            a.btn.active:before {
+                transform: scaleX(0);
+
+            }
+
+            a.searchactive {
+                color: #ff00ee;
+            }
+
+        }
+
+    }
+
+
+
+
+}

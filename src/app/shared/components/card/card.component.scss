@@ -6,8 +6,10 @@
     padding: 1px;
 }
 
-.card img {
+img {
     border-radius: 7px;
+    object-fit: cover;
+    height: 100%;
 }
 
 .card:hover {
@@ -15,7 +17,6 @@
     border: 3px solid #fff;
     cursor: pointer;
 }
-
 
 h2 {
     font-size: 1.2rem;
