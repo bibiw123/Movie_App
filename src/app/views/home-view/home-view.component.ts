@@ -17,8 +17,6 @@ export class HomeViewComponent {
   tv!: TvShowModel[];
   pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  activeSlide = 0;
-  sliders!: MovieModel[];
 
   subscription!: Subscription;
 
@@ -27,23 +25,6 @@ export class HomeViewComponent {
     public TMDBSvc: APIExternalMoviesGateway,
     private _sanitize: DomSanitizer
   ) { }
-
-
-
-
-  nextSlide() {
-    this.activeSlide++;
-    if (this.activeSlide > this.sliders.length - 1) {
-      this.activeSlide = 0;
-    }
-  }
-
-  previousSlide() {
-    this.activeSlide--;
-    if (this.activeSlide < 0) {
-      this.activeSlide = this.sliders.length - 1;
-    }
-  }
 
   ngOnInit() {
     // recuperer les 5 premiers movies
@@ -64,11 +45,6 @@ export class HomeViewComponent {
   findPrevMoviesAction() {
     this.TMDBSvc.getPrevMoviesFromApi()
   }
-
-  getFullImageUrl(fragmentUrl: string): string {
-    return `url(https://image.tmdb.org/t/p/original/${fragmentUrl})`;
-  }
-
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

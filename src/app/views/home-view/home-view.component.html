@@ -1,33 +1,5 @@
-<!-- slider-->
-@if(TMDBSvc.movies$ | async; as slider) {
-<header class="slider" [style.background-image]="getFullImageUrl(slider[activeSlide].image_landscape)">
-    <div class="slider-container">
-        @for (itemMovie of sliders; track itemMovie.id; let i = $index) {
-        <div class="slide" [class.active]="activeSlide===i"
-            [style.background-image]="getFullImageUrl(itemMovie.image_landscape)">
 
-            <div class="slider-content active">
-                <h2 class="movies-title">{{itemMovie.titre}}</h2>
-                <p class="movies_short_details">
-                    {{itemMovie.resume}}
-                </p>
-                <div class="m_details">
-
-                </div>
-
-            </div>
-        </div>
-        }
-
-        <button (click)="previousSlide()" class="arrow left-arrow" id="left">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <button (click)="nextSlide()" class="arrow right-arrow" id="right">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-    </div>
-</header>
-}
+<ui-slider [items]="TMDBSvc.movies$ | async"> </ui-slider>
 
 
 <!-- cards movies-->

@@ -35,6 +35,7 @@ import { TMDBService } from './core/adapters/tmdb.service';
 import { APIInMemoryService } from './core/adapters/apiin-memory.service';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { AuthService } from './core/adapters/auth.service';
+import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { AuthService } from './core/adapters/auth.service';
     ActionbarComponent, SearchbarComponent, CardComponent, DropdownComponent,
     // pipes & directives
     PrintdurationPipe,
+    SliderComponent,
     //ClickoutsideDirective
   ],
 
