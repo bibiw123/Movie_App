@@ -19,6 +19,13 @@ export class TvListViewComponent {
     private _TMDBSvc: APIExternalMoviesGateway
   ) { }
 
+  ngOnInit(){
+
+    console.log(this.tvshows$)
+
+
+  }
+
   selectGenre(genre: Genre) {
     console.log(genre)
   }

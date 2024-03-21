@@ -2,10 +2,10 @@
     <div class="container">
         <h2 class="label">Tv & séries</h2>
         <app-dropdown (OnSelectItemEvent)="selectGenre($event)" [items]="genres" />
-        <div class="movies-details">
+        <div class="row">
 
             @for (itemTvShow of tvshows$ | async; track itemTvShow.id) {
-            <div class="animate__animated animate__fadeIn">
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
                 <app-card [routerLink]="['/tv', itemTvShow.id]" [item]="itemTvShow"></app-card>
             </div>
             }
