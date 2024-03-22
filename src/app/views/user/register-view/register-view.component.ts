@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../shared/services/user.service';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
+import { AlertService } from '../../../shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-view',
@@ -13,7 +15,12 @@ export class RegisterViewComponent {
   registerForm!: FormGroup
   isSubmitted: boolean = false
 
-  constructor(private formbuilder: FormBuilder, private authGateway: AuthGateway) { }
+  constructor(
+    private formbuilder: FormBuilder,
+    private authGateway: AuthGateway,
+    private alert: AlertService,
+    private router:Router
+    ) { }
 
 
   ngOnInit() {
@@ -59,7 +66,11 @@ export class RegisterViewComponent {
     console.log(this.registerForm.value)
     if (this.registerForm.valid) {
       this.authGateway.register(this.registerForm.value)
-        .subscribe(response => console.log(response))
+        .subscribe( (reponse) => {
+          console.log(reponse);
+          this.alert.show("Vous êtes bien inscrit");
+          this.router.navigate(["login"])
+        } )
     }
   }
 
