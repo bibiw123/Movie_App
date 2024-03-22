@@ -3,7 +3,7 @@ import { UserModel } from "../models/user.model";
 
 export abstract class UserGateway {
 
-  public abstract user$ : Observable<UserModel | null>
+  public abstract user$: Observable<UserModel>
 
   abstract addMovieToWatchlist(movie: any): Observable<any>;
   abstract removeMovieToWatchlist(movie: any): Observable<any>;
