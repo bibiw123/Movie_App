@@ -45,6 +45,11 @@ export class MovieDetailViewComponent implements OnInit {
     return this._sanitize.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + key);
   }
 
+  addMovieToWatchlistAction(movie: MovieModel){
+    console.log(movie);
+
+
+  }
 
 
 
@@ -57,7 +62,7 @@ export class MovieDetailViewComponent implements OnInit {
 
 
 
-  // 2 demander au service : faire une request TMDB_URL/movie/{id} 
+  // 2 demander au service : faire une request TMDB_URL/movie/{id}
   //TMDBService.getDetailMovie(id)
   // Je recupere un objet MovieModel
 
