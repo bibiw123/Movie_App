@@ -10,10 +10,10 @@ import { AuthGateway } from '../../../core/ports/auth.gateway';
 })
 export class RegisterViewComponent {
 
-  registerForm!:FormGroup
-  isSubmitted:boolean=false
+  registerForm!: FormGroup
+  isSubmitted: boolean = false
 
-  constructor(private formbuilder:FormBuilder, private authGateway:AuthGateway) { }
+  constructor(private formbuilder: FormBuilder, private authGateway: AuthGateway) { }
 
 
   ngOnInit() {
@@ -23,25 +23,26 @@ export class RegisterViewComponent {
 
     this.registerForm = this.formbuilder.group({
 
-      username:['',[
-          Validators.minLength(3),
-          Validators.maxLength(26),
-          Validators.required
-        ]
+      username: ['', [
+        Validators.minLength(3),
+        Validators.maxLength(26),
+        Validators.required,
+        Validators.pattern(/^\p{L}[\p{L}\-_]{1,23}\p{L}$/u)
+      ]
       ],
-      email:['',[
-          Validators.email,
-          Validators.required
-        ]
+      email: ['', [
+        Validators.email,
+        Validators.required
+      ]
       ],
-      password:['',[
-          Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$"),
-          Validators.minLength(8),
-          Validators.required
-        ]
+      password: ['', [
+        Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!\\-_]).{8,}$"),
+        Validators.minLength(8),
+        Validators.required
+      ]
       ]
 
-      })
+    })
 
 
   }
@@ -51,14 +52,14 @@ export class RegisterViewComponent {
    * la méthode createUser du UserService
    */
 
-  onSubmitRegisterForm(){
+  onSubmitRegisterForm() {
 
-    this.isSubmitted=true
+    this.isSubmitted = true
     console.log(this.registerForm)
     console.log(this.registerForm.value)
-    if(this.registerForm.valid){
+    if (this.registerForm.valid) {
       this.authGateway.register(this.registerForm.value)
-      .subscribe(response=>console.log(response))
+        .subscribe(response => console.log(response))
     }
   }
 
