@@ -1,4 +1,6 @@
-export let moviesData = [
+import { MovieModel } from "../models/movie.model";
+
+export let moviesData: MovieModel[] = [
     {
         "id": 866398,
         "titre": "The Beekeeper",

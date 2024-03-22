@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MovieModel } from '../../../core/models/movie.model';
+import { UserGateway } from '../../../core/ports/user.gateway';
 
 @Component({
   selector: 'app-watchlist',
@@ -8,8 +9,6 @@ import { MovieModel } from '../../../core/models/movie.model';
 })
 export class WatchlistComponent {
 
-  movies:MovieModel[] = [
-
-  ]
+  constructor(public userService: UserGateway) { }
 
 }

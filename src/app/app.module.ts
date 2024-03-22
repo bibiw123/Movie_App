@@ -36,6 +36,8 @@ import { APIInMemoryService } from './core/adapters/apiin-memory.service';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { AuthService } from './core/adapters/auth.service';
 import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.component';
+import { UserGateway } from './core/ports/user.gateway';
+import { UserService } from './core/adapters/user.service';
 
 
 @NgModule({
@@ -76,6 +78,7 @@ import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.comp
     { provide: APIExternalMoviesGateway, useClass: TMDBService },
     //{ provide: APIExternalMoviesGateway, useClass: APIInMemoryService },
     { provide: AuthGateway, useClass: AuthService },
+    { provide: UserGateway, useClass: UserService },
 
 
     // interceptor pour ajouter un token à la request
