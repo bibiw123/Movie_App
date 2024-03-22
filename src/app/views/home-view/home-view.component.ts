@@ -17,9 +17,6 @@ export class HomeViewComponent {
   tv!: TvShowModel[];
   pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-
-  subscription!: Subscription;
-
   constructor(
     //private _TMDBSvc: TMDBService
     public TMDBSvc: APIExternalMoviesGateway,
@@ -30,7 +27,7 @@ export class HomeViewComponent {
     // recuperer les 5 premiers movies
     this.TMDBSvc.getMoviesFromApi();
     // récuperer les 5 premieres series
-    this.TMDBSvc.getTvShowFromApi(); // request à TMDB -> this.tv$.subscribe()
+    this.TMDBSvc.getTvShowFromApi();
   }
 
   findNextMoviesAction(pageNumber?: number) {
@@ -44,11 +41,6 @@ export class HomeViewComponent {
 
   findPrevMoviesAction() {
     this.TMDBSvc.getPrevMoviesFromApi()
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    console.log('ceci va s\'executer juste avant la destruction du component HomeView')
   }
 
 }
