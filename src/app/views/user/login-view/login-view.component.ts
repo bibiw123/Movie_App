@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../../shared/services/user.service';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
+import { AlertService } from '../../../shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-view',
@@ -13,8 +15,12 @@ export class LoginViewComponent {
   loginForm!:FormGroup
   isSubmitted: boolean = false;
 
-  constructor(private formbuilder:FormBuilder, private authGateway:AuthGateway) { }
-
+  constructor(
+    private formbuilder:FormBuilder,
+    private authGateway:AuthGateway,
+    private alert: AlertService,
+    private router: Router
+  ) { }
   ngOnInit() {
 
     this.loginForm = this.formbuilder.group({
@@ -27,10 +33,10 @@ export class LoginViewComponent {
   }
 
   /**
-   * Role verifier la validité et appeler 
+   * Role verifier la validité et appeler
    * la méthode createUser du UserService
    */
- 
+
   onSubmitLoginForm(){
 
     this.isSubmitted=true
@@ -38,8 +44,12 @@ export class LoginViewComponent {
     console.log(this.loginForm.value)
     if(this.loginForm.valid){
       this.authGateway.login(this.loginForm.value)
-      .subscribe(response => console.log(response))
-    
+      .subscribe(response =>{
+        console.log(response);
+        this.alert.show("Vous êtes bien connecté(e)");
+        this.router.navigate([''])
+      } )
+
     }
   }
 

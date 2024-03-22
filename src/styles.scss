@@ -4,6 +4,7 @@
     afin que le CSS reste maintenable et scalable.
     - les CSS globaux : _variables.scss, _reset.scss, _grid.scss
     - les composants  : _button.scss, _form.scss, _navbar.scss, _pagination.scss, _slider.scss
+    - les dépendances : les fonts, fontawesome, material Angular
 */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Roboto:wght@400;700&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Ruda:wght@400;600;700&display=swap");
@@ -15,6 +16,7 @@
 /* CSS Dependencies */
 @import 'animate.css/animate.css';
 @import '@fortawesome/fontawesome-free/css/all.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* Design system */
 @import 'assets/scss/_alert-bar.scss';
