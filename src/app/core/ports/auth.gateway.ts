@@ -6,7 +6,7 @@ export abstract class AuthGateway {
     abstract register(user: any): Observable<any>
     abstract login(user: any): Observable<any>
     abstract logout(): Observable<any>
-    abstract storeTokenInLocalStorage(): void
-    abstract getTokenFromLocalStorage(): string
+    abstract storeTokenInLocalStorage(token:string): void
+    abstract getTokenFromLocalStorage(): string | null
 
 }

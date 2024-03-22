@@ -31,10 +31,11 @@ export class AuthService implements AuthGateway {
     const endpoint = "/logout"
     return this.http.get(this.apiurl + endpoint)
   }
-  storeTokenInLocalStorage(): void {
+  storeTokenInLocalStorage(token:string): void {
+    localStorage.setItem("token",token)
 
   }
-  getTokenFromLocalStorage(): string {
-    return ""
+  getTokenFromLocalStorage(): string | null {
+    return localStorage.getItem("token")
   }
 }

@@ -46,6 +46,7 @@ export class LoginViewComponent {
       this.authGateway.login(this.loginForm.value)
       .subscribe(response =>{
         console.log(response);
+        this.authGateway.storeTokenInLocalStorage(response.token);
         this.alert.show("Vous êtes bien connecté(e)");
         this.router.navigate([''])
       } )
