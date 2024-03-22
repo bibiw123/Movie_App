@@ -38,19 +38,10 @@ export class LoginViewComponent {
    */
 
   onSubmitLoginForm(){
-
     this.isSubmitted=true
-    console.log(this.loginForm)
     console.log(this.loginForm.value)
     if(this.loginForm.valid){
       this.authGateway.login(this.loginForm.value)
-      .subscribe(response =>{
-        console.log(response);
-        this.authGateway.storeTokenInLocalStorage(response.token);
-        this.alert.show("Vous êtes bien connecté(e)");
-        this.router.navigate([''])
-      } )
-
     }
   }
 
