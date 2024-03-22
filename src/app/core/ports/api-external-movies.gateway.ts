@@ -7,15 +7,15 @@ import { TvShowModel } from "../models/tv-show.model";
     Le service TMDBService implémente cette classe APIExternalMoviesGateway
 
     Le principe :          PORT                ADAPTER 1 
-    |COMPONENT| =====> |TMDBGateway| =====> |TMDBService|                   
-                      (abstractClass)      (Service Concret)
+    |COMPONENT| =====>   |Gateway|  =====>  |TMDBService|                   
+                      (abstractClass)       (Service Concret)
 
                                                ADAPTER 2 
-                                     =====> |OtherService|                   
+                                    =====>  |OtherService|                   
                                             (Service Concret)
                                             
                                                 ADAPTER 3 
-                                     =====> |OtherService|                   
+                                    =====>  |OtherService|                   
                                             (Service Concret) 
 
 

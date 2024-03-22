@@ -22,7 +22,7 @@
             <p class="error">Maximum 26 caractères</p>
             }
             @if (registerForm.controls['username'].hasError("pattern") && isSubmitted) {
-            <p class="error">Pas de chiffre - peut contenir un - ou _</p>
+            <p class="error">Les chiffres ne sont pas acceptés</p>
             }
 
         </div>
