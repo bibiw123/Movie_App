@@ -17,4 +17,7 @@ export class NavbarComponent {
   closeNav(){
     this.isMenuOpened = false
   }
+  logoutAction(){
+    this.authGateway.logout()
+  }
 }

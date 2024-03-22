@@ -23,6 +23,7 @@
                 <ul>
                     @if(authGateway.isAuth$ | async) {
                     <li><a>Angelique</a></li>
+                    <li><a (click)="logoutAction()">Déconnexion</a></li>
                     }
                     @else {
                     <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
