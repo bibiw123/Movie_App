@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 import { Credentials } from '../models/user.model';
+import { AlertService } from '../../shared/services/alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService implements AuthGateway {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService
+    private userService: UserService,
+    private alert: AlertService
   ) { }
 
 
@@ -56,6 +58,7 @@ export class AuthService implements AuthGateway {
   logout(): Observable<any> {
     const endpoint = "/logout"
     this._isAuth$.next(false)
+    this.alert.show('Vous êtes déconnecté(e)')
     return this.http.get(this.apiurl + endpoint)
   }
 
