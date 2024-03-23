@@ -39,8 +39,16 @@
                 <ul>
                     @if((authGateway.isAuth$|async) && ((userGataway.user$|async)) ) {
                     @if(userGataway.user$|async;as user) {
-                    <li>Hello<a>{{user.username}}</a></li>
-                    <li><a (click)="logoutAction()">Déconnexion</a></li>
+                    <li>
+                        <!-- <button class="user" [matMenuTriggerFor]="menu">{{user.username}}</button> -->
+                        <img class="avatar" [matMenuTriggerFor]="menu"
+                            src="https://api.dicebear.com/8.x/adventurer/svg?seed=ange" alt="">
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>Compte</button>
+                            <button mat-menu-item>Préférences</button>
+                            <button (click)="logoutAction()" mat-menu-item>Déconnexion</button>
+                        </mat-menu>
+                    </li>
                     }
                     }
 

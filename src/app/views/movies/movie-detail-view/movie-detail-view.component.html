@@ -2,6 +2,7 @@
 
 <div class="container">
 
+    <!-- Titre film et bouton "back"-->
     <div class="title-block">
         <button (click)="location.back()" id="left" class="arrow left-arrow">
             <i class="fas fa-arrow-left"></i>
@@ -9,56 +10,47 @@
         <h1>{{movie.titre}}</h1>
     </div>
 
-    <div class="row g-4 animate__animated animate__fadeIn">
+    <div class="row">
 
-        <div class="video-block">
-
+        <!-- BLOC GAUCHE: VIDEO -->
+        <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
-                <button>Ajouter le film à ma bibliotheque</button>
+            <button (click)="addMovieToWatchlistAction(movie)">Ajouter à ma liste</button>
             }
-
             @if(movie.video) {
-            <!-- Integration iframe Ytube-->
             <div class="video-container">
                 <iframe width="560" height="315" [src]="getFullVideoUrl(movie.video)" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen></iframe>
             </div>
             }@else {
-            <div class="d-flex justify-content-center align-items-center h-100">
-                <h3>😒 Pas de vidéos disponible</h3>
+            <div class="">
+                <img [src]="getFullImageUrl(movie.image_landscape)" [alt]="movie.titre">
+                <p>😒 Pas de vidéos disponible</p>
             </div>
             }
-
-            <button (click)="addMovieToWatchlistAction(movie)">Ajouter à ma liste</button>
         </div>
 
-
-        <div class="text-block">
-            <!-- contenu details-->
-            <h2>Date de sortie</h2>
-            <p>{{movie.date | date:'dd/MM/yyyy'}}</p>
-
-            <h2>Résumé</h2>
-            <p class="resume">{{movie.resume}}</p>
-
-            <h2>Genres</h2>
+        <!-- BLOC DROITE: TEXTES-->
+        <div class="col-12 col-lg-6">
+            <p>
+                <span><i class="fa-solid fa-circle"></i>Sortie {{movie.date | date:'MM-yyyy'}}</span>
+                <span><i class="fa-solid fa-circle"></i>Durée {{movie.duration | printduration}}</span>
+            </p>
             @for(genre of movie.genres; track genre.id ) {
             <span class="badge rounded-pill text-bg-light">
                 {{genre.name}}
             </span>
             }
 
-            <h2>Durée</h2>
-            <p>{{movie.duration | printduration}}</p>
+            <h2>Résumé</h2>
+            <p class="resume">{{movie.resume}}</p>
 
             <hr>
-            <!-- AFFICHER LE FORMULAIRE DE COMMENTAIRE-->
+            <!-- FORMULAIRE DE COMMENTAIRE-->
             <h2>Avis</h2>
-
         </div>
 
     </div>
-
 </div>
 }

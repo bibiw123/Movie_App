@@ -26,8 +26,8 @@ export class MovieDetailViewComponent implements OnInit {
     // private _TMDBSvc: TMDBService,
     private _TMDBSvc: APIExternalMoviesGateway,
     private _sanitize: DomSanitizer,
-    public authGateway:AuthGateway
-    ) { }
+    public authGateway: AuthGateway
+  ) { }
 
   ngOnInit() {
     //1 On récupere l'id dans l'URL
@@ -45,7 +45,11 @@ export class MovieDetailViewComponent implements OnInit {
     return this._sanitize.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + key);
   }
 
-  addMovieToWatchlistAction(movie: MovieModel){
+  getFullImageUrl(fragmentUrl: string) {
+    return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
+  }
+
+  addMovieToWatchlistAction(movie: MovieModel) {
     console.log(movie);
 
 

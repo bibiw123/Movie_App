@@ -5,3 +5,21 @@ a.logo {
         width: 115px;
     }
 }
+
+button.user {
+    padding: 0.3rem 1.5rem !important;
+    border: none;
+    border-radius: 5px;
+    color: rgb(255, 255, 255);
+    font-size: 1rem !important;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    // background: linear-gradient(315deg, #6e35b8, #1f1873) !important;
+    background: var(--secondary-color);
+}
+
+img.avatar {
+    background: antiquewhite;
+    border-radius: 50%;
+    width: 70px;
+}
