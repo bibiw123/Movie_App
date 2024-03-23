@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from '../../../shared/services/user.service';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
 import { Credentials } from '../../../core/models/user.model';
+import { UserGateway } from '../../../core/ports/user.gateway';
 
 @Component({
   selector: 'app-login-view',
@@ -19,6 +19,7 @@ export class LoginViewComponent {
   constructor(
     private formbuilder: FormBuilder,
     private authGateway: AuthGateway,
+    private userGateway: UserGateway,
     private alert: AlertService,
     private router: Router
   ) { }
@@ -45,6 +46,7 @@ export class LoginViewComponent {
 
     if (this.loginForm.valid) {
       this.authGateway.login(credentials).subscribe((response: any) => {
+        this.userGateway.createUserModelAfterLogin(response.user)
         this.alert.show("Vous êtes bien connecté(e)");
         this.router.navigate(['']);
       })

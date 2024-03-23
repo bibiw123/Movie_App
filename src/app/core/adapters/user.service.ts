@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserGateway } from '../ports/user.gateway';
-import { Observable, Subject, forkJoin, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, forkJoin, of, switchMap } from 'rxjs';
 import { SimpleUser, UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -21,8 +21,13 @@ export class UserService implements UserGateway {
 
   apiurl = environment.API_URL;
 
-  private _user$: Subject<UserModel> = new Subject()
-  public user$: Observable<UserModel> = this._user$.asObservable();
+  private _user$: BehaviorSubject<Partial<UserModel>> = new BehaviorSubject({})
+  public user$: Observable<any> = this._user$.asObservable();
+
+  public setUser$(user: UserModel): void {
+    this._user$.next(user)
+
+  }
 
   /**
    * createUserModelAfterLogin
@@ -34,8 +39,8 @@ export class UserService implements UserGateway {
    * Tous les compoments peuvent alors consommer user$
    * afin d'afficher les données utilisateur dans les vues HTML
    */
-  createUserModelAfterLogin(user: SimpleUser): void {
-    let userLoggedIn!: UserModel;
+  createUserModelAfterLogin(user: SimpleUser): UserModel {
+
     // let userWatchList$ = of(user).pipe(
     //   switchMap((user) => {
     //     return forkJoin([
@@ -51,8 +56,11 @@ export class UserService implements UserGateway {
     //   userLoggedIn = new UserModel(user, response[0], response[1]);
     //   this._user$.next(userLoggedIn);
     // })
-    userLoggedIn = new UserModel(user, this.fakeMoviesWatchlist, this.fakeSeriesWatchlist);
+    let userLoggedIn: UserModel = new UserModel(user, this.fakeMoviesWatchlist, this.fakeSeriesWatchlist);
+    console.log(userLoggedIn)
     this._user$.next(userLoggedIn);
+    console.log(this.user$)
+    return userLoggedIn
   }
 
 

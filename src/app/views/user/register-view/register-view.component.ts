@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../../shared/services/user.service';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
@@ -19,8 +18,8 @@ export class RegisterViewComponent {
     private formbuilder: FormBuilder,
     private authGateway: AuthGateway,
     private alert: AlertService,
-    private router:Router
-    ) { }
+    private router: Router
+  ) { }
 
 
   ngOnInit() {
@@ -66,11 +65,11 @@ export class RegisterViewComponent {
     console.log(this.registerForm.value)
     if (this.registerForm.valid) {
       this.authGateway.register(this.registerForm.value)
-        .subscribe( (reponse) => {
+        .subscribe((reponse) => {
           console.log(reponse);
           this.alert.show("Vous êtes bien inscrit");
           this.router.navigate(["login"])
-        } )
+        })
     }
   }
 

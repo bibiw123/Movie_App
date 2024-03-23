@@ -4,31 +4,53 @@
 
             <!-- navbar part 1: logo + navigation-->
             <div>
-                <a href="index.html">
-                    <img src="assets/logo.png" alt="" />
+                <a class="logo" href="index.html">
+                    <img src="assets/logo11.png" alt="" />
                 </a>
                 <ul>
-                    <li><a routerLink="/" routerLinkActive='active'
-                            [routerLinkActiveOptions]="{ exact: true }">Accueil</a></li>
-                    <li><a routerLink="/movies" routerLinkActive='active'>Films</a></li>
-                    <li><a routerLink="/tv" routerLinkActive='active'>Séries</a></li>
-                    <li><a routerLink="/watchlist" routerLinkActive='active'>Ma liste</a></li>
-                    <li><a routerLink="/search" routerLinkActive='searchactive'><i
-                                class="fa-solid fa-magnifying-glass"></i></a></li>
+                    <li>
+                        <!-- <i class="fa-solid fa-house"></i> -->
+                        <a routerLink="/" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+                    </li>
+
+                    <li>
+                        <!-- <i class="fa-solid fa-film"></i> -->
+                        <a routerLink="/movies" routerLinkActive='active'>Films</a>
+                    </li>
+
+                    <li>
+                        <!-- <i class="fa-solid fa-tv"></i> -->
+                        <a routerLink="/tv" routerLinkActive='active'>Séries</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <a routerLink="/watchlist" routerLinkActive='active'>Ma liste</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <a routerLink="/search" routerLinkActive='searchactive'>Recherche</a>
+                    </li>
                 </ul>
             </div>
 
             <!-- navbar part 2: inscription + connexion-->
             <div>
                 <ul>
-                    @if(authGateway.isAuth$ | async) {
-                    <li><a>Angelique</a></li>
+                    @if((authGateway.isAuth$|async) && ((userGataway.user$|async)) ) {
+                    @if(userGataway.user$|async;as user) {
+                    <li>Hello<a>{{user.username}}</a></li>
                     <li><a (click)="logoutAction()">Déconnexion</a></li>
                     }
+                    }
+
+
                     @else {
                     <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>
                     <li><a class="btn" routerLink="/register" routerLinkActive='active'>Inscription</a></li>
                     }
+
+
                 </ul>
             </div>
 

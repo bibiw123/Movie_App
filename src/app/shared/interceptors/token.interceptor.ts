@@ -1,8 +1,8 @@
 import { HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { UserService } from '../services/user.service';
 import { Utils } from '../utils/utils';
+import { AuthGateway } from '../../core/ports/auth.gateway';
 
 interface Endpoint {
   endpoint: string,
@@ -21,9 +21,9 @@ export class TokenInterceptor implements HttpInterceptor {
   TMDB_URL = environment.TMDB_API_URL;
   TMDB_TOKEN = environment.TMDB_TOKEN;
   MYAPI_URL = environment.API_URL;
-  USER_TOKEN = this._userSvc.getToken();
+  USER_TOKEN = this._authSvc.getTokenFromLocalStorage();
 
-  constructor(private _userSvc: UserService) { }
+  constructor(private _authSvc: AuthGateway) { }
 
   /**
    * le rôle de intercept est d'intercepter req (HttpRequest Object)

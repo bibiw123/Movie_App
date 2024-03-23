@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MovieModel } from '../../../core/models/movie.model';
 import { UserGateway } from '../../../core/ports/user.gateway';
+import { AuthGateway } from '../../../core/ports/auth.gateway';
 
 @Component({
   selector: 'app-watchlist',
@@ -9,6 +9,9 @@ import { UserGateway } from '../../../core/ports/user.gateway';
 })
 export class WatchlistComponent {
 
-  constructor(public userService: UserGateway) { }
+  constructor(
+    public authService: AuthGateway,
+    public userService: UserGateway
+  ) { }
 
 }

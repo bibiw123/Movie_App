@@ -1,21 +1,25 @@
-<!-- <div class="container p-5">
+<!-- Si l'utilisateur n'est pas connecté -->
+@if(!(authService.isAuth$ | async)) {
+<div class="container p-5">
     <div class="d-flex flex-column justify-content-center align-items-center block">
-        <i class="bi bi-plus-circle"></i>
-        <h1>Votre liste</h1>
+        <i class="fa-solid fa-circle-plus"></i>
+        <h1>Votre liste est vide</h1>
         <p class="text-center">Le contenu que vous ajoutez à votre liste apparaît ici.</p>
     </div>
-</div> -->
+</div>
+}
 
-<!-- PARTIE 1: user watchlist movies-->
-
+@else {
+<!-- Si l'utilisateur EST connecté -->
+<!-- PARTIE 1: watchlist movies-->
 @if(userService.user$ | async; as user) {
-<section id="movies">
+<section>
     <div class="container">
-        <h2 class="label">Par ici les nouveautés films</h2>
+        <h2 class="label">Ma liste de films</h2>
         <div class="row">
 
             @for (itemMovie of (user.watchList.movies); track itemMovie.id) {
-            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-3">
                 <ui-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></ui-card>
             </div>
             }
@@ -24,14 +28,14 @@
     </div>
 </section>
 
-<!-- PARTIE 2: user watchlist series-->
-<section id="movies">
+<!-- PARTIE 2: watchlist series-->
+<section>
     <div class="container">
-        <h2 class="label">Par ici les nouveautés films</h2>
+        <h2 class="label">Ma liste de séries</h2>
         <div class="row">
 
             @for (itemMovie of (user.watchList.series); track itemMovie.id) {
-            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-3">
                 <ui-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></ui-card>
             </div>
             }
@@ -39,4 +43,5 @@
         </div>
     </div>
 </section>
+}
 }

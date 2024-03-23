@@ -19,6 +19,7 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* Design system */
+@import 'assets/scss/_utilities.scss';
 @import 'assets/scss/_alert-bar.scss';
 @import 'assets/scss/_button.scss';
 @import 'assets/scss/_form.scss';
@@ -29,6 +30,7 @@
 body {
     background-color: #13151c;
     background: url('/assets/body-bkg.png') 50%/cover no-repeat fixed;
+    color: #fff;
 }
 
 section {
