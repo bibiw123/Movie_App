@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { TMDBService } from '../../../core/adapters/tmdb.service';
 import { MovieModel } from '../../../core/models/movie.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Genre, genresMovie } from '../../../shared/data/genres.data';
-import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movies.gateway';
+import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 
 @Component({
   selector: 'app-movie-list-view',
@@ -12,29 +11,21 @@ import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movie
 })
 export class MovieListViewComponent {
 
-  movies$: Observable<MovieModel[]> = this._TMDBSvc.getMoviesFromApi();
+  movies$: Observable<MovieModel[]> = this._TmdbGateway.movies$
   genres: Genre[] = genresMovie;
-  subscription!: Subscription;
 
-  constructor(
-    // private _TMDBSvc: TMDBService
-    private _TMDBSvc: APIExternalMoviesGateway
-  ) { }
-  /**
-     * getMoviesFromApi()
-     * retourne _TMDBSvc.movies$$.asObservable()
-     * 
-     * donc je peux subscribe à cette source
-     * this.subscription = this._TMDBSvc.getMoviesFromApi().subscribe(data => this.movies = data) 
-     * 
-     * ou directement avec le pipe async dans la view...
-     * @for (itemMovie of movies$ | async ; track itemMovie.id)
-     * 
-     * 
-     */
+  constructor(private _TmdbGateway: TMDBGateway) { }
+
+  /**                appelle
+  *  |1.COMPONENT | ==========> |2.TMDBService|                 
+  *                             .getMoviesFromApi()       
+  *                             pousse _movies$.next(allMovies)
+  *  |3.VUE HTML|
+  *  affiche: TMDBService.movies$ | async
+  */
 
   ngOnInit() {
-    this._TMDBSvc.getMoviesFromApi()
+    this._TmdbGateway.getMoviesFromApi();
   }
 
   selectGenre(genre: Genre) {
@@ -42,7 +33,4 @@ export class MovieListViewComponent {
     // Request TMDV /movie/
   }
 
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe()
-  // }
 }

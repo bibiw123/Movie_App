@@ -1,6 +1,6 @@
 import { Review } from "./review.model";
 
-interface Genre {
+type Genre = {
     id: number,
     name: string
 }

@@ -1,4 +1,4 @@
-import { MovieModel } from "../models/movie.model";
+import { MovieModel } from "../../models/movie.model";
 
 export let moviesData: MovieModel[] = [
     {

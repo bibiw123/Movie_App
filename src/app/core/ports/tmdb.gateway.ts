@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { MovieModel } from "../models/movie.model";
-import { TvShowModel } from "../models/tv-show.model";
+import { TvShowModel } from "../models/series.model";
 
 /* 
     Dans le cadre de l'architecture port/adapter (clean architecture)
@@ -10,17 +10,17 @@ import { TvShowModel } from "../models/tv-show.model";
     |COMPONENT| =====>   |Gateway|  =====>  |TMDBService|                   
                       (abstractClass)       (Service Concret)
 
-                                               ADAPTER 2 
+                                              OU ADAPTER 2 
                                     =====>  |OtherService|                   
                                             (Service Concret)
                                             
-                                                ADAPTER 3 
+                                              OU ADAPTER 3 
                                     =====>  |OtherService|                   
                                             (Service Concret) 
 
 
 */
-export abstract class APIExternalMoviesGateway {
+export abstract class TMDBGateway {
 
     abstract movies$: Observable<MovieModel[]>;
     abstract tv$: Observable<TvShowModel[]>;

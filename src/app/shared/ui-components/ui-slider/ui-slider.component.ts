@@ -8,11 +8,11 @@ import { MovieModel } from '../../../core/models/movie.model';
 })
 export class SliderComponent {
 
-  @Input() items!:MovieModel[] | null
+  @Input() items!: MovieModel[] | null
   activeSlide: number = 0
   sliders = this.items
 
-  ngOnInit(){
+  ngOnInit() {
 
     console.log(this.items)
   }

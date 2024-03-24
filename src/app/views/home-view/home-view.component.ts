@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { MovieModel } from '../../core/models/movie.model';
-import { TvShowModel } from '../../core/models/tv-show.model';
-import { TMDBService } from '../../core/adapters/tmdb.service';
-import { APIExternalMoviesGateway } from '../../core/ports/api-external-movies.gateway';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
+import { TvShowModel } from '../../core/models/series.model';
+import { TMDBGateway } from '../../core/ports/tmdb.gateway';
 
 @Component({
   selector: 'app-home-view',
@@ -18,29 +15,27 @@ export class HomeViewComponent {
   pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(
-    //private _TMDBSvc: TMDBService
-    public TMDBSvc: APIExternalMoviesGateway,
-    private _sanitize: DomSanitizer
+    public TmdbGateway: TMDBGateway
   ) { }
 
   ngOnInit() {
     // recuperer les 5 premiers movies
-    this.TMDBSvc.getMoviesFromApi();
+    this.TmdbGateway.getMoviesFromApi();
     // récuperer les 5 premieres series
-    this.TMDBSvc.getTvShowFromApi();
+    this.TmdbGateway.getTvShowFromApi();
   }
 
   findNextMoviesAction(pageNumber?: number) {
     if (pageNumber) {
-      this.TMDBSvc.getNextMoviesFromApi(pageNumber)
+      this.TmdbGateway.getNextMoviesFromApi(pageNumber)
     }
     else {
-      this.TMDBSvc.getNextMoviesFromApi()
+      this.TmdbGateway.getNextMoviesFromApi()
     }
   }
 
   findPrevMoviesAction() {
-    this.TMDBSvc.getPrevMoviesFromApi()
+    this.TmdbGateway.getPrevMoviesFromApi()
   }
 
 }

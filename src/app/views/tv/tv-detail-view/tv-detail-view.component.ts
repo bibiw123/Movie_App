@@ -3,9 +3,9 @@ import { Observable, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TMDBService } from '../../../core/adapters/tmdb.service';
-import { TvShowModel } from '../../../core/models/tv-show.model';
+import { TvShowModel } from '../../../core/models/series.model';
 import { Location } from '@angular/common';
-import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movies.gateway';
+import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 
 @Component({
   selector: 'app-tv-detail-view',
@@ -16,15 +16,15 @@ export class TvDetailViewComponent {
   tvshow$!: Observable<TvShowModel>
   constructor(
     private _route: ActivatedRoute,
-    //private _TMDBSvc: TMDBService,
-    private _TMDBSvc: APIExternalMoviesGateway,
     private _sanitize: DomSanitizer,
-    public location: Location) { }
+    public location: Location,
+    private _TmdbGateway: TMDBGateway
+  ) { }
 
   ngOnInit() {
-    // 1 On récupere l'id dans l'URL
+    // 1 On récupere l'id de la sérue dans l'URL
     const tvShowId: string = this._route.snapshot.params['id'];
-    this.tvshow$ = this._TMDBSvc.getOneTvShowFromApi(tvShowId).pipe(
+    this.tvshow$ = this._TmdbGateway.getOneTvShowFromApi(tvShowId).pipe(
       tap(console.log)
     )
     // 2 dans la view (tvshow$ | async; as tvshow)

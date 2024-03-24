@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieModel } from '../../../core/models/movie.model';
 import { ActivatedRoute } from '@angular/router';
-import { TMDBService } from '../../../core/adapters/tmdb.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
-import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movies.gateway';
+import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
-
 
 
 @Component({
@@ -17,28 +15,22 @@ import { AuthGateway } from '../../../core/ports/auth.gateway';
 })
 export class MovieDetailViewComponent implements OnInit {
 
-  //movie!: MovieModel;
   movie$!: Observable<MovieModel>
 
   constructor(
     public location: Location,
     private _route: ActivatedRoute,
-    // private _TMDBSvc: TMDBService,
-    private _TMDBSvc: APIExternalMoviesGateway,
     private _sanitize: DomSanitizer,
+    private _TmdbGateway: TMDBGateway,
     public authGateway: AuthGateway
   ) { }
 
   ngOnInit() {
-    //1 On récupere l'id dans l'URL
+    // 1 On récupere l'id dans l'URL
     const movieId: string = this._route.snapshot.params['id'];
     // 2 On demande au service de nous donner le film correspondant
-    //   this._TMDBSvc.getMovieFromApi(movieId)
-    //   .subscribe(data => this.movie = data)
-
-    // OU via le pipe async dans la view (en remplacement du .subscribe précédent)
-    this.movie$ = this._TMDBSvc.getMovieFromApi(movieId)
-    // Pour afficher, on utilise @if(movie$ | async; as movie)
+    this.movie$ = this._TmdbGateway.getMovieFromApi(movieId)
+    // 3 Pour afficher @if(movie$ | async; as movie) dans la vue HTML
   }
 
   getFullVideoUrl(key: string): SafeResourceUrl {
@@ -51,25 +43,6 @@ export class MovieDetailViewComponent implements OnInit {
 
   addMovieToWatchlistAction(movie: MovieModel) {
     console.log(movie);
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  // 2 demander au service : faire une request TMDB_URL/movie/{id}
-  //TMDBService.getDetailMovie(id)
-  // Je recupere un objet MovieModel
-
-  // 3 dans le template movie-detail-.html
 
 }

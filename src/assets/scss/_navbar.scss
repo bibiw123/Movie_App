@@ -1,15 +1,22 @@
 @import '_variables.scss';
 
 .navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 10;
-    padding: 1rem 0;
+    padding: 0.3rem 0;
     display: flex;
+    background: #13111be7;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        width: auto;
+    }
 
     img {
-        width: 130px;
+        width: 110px;
     }
 
     div.navbar-content {
@@ -26,6 +33,7 @@
     ul {
         display: flex;
         list-style: none;
+        margin: 0;
 
         li {
             margin-right: 7px;

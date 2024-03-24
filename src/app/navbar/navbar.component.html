@@ -8,21 +8,10 @@
                     <img src="assets/logo11.png" alt="" />
                 </a>
                 <ul>
-                    <li>
-                        <!-- <i class="fa-solid fa-house"></i> -->
-                        <a routerLink="/" routerLinkActive='active'
-                            [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+                    <li><a routerLink="/" routerLinkActive='active' [routerLinkActiveOptions]="{exact:true}">Accueil</a>
                     </li>
-
-                    <li>
-                        <!-- <i class="fa-solid fa-film"></i> -->
-                        <a routerLink="/movies" routerLinkActive='active'>Films</a>
-                    </li>
-
-                    <li>
-                        <!-- <i class="fa-solid fa-tv"></i> -->
-                        <a routerLink="/tv" routerLinkActive='active'>Séries</a>
-                    </li>
+                    <li><a routerLink="/movies" routerLinkActive='active'>Films</a></li>
+                    <li><a routerLink="/tv" routerLinkActive='active'>Séries</a></li>
                     <li>
                         <i class="fa-solid fa-circle-plus"></i>
                         <a routerLink="/watchlist" routerLinkActive='active'>Ma liste</a>
@@ -40,9 +29,11 @@
                     @if((authGateway.isAuth$|async) && ((userGataway.user$|async)) ) {
                     @if(userGataway.user$|async;as user) {
                     <li>
-                        <!-- <button class="user" [matMenuTriggerFor]="menu">{{user.username}}</button> -->
-                        <img class="avatar" [matMenuTriggerFor]="menu"
-                            src="https://api.dicebear.com/8.x/adventurer/svg?seed=ange" alt="">
+                        <a class="user" [matMenuTriggerFor]="menu">
+                            <span>{{user.username | titlecase}}</span>
+                            <img class="avatar"
+                                [src]="'https://api.dicebear.com/8.x/adventurer/svg?seed='+user.username" alt="">
+                        </a>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item>Compte</button>
                             <button mat-menu-item>Préférences</button>
@@ -51,7 +42,6 @@
                     </li>
                     }
                     }
-
 
                     @else {
                     <li><a routerLink="/login" routerLinkActive='active'>Connexion</a></li>

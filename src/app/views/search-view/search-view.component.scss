@@ -1,6 +1,5 @@
-app-searchbar {
-    position: sticky;
-    top: 100px;
-    z-index: 9;
-    margin-bottom: 50px;
+section {
+    z-index: -1;
+    position: relative;
+    padding: 20px;
 }

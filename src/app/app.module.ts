@@ -31,9 +31,9 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
-import { APIExternalMoviesGateway as APIExternalMoviesGateway } from './core/ports/api-external-movies.gateway';
+import { TMDBGateway } from './core/ports/tmdb.gateway';
 import { TMDBService } from './core/adapters/tmdb.service';
-import { APIInMemoryService } from './core/adapters/apiin-memory.service';
+import { APIInMemoryService } from './core/adapters/tmdb-in-memory.service';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { AuthService } from './core/adapters/auth.service';
 import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.component';
@@ -76,28 +76,19 @@ import { UserService } from './core/adapters/user.service';
   ],
 
   providers: [
-    // Ici on indique à angular  APIAPIExternalMoviesGateway va instancier TMDBService
-    { provide: APIExternalMoviesGateway, useClass: TMDBService },
-    //{ provide: APIExternalMoviesGateway, useClass: APIInMemoryService },
+    // Configuration PATTERN PORT/ADAPTER (Clean Architcture)
+    { provide: TMDBGateway, useClass: TMDBService },
     { provide: AuthGateway, useClass: AuthService },
     { provide: UserGateway, useClass: UserService },
 
+    // Interceptor: TokenInterceptor - pour ajouter un token à la request
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    // Interceptor: ErrorInterceptor - pour traiter les erreurs HTTP (401, 403, 404, 400, 500)
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
-    // interceptor pour ajouter un token à la request
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-    // interceptor pour traiter les erreurs HTTP (401, 403, 404, 400, 500)
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
     provideAnimationsAsync()
-
   ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

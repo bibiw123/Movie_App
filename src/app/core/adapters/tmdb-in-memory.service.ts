@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { APIExternalMoviesGateway } from '../ports/api-external-movies.gateway';
+import { TMDBGateway } from '../ports/tmdb.gateway';
 import { MovieModel } from '../models/movie.model';
-import { Observable, map, of } from 'rxjs';
-import { TvShowModel } from '../models/tv-show.model';
-import { moviesData } from '../data/movies.data';
-import { tvShowsData } from '../data/tvshows.data';
+import { Observable, of } from 'rxjs';
+import { TvShowModel } from '../models/series.model';
+import { moviesData } from './data/movies.data';
+import { tvShowsData } from './data/series.data';
 import { SearchModel } from '../models/search.model';
-import { searchData } from '../data/search.data'
+import { searchData } from './data/search.data'
 
 @Injectable({
   providedIn: 'root'
 })
-export class APIInMemoryService implements APIExternalMoviesGateway {
+export class APIInMemoryService implements TMDBGateway {
 
   tv$!: Observable<TvShowModel[]>
   movies$!: Observable<MovieModel[]>;

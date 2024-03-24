@@ -1,96 +1,94 @@
-<!-- <a href="index.html">
-        <div class="logo">
-            <img src="assets/logo.png" alt="">
-        </div>
-    </a> -->
-<div class="form-box">
+<section>
 
-    <h2>Créer un compte</h2>
-    <form [formGroup]="registerForm" (submit)="onSubmitRegisterForm()">
+    <div class="form-box">
 
-        <div>
-            <label for="username">Votre pseudo</label>
-            <input type="text" type="text" formControlName="username" id="username">
-            <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-            @if (registerForm.controls['username'].hasError("required") && isSubmitted) {
-            <p class="error">Le champs est requis</p>
-            }
-            @if (registerForm.controls['username'].hasError("minlength") && isSubmitted) {
-            <p class="error">Minimum 3 caractères</p>
-            }
-            @if (registerForm.controls['username'].hasError("maxlength") && isSubmitted) {
-            <p class="error">Maximum 26 caractères</p>
-            }
-            @if (registerForm.controls['username'].hasError("pattern") && isSubmitted) {
-            <p class="error">Les chiffres ne sont pas acceptés</p>
-            }
+        <h2>Créer un compte</h2>
+        <form [formGroup]="registerForm" (submit)="onSubmitRegisterForm()">
 
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="text" id="email" formControlName="email" placeholder="angelique@gmail.com">
-            <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
-            @if (registerForm.controls['email'].hasError("required") && isSubmitted) {
-            <p class="error">Le champs est requis</p>
-            }
-            @if (registerForm.controls['email'].hasError("email") && isSubmitted) {
-            <p class="error">Veuillez indiquer un email valide</p>
-            }
-        </div>
+            <div>
+                <label for="username">Votre pseudo</label>
+                <input type="text" type="text" formControlName="username" id="username">
+                <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
+                @if (registerForm.controls['username'].hasError("required") && isSubmitted) {
+                <p class="error">Le champs est requis</p>
+                }
+                @if (registerForm.controls['username'].hasError("minlength") && isSubmitted) {
+                <p class="error">Minimum 3 caractères</p>
+                }
+                @if (registerForm.controls['username'].hasError("maxlength") && isSubmitted) {
+                <p class="error">Maximum 26 caractères</p>
+                }
+                @if (registerForm.controls['username'].hasError("pattern") && isSubmitted) {
+                <p class="error">Les chiffres ne sont pas acceptés</p>
+                }
 
-        <div>
-            <label for="pwd">Mot de passe</label>
-            <input type="password" formControlName="password" id="pwd">
-            @if (registerForm.controls['password'].hasError("required") && isSubmitted) {
-            <p class="error">Le champs est requis</p>
-            }
-            <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="text" id="email" formControlName="email" placeholder="angelique@gmail.com">
+                <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
+                @if (registerForm.controls['email'].hasError("required") && isSubmitted) {
+                <p class="error">Le champs est requis</p>
+                }
+                @if (registerForm.controls['email'].hasError("email") && isSubmitted) {
+                <p class="error">Veuillez indiquer un email valide</p>
+                }
+            </div>
 
-            <p class="error" *ngIf="registerForm.controls['password'].dirty">
-                <span>
-                    @if(registerForm.controls['password'].value.match('^(?=.*[A-Z])')){
-                    <i class="fa-solid fa-check"></i>
-                    }
-                    @else {<i class="fa-solid fa-xmark"></i>}
-                    Majuscule
-                </span>
+            <div>
+                <label for="pwd">Mot de passe</label>
+                <input type="password" formControlName="password" id="pwd">
+                @if (registerForm.controls['password'].hasError("required") && isSubmitted) {
+                <p class="error">Le champs est requis</p>
+                }
+                <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
 
-                <span>
-                    @if(registerForm.controls['password'].value.match('^(?=.*[a-z])')){
-                    <i class="fa-solid fa-check"></i>
-                    }
-                    @else {<i class="fa-solid fa-xmark"></i>}
-                    Minuscule
-                </span>
+                <p class="error" *ngIf="registerForm.controls['password'].dirty">
+                    <span>
+                        @if(registerForm.controls['password'].value.match('^(?=.*[A-Z])')){
+                        <i class="fa-solid fa-check"></i>
+                        }
+                        @else {<i class="fa-solid fa-xmark"></i>}
+                        Majuscule
+                    </span>
 
-                <span>
-                    @if(registerForm.controls['password'].value.match('(.*[0-9].*)')){
-                    <i class="fa-solid fa-check"></i>
-                    }
-                    @else {<i class="fa-solid fa-xmark"></i>}
-                    Nombre
-                </span>
+                    <span>
+                        @if(registerForm.controls['password'].value.match('^(?=.*[a-z])')){
+                        <i class="fa-solid fa-check"></i>
+                        }
+                        @else {<i class="fa-solid fa-xmark"></i>}
+                        Minuscule
+                    </span>
 
-                <span>
-                    @if(registerForm.controls['password'].value.match('(?=.*[!@#$%^&*])')){
-                    <i class="fa-solid fa-check"></i>
-                    }
-                    @else {<i class="fa-solid fa-xmark"></i>}
-                    Caractère spécial
-                </span>
+                    <span>
+                        @if(registerForm.controls['password'].value.match('(.*[0-9].*)')){
+                        <i class="fa-solid fa-check"></i>
+                        }
+                        @else {<i class="fa-solid fa-xmark"></i>}
+                        Nombre
+                    </span>
+
+                    <span>
+                        @if(registerForm.controls['password'].value.match('(?=.*[!@#$%^&*])')){
+                        <i class="fa-solid fa-check"></i>
+                        }
+                        @else {<i class="fa-solid fa-xmark"></i>}
+                        Caractère spécial
+                    </span>
+                </p>
+
+                @if (registerForm.controls['password'].hasError("minlength")) {
+                <p class="error">Minimum 8 caractères</p>
+                }
+            </div>
+
+            <button type="submit">Créer mon compte</button>
+
+            <p class="rappel">
+                Vous avez déjà un compte ?
+                <a routerLink="/login">Connectez-vous</a>
             </p>
 
-            @if (registerForm.controls['password'].hasError("minlength")) {
-            <p class="error">Minimum 8 caractères</p>
-            }
-        </div>
-
-        <button type="submit">Créer mon compte</button>
-
-        <p class="rappel">
-            Vous avez déjà un compte ?
-            <a routerLink="/login">Connectez-vous</a>
-        </p>
-
-    </form>
-</div>
+        </form>
+    </div>
+</section>

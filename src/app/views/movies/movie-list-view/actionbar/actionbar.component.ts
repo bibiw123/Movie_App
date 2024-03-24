@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { APIExternalMoviesGateway } from '../../../../core/ports/api-external-movies.gateway';
+import { TMDBGateway } from '../../../../core/ports/tmdb.gateway';
 
 @Component({
   selector: 'app-actionbar',
@@ -8,10 +8,10 @@ import { APIExternalMoviesGateway } from '../../../../core/ports/api-external-mo
 })
 export class ActionbarComponent {
 
-  constructor(private _TMDBSvc: APIExternalMoviesGateway) { }
+  constructor(private _TmdbGateway: TMDBGateway) { }
 
   nextMoviesAction() {
-    this._TMDBSvc.getNextMoviesFromApi();
+    this._TmdbGateway.getNextMoviesFromApi();
   }
 
 }

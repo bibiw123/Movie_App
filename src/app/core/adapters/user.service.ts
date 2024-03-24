@@ -5,9 +5,9 @@ import { SimpleUser, UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MovieModel } from '../models/movie.model';
-import { TvShowModel } from '../models/tv-show.model';
-import { moviesData } from '../data/movies.data';
-import { tvShowsData } from '../data/tvshows.data';
+import { TvShowModel } from '../models/series.model';
+import { moviesData } from './data/movies.data';
+import { tvShowsData } from './data/series.data';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,8 @@ export class UserService implements UserGateway {
 
   }
 
+
+
   /**
    * createUserModelAfterLogin
    *
@@ -41,21 +43,24 @@ export class UserService implements UserGateway {
    */
   createUserModelAfterLogin(user: SimpleUser): UserModel {
 
-    // let userWatchList$ = of(user).pipe(
-    //   switchMap((user) => {
-    //     return forkJoin([
-    //       this.fetchWatchlistMovies(),
-    //       this.fetchWatchlistSeries()
-    //     ]
-    //     );
-    //   })
-    // )
-    // userWatchList$.subscribe(response => {
-    //   console.log('WatchList movies', response[0]);
-    //   console.log('WatchList series', response[1]);
-    //   userLoggedIn = new UserModel(user, response[0], response[1]);
-    //   this._user$.next(userLoggedIn);
-    // })
+    let userWatchList$ = of(user).pipe(
+      switchMap((user) => {
+        return forkJoin([
+          this.fetchWatchlistMovies(),
+          this.fetchWatchlistSeries(),
+        ]
+        );
+      })
+    )
+    userWatchList$.subscribe(response => {
+      console.log('WatchList movies', response[0]);
+      console.log('WatchList series', response[1]);
+      userLoggedIn = new UserModel(user, response[0], response[1]);
+      this._user$.next(userLoggedIn);
+    })
+
+
+
     let userLoggedIn: UserModel = new UserModel(user, this.fakeMoviesWatchlist, this.fakeSeriesWatchlist);
     console.log(userLoggedIn)
     this._user$.next(userLoggedIn);
@@ -80,5 +85,9 @@ export class UserService implements UserGateway {
   removeMovieToWatchlist(movieId: number): Observable<any> {
     const endpoint = '/movies';
     return this.http.delete(`${this.apiurl}/${endpoint}/${movieId}`);
+  }
+
+  resetUserData() {
+    this._user$.next({})
   }
 }

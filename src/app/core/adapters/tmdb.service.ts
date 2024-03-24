@@ -1,44 +1,46 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, filter, map, mapTo, tap } from 'rxjs';
-import { MovieModel } from '../models/movie.model';
-import { TvShowModel } from '../models/tv-show.model';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { MovieModel } from '../models/movie.model';
+import { TvShowModel } from '../models/series.model';
 import { SearchModel } from '../models/search.model';
-import { APIExternalMoviesGateway } from '../ports/api-external-movies.gateway';
+import { TMDBGateway } from '../ports/tmdb.gateway';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class TMDBService implements APIExternalMoviesGateway {
+export class TMDBService implements TMDBGateway {
 
   moviesPageNumber = 1;
 
   private TMDB_URL: string = environment.TMDB_API_URL;
 
-  /* on crée un BehaviorSubject qui sert de store pour nos MovieModel */
+  /* STORE movies : BehaviorSubject _movies$ */
   private _movies$ = new BehaviorSubject<MovieModel[]>([]);
   public movies$: Observable<MovieModel[]> = this._movies$.asObservable();
 
+  /* STORE series : BehaviorSubject _tv$ */
   private _tv$ = new BehaviorSubject<TvShowModel[]>([]);
   public tv$ = this._tv$.asObservable();
 
-  private searchPageNumber = 1;
-  private searchResults$$ = new BehaviorSubject<SearchModel[]>([]);
-  public searchResults$ = this.searchResults$$.asObservable();
+  /* STORE searchResults : BehaviorSubject _searchResults */
+  private _searchResults$ = new BehaviorSubject<SearchModel[]>([]);
+  public searchResults$ = this._searchResults$.asObservable();
 
 
   constructor(private http: HttpClient) { }
   /*
-    Observable.pipe() return un Observable
+    Comment MAPPER les réponses API 
+    dans notre modèle de données Frontend ?
+    
+    Observable.pipe( operator ) 
+    > accepte en parametres un/des opérateur(s) de transformation
+      ex: map(), filter(), etc....
+    > return un Observable
 
-    .pipe( ) accepte en parametres des opérateurs de transformation :
-    map(), filter(), etc....
-
-    On utilise pipe() pour donner à nos components un Observable qui contient
-    des données formatées comme on le décide
-
-    Ainsi on délégue totalement au service la responsabilité de mapper les
+    Ainsi on délégue au service la responsabilité de mapper les
     reponses API en modeles d'objets côté front-end
   */
 
@@ -48,33 +50,23 @@ export class TMDBService implements APIExternalMoviesGateway {
    * @returns @Observable<MovieModel>
    */
   getMoviesFromApi(): Observable<MovieModel[]> {
-    if (this._movies$.getValue().length > 0) {
-      return this._movies$.asObservable();
-    }
-    else {
+    if (this._movies$.getValue().length === 0) {
       const ENDPOINT = `/discover/movie`;
       let options = {
         params: { language: 'fr' }
       }
-
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
-          map((response: any) =>
-            response.results
-              .slice(0, 6)
-              .map(
-                (movieFromApi: any) => new MovieModel(movieFromApi)
-              )
-          ),
-
-
+          map((response: any) => response.results
+            .slice(0, 12)
+            .map(
+              (movieFromApi: any) => new MovieModel(movieFromApi)
+            )
+          )
         )
-        //fairela request HTTP
         .subscribe((response: MovieModel[]) => this._movies$.next(response))
-
-      return this._movies$.asObservable()
     }
-
+    return this._movies$.asObservable();
   }
 
 

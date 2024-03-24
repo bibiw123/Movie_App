@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, switchMap } from 'rxjs';
-import { TMDBService } from '../../../core/adapters/tmdb.service';
 import { SearchModel } from '../../../core/models/search.model';
-import { APIExternalMoviesGateway } from '../../../core/ports/api-external-movies.gateway';
+import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +16,7 @@ export class SearchbarComponent {
   results!: SearchModel[];
   @Output() onResultsEvent = new EventEmitter()
 
-  constructor(private _TMDBSvc: APIExternalMoviesGateway, private _router: Router) { }
+  constructor(private _TmdbGateway: TMDBGateway, private _router: Router) { }
 
   ngOnInit() {
     // 1 traiter la saisie du user
@@ -29,7 +28,7 @@ export class SearchbarComponent {
     // 2 request
     search$
       .pipe(
-        switchMap(data => this._TMDBSvc.search(data))
+        switchMap(data => this._TmdbGateway.search(data))
       )
       .subscribe((data: SearchModel[]) => {
         console.log(data)

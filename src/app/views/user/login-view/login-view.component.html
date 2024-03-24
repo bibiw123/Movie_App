@@ -1,32 +1,29 @@
-<!-- <a href="index.html">
-        <div class="logo">
-            <img src="assets/logo.png" alt="">
-        </div>
-    </a> -->
-<div class="form-box">
+<section>
+    <div class="form-box">
 
-    <h2>Connexion</h2>
-    <form [formGroup]="loginForm" (submit)="onSubmitLoginForm()">
+        <h2>Connexion</h2>
+        <form [formGroup]="loginForm" (submit)="onSubmitLoginForm()">
 
-        <div>
-            <label>Email</label>
-            <input type="text" type="text" formControlName="email" placeholder="hello@gmail.com">
-            <!-- paragraphe erreur -->
-            @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
-            <p class="error">Veuillez indiquer un email valide</p>
-            }
-        </div>
+            <div>
+                <label>Email</label>
+                <input type="text" type="text" formControlName="email" placeholder="hello@gmail.com">
+                <!-- paragraphe erreur -->
+                @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
+                <p class="error">Veuillez indiquer un email valide</p>
+                }
+            </div>
 
-        <div>
-            <label>Mot de passe</label>
-            <input type="password" formControlName="password">
-        </div>
+            <div>
+                <label>Mot de passe</label>
+                <input type="password" formControlName="password">
+            </div>
 
-        <button type="submit">Connexion</button>
+            <button type="submit">Connexion</button>
 
-        <p class="rappel">
-            Vous n'avez pas de compte ?
-            <a routerLink="/register">Créer un compte</a>
-        </p>
-    </form>
-</div>
+            <p class="rappel">
+                Vous n'avez pas de compte ?
+                <a routerLink="/register">Créer un compte</a>
+            </p>
+        </form>
+    </div>
+</section>

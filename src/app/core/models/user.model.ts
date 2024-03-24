@@ -1,5 +1,5 @@
 import { MovieModel } from "./movie.model";
-import { TvShowModel } from "./tv-show.model";
+import { TvShowModel } from "./series.model";
 
 // type WatchList
 export class WatchList {
