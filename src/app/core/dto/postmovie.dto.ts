@@ -32,7 +32,7 @@ export class MovieDTOMapper {
         }
     }
 
-    static mapToMovieModel(movie: PostMovieDTO): MovieModel {
+    static mapToMovieModel(movie: MovieResponseDTO): MovieModel {
         return {
             tmdb_id: movie.id_tmdb,
             titre: movie.title,

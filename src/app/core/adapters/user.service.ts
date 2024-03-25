@@ -40,7 +40,8 @@ export class UserService implements UserGateway {
       switchMap((user) => {
         return forkJoin([
           this.fetchWatchlistMovies(),
-          this.fetchWatchlistSeries()
+          //this.fetchWatchlistSeries()
+          of([])
         ]);
       })
     );
@@ -55,10 +56,18 @@ export class UserService implements UserGateway {
 
 
   fetchWatchlistMovies(): Observable<any> {
-    return this.http.get('/movies')
+    const endpoint = '/movies'
+    return this.http.get(this.apiurl + endpoint)
+      .pipe(
+        map((movies: any) =>
+          movies.map((movie: MovieResponseDTO) => MovieDTOMapper.mapToMovieModel(movie))
+        )
+      )
   }
+
   fetchWatchlistSeries(): Observable<any> {
-    return this.http.get('/series')
+    const endpoint = '/series'
+    return this.http.get(this.apiurl + endpoint)
   }
 
 
