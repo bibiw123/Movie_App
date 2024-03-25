@@ -14,7 +14,11 @@
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
-            <button (click)="addOrRemoveMovieToWatchListAction(movie)">Ajouter à ma liste</button>
+            <button class="addtowatchlist" (click)="addOrRemoveMovieToWatchListAction(movie)">
+                Ajouter à ma liste
+                <i class="fa-regular fa-heart" [class.addtowatchlist-true]="userGateway.isMovieInWatchlist(movie)"
+                    [class.fa-solid]="userGateway.isMovieInWatchlist(movie)"></i>
+            </button>
             }
             @if(movie.video) {
             <div class="video-container">

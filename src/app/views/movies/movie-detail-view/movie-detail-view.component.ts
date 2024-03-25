@@ -24,7 +24,7 @@ export class MovieDetailViewComponent implements OnInit {
     private _sanitize: DomSanitizer,
     private _TmdbGateway: TMDBGateway,
     public authGateway: AuthGateway,
-    private _userGateway: UserGateway
+    public userGateway: UserGateway
   ) { }
 
   ngOnInit() {
@@ -44,8 +44,8 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   addOrRemoveMovieToWatchListAction(movie: MovieModel) {
-    if (this._userGateway.isMovieInWatchlist(movie) == false) {
-      this._userGateway.postMovie(movie)
+    if (this.userGateway.isMovieInWatchlist(movie) == false) {
+      this.userGateway.postMovie(movie)
     }
     else {
       //this._userGateway.deleteMovie(movie.id)

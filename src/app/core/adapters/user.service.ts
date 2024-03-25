@@ -50,6 +50,7 @@ export class UserService implements UserGateway {
         map(response => new UserModel(user, response[0], response[1]))
       )
       .subscribe((userLoggedIn: UserModel) => {
+        console.log('user after login:', userLoggedIn)
         this._user$.next(userLoggedIn);
       })
   }
