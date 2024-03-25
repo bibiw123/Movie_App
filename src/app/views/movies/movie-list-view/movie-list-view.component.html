@@ -4,9 +4,9 @@
         <ui-dropdown (OnSelectItemEvent)="selectGenre($event)" [items]="genres"></ui-dropdown>
         <div class="row">
 
-            @for (itemMovie of movies$ | async ; track itemMovie.id) {
+            @for (itemMovie of movies$ | async ; track itemMovie.tmdb_id) {
             <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
-                <ui-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></ui-card>
+                <ui-card [routerLink]="['/movies', itemMovie.tmdb_id]" [item]="itemMovie"></ui-card>
             </div>
             }
 

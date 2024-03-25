@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { MovieModel } from '../models/movie.model';
+import { MovieModel, MovieModelMapper } from '../models/movie.model';
 import { TvShowModel } from '../models/series.model';
 import { SearchModel } from '../models/search.model';
 import { TMDBGateway } from '../ports/tmdb.gateway';
@@ -60,7 +60,7 @@ export class TMDBService implements TMDBGateway {
           map((response: any) => response.results
             .slice(0, 12)
             .map(
-              (movieFromApi: any) => new MovieModel(movieFromApi)
+              (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
             )
           )
         )
@@ -80,7 +80,7 @@ export class TMDBService implements TMDBGateway {
       .pipe(
         map((response: any) =>
           response.results.map(
-            (movieFromApi: any) => new MovieModel(movieFromApi)
+            (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
           )
         )
       )
@@ -110,7 +110,7 @@ export class TMDBService implements TMDBGateway {
       .pipe(
         map((response: any) =>
           response.results.map(
-            (movieFromApi: any) => new MovieModel(movieFromApi)
+            (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
           )
         )
       )
@@ -195,7 +195,7 @@ export class TMDBService implements TMDBGateway {
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
-        map(response => new MovieModel(response))
+        map(response => MovieModelMapper.mapFromTmdb(response))
       );
   }
 

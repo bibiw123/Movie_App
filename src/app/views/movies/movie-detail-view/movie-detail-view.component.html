@@ -11,11 +11,10 @@
     </div>
 
     <div class="row">
-
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
-            <button (click)="addMovieToWatchListAction(movie)">Ajouter à ma liste</button>
+            <button (click)="addOrRemoveMovieToWatchListAction(movie)">Ajouter à ma liste</button>
             }
             @if(movie.video) {
             <div class="video-container">

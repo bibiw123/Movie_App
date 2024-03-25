@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserGateway } from '../ports/user.gateway';
-import { BehaviorSubject, Observable, Subject, forkJoin, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, forkJoin, map, of, switchMap } from 'rxjs';
 import { SimpleUser, UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -8,7 +8,7 @@ import { MovieModel } from '../models/movie.model';
 import { TvShowModel } from '../models/series.model';
 import { moviesData } from '../data/movies.data';
 import { tvShowsData } from '../data/series.data';
-import { MovieDTOMapper, PostMovieDTO } from '../dto/postmovie.dto';
+import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 
 
 
@@ -18,9 +18,6 @@ import { MovieDTOMapper, PostMovieDTO } from '../dto/postmovie.dto';
 })
 export class UserService implements UserGateway {
 
-  fakeMoviesWatchlist: MovieModel[] = moviesData;
-  fakeSeriesWatchlist: TvShowModel[] = tvShowsData;
-
   constructor(private http: HttpClient) { }
 
   apiurl = environment.API_URL;
@@ -29,19 +26,43 @@ export class UserService implements UserGateway {
   private _user$: BehaviorSubject<Partial<UserModel>> = new BehaviorSubject({})
   public user$: Observable<any> = this._user$.asObservable();
 
-  user: UserModel = {
-    username: 'Angelique',
-    email: 'ange@gg.co',
-    watchList: {
-      movies: [],
-      series: []
-    }
+  /**
+   * createUserModelAfterLogin
+   * Role: 
+   * - construire un user:UserModel {username, email, watchList}
+   * - pousser cette donnée avec this._user$.next(user)
+   * 
+   * Tous les compoments peuvent alors consommer user$ | async
+   * afin d'afficher les données utilisateur dans les vues HTML
+   */
+  createUserModelAfterLogin(user: SimpleUser): void {
+    const userWatchList$ = of(user).pipe(
+      switchMap((user) => {
+        return forkJoin([
+          this.fetchWatchlistMovies(),
+          this.fetchWatchlistSeries()
+        ]);
+      })
+    );
+    userWatchList$
+      .pipe(
+        map(response => new UserModel(user, response[0], response[1]))
+      )
+      .subscribe((userLoggedIn: UserModel) => {
+        this._user$.next(userLoggedIn);
+      })
   }
 
 
   fetchWatchlistMovies(): Observable<any> {
     return this.http.get('/movies')
   }
+  fetchWatchlistSeries(): Observable<any> {
+    return this.http.get('/series')
+  }
+
+
+
 
   postMovie(movie: MovieModel): void {
     const endpoint = '/movies';
@@ -59,9 +80,13 @@ export class UserService implements UserGateway {
     ) // fin du subscribe
   }
 
-  deleteMovie(movieId: number): Observable<any> {
+  deleteMovie(movieId: number): void {
     const endpoint = '/movies';
-    return this.http.delete(`${this.apiurl}/${endpoint}/${movieId}`);
+    this.http.delete(`${this.apiurl}/${endpoint}/${movieId}`)
+    // 1 faire la request HTTP, puis recuperer la response (movieid)
+    // 2 delete le film de user.watchlist.movies (avec filter)
+    // https://herewecode.io/fr/blog/supprimer-element-tableau-javascript/#:~:text=Si%20on%20souhaite%20supprimer%20le,rapidement%20avec%20la%20m%C3%A9thode%20shift.&text=On%20peut%20aussi%20utiliser%20la,d'une%20cha%C3%AEne%20de%20caract%C3%A8res.
+    // 3 Déclencher le changement dans le store ._user$
   }
 
 
@@ -71,49 +96,21 @@ export class UserService implements UserGateway {
   }
 
 
-
   /**
-   * createUserModelAfterLogin
-   *
-   * Role: 
-   * - construire un user:UserModel {username, email, watchList}
-   * - pousser cette donnée avec this._user$.next(user)
-   * 
-   * Tous les compoments peuvent alors consommer user$
-   * afin d'afficher les données utilisateur dans les vues HTML
+   * méthode utilitaire
+   * isMovieInWatchlist
+   * rôle: permet aux components de vérifier 
+   *       si un movie est dans la watchlist du user
+   * @param movie 
+   * @returns boolean 
    */
-  createUserModelAfterLogin(user: SimpleUser): UserModel {
-
-    let userWatchList$ = of(user).pipe(
-      switchMap((user) => {
-        return forkJoin([
-          this.fetchWatchlistMovies(),
-          this.fetchWatchlistSeries(),
-        ]
-        );
-      })
-    )
-    userWatchList$.subscribe(response => {
-      console.log('WatchList movies', response[0]);
-      console.log('WatchList series', response[1]);
-      userLoggedIn = new UserModel(user, response[0], response[1]);
-      this._user$.next(userLoggedIn);
-    })
-
-
-
-    let userLoggedIn: UserModel = new UserModel(user, this.fakeMoviesWatchlist, this.fakeSeriesWatchlist);
-    console.log(userLoggedIn)
-    this._user$.next(userLoggedIn);
-    console.log(this.user$)
-    return userLoggedIn
-  }
-
-
-
-
-  fetchWatchlistSeries(): Observable<any> {
-    return this.http.get('/series')
+  isMovieInWatchlist(movie: MovieModel): boolean {
+    let user = this._user$.getValue();
+    if (user?.watchList?.movies) {
+      return user.watchList?.movies.some(
+        watchlistMovieItem => watchlistMovieItem.tmdb_id === movie.tmdb_id)
+    }
+    return false;
   }
 
 
@@ -122,3 +119,4 @@ export class UserService implements UserGateway {
     this._user$.next({})
   }
 }
+

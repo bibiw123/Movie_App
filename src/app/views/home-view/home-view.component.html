@@ -7,9 +7,9 @@
         <h2 class="label">Par ici les nouveautés films</h2>
         <div class="row">
 
-            @for (itemMovie of (TmdbGateway.movies$ | async); track itemMovie.id) {
+            @for (itemMovie of (TmdbGateway.movies$ | async); track itemMovie.tmdb_id) {
             <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-lg-4 col-xl-2 g-3">
-                <ui-card [routerLink]="['/movies', itemMovie.id]" [item]="itemMovie"></ui-card>
+                <ui-card [routerLink]="['/movies', itemMovie.tmdb_id]" [item]="itemMovie"></ui-card>
             </div>
             }
 

@@ -1,16 +1,20 @@
 import { Observable } from "rxjs";
 import { SimpleUser, UserModel } from "../models/user.model";
+import { MovieModel } from "../models/movie.model";
+import { MovieResponseDTO } from "../dto/postmovie.dto";
 
 export abstract class UserGateway {
 
   abstract user$: Observable<any>
   abstract setUser$(user: UserModel | null): void
-  abstract createUserModelAfterLogin(user: SimpleUser): UserModel
+  abstract createUserModelAfterLogin(user: SimpleUser): void
 
-  abstract fetchWatchlistMovies(): Observable<any>
+  abstract fetchWatchlistMovies(): Observable<MovieResponseDTO>
   abstract fetchWatchlistSeries(): Observable<any>
 
   abstract postMovie(movie: any): void;
-  abstract deleteMovie(movie: any): Observable<any>;
+  abstract deleteMovie(movie: any): void;
+
+  abstract isMovieInWatchlist(movie: MovieModel): boolean
 
 }

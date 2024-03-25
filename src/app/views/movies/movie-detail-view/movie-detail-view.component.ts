@@ -43,11 +43,14 @@ export class MovieDetailViewComponent implements OnInit {
     return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
   }
 
-  addMovieToWatchListAction(movie: MovieModel) {
-    console.log(movie);
-    this._userGateway.postMovie(movie)
+  addOrRemoveMovieToWatchListAction(movie: MovieModel) {
+    if (this._userGateway.isMovieInWatchlist(movie) == false) {
+      this._userGateway.postMovie(movie)
+    }
+    else {
+      //this._userGateway.deleteMovie(movie.id)
+    }
   }
-
 
 
 }

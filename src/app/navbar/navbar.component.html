@@ -26,8 +26,8 @@
             <!-- navbar part 2: inscription + connexion-->
             <div>
                 <ul>
-                    @if((authGateway.isAuth$|async) && ((userGataway.user$|async)) ) {
-                    @if(userGataway.user$|async;as user) {
+                    @if((authGateway.isAuth$|async) && ((userGataway.user$ | async)) ) {
+                    @if(userGataway.user$|async; as user) {
                     <li>
                         <a class="user" [matMenuTriggerFor]="menu">
                             <span>{{user.username | titlecase}}</span>
