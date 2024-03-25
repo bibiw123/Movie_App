@@ -14,6 +14,7 @@
 <!-- PARTIE 1: watchlist movies-->
 @if(userService.user$ | async; as user) {
 <section>
+    <pre>{{user | json}}</pre>
     <div class="container">
         <h2 class="label">Ma liste de films</h2>
         <div class="row">
