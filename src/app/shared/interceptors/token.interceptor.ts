@@ -16,6 +16,8 @@ export class TokenInterceptor implements HttpInterceptor {
   private apiAuthEndpoints: Endpoint[] = [
     { endpoint: '/watchlist', method: 'ALL' },
     { endpoint: '/reviews', method: 'POST' },
+    { endpoint: '/movies', method: 'POST' },
+    { endpoint: '/series', method: 'POST' },
     // add other...
   ];
   TMDB_URL = environment.TMDB_API_URL;
