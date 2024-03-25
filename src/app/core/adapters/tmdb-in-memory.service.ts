@@ -3,21 +3,21 @@ import { TMDBGateway } from '../ports/tmdb.gateway';
 import { MovieModel } from '../models/movie.model';
 import { Observable, of } from 'rxjs';
 import { TvShowModel } from '../models/series.model';
-import { moviesData } from './data/movies.data';
-import { tvShowsData } from './data/series.data';
 import { SearchModel } from '../models/search.model';
-import { searchData } from './data/search.data'
+import { moviesData } from '../data/movies.data';
+import { tvShowsData } from '../data/series.data';
+import { searchData } from '../data/search.data';
 
 @Injectable({
   providedIn: 'root'
 })
-export class APIInMemoryService implements TMDBGateway {
+export class TMDBInMemoryService implements TMDBGateway {
 
   tv$!: Observable<TvShowModel[]>
   movies$!: Observable<MovieModel[]>;
   movies: MovieModel[] = moviesData;
   tvShows: TvShowModel[] = tvShowsData;
-  searchData: SearchModel[] = searchData;
+  searchData: SearchModel[] = searchData
 
   getMoviesFromApi(): Observable<MovieModel[]> {
     return of(this.movies);

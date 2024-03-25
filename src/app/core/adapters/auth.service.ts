@@ -19,6 +19,7 @@ export class AuthService implements AuthGateway {
     private alert: AlertService
   ) { }
 
+  /* STORE isAuth : BehaviorSubject _isAuth$ */
   private _isAuth$ = new BehaviorSubject<boolean>(false);
   public isAuth$: Observable<boolean> = this._isAuth$.asObservable()
 
@@ -29,14 +30,14 @@ export class AuthService implements AuthGateway {
 
   login(user: Credentials): Observable<any> {
     const endpoint = "/login";
-    // return this.http.post(this.apiurl + endpoint, user)
-    return of({
-      token: "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTExMzQyOTAsImV4cCI6MTcxMTc2MDEwNywic3ViIjoiZnJlZG9AZ21haWwuY29tIiwiZW1haWwiOiJmcmVkb0BnbWFpbC5jb20ifQ.lKjV5_MbQGD7XBEVkeeAoTSQZQmx2fjMlECg5QA6QoFo2OeJ_CnvOc9FY09fm-3k",
-      user: {
-        username: "fred",
-        email: "fred@gmail.com"
-      }
-    })
+    // return of({
+    //   token: "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTExMzQyOTAsImV4cCI6MTcxMTc2MDEwNywic3ViIjoiZnJlZG9AZ21haWwuY29tIiwiZW1haWwiOiJmcmVkb0BnbWFpbC5jb20ifQ.lKjV5_MbQGD7XBEVkeeAoTSQZQmx2fjMlECg5QA6QoFo2OeJ_CnvOc9FY09fm-3k",
+    //   user: {
+    //     username: "fred",
+    //     email: "fred@gmail.com"
+    //   }
+    // })
+    return this.http.post(this.apiurl + endpoint, user)
       .pipe(
         tap((response: any) => {
           if (response.token && response.token.length) {

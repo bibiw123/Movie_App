@@ -33,12 +33,12 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { TMDBGateway } from './core/ports/tmdb.gateway';
 import { TMDBService } from './core/adapters/tmdb.service';
-import { APIInMemoryService } from './core/adapters/tmdb-in-memory.service';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { AuthService } from './core/adapters/auth.service';
 import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.component';
 import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
+import { TMDBInMemoryService } from './core/adapters/tmdb-in-memory.service';
 
 
 @NgModule({

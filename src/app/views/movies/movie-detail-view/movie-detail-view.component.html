@@ -15,7 +15,7 @@
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
-            <button (click)="addMovieToWatchlistAction(movie)">Ajouter à ma liste</button>
+            <button (click)="addMovieToWatchListAction(movie)">Ajouter à ma liste</button>
             }
             @if(movie.video) {
             <div class="video-container">
@@ -33,6 +33,7 @@
 
         <!-- BLOC DROITE: TEXTES-->
         <div class="col-12 col-lg-6">
+
             <p>
                 <span><i class="fa-solid fa-circle"></i>Sortie {{movie.date | date:'MM-yyyy'}}</span>
                 <span><i class="fa-solid fa-circle"></i>Durée {{movie.duration | printduration}}</span>

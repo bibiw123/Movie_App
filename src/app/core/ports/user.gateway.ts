@@ -10,7 +10,7 @@ export abstract class UserGateway {
   abstract fetchWatchlistMovies(): Observable<any>
   abstract fetchWatchlistSeries(): Observable<any>
 
-  abstract addMovieToWatchlist(movie: any): Observable<any>;
-  abstract removeMovieToWatchlist(movie: any): Observable<any>;
+  abstract postMovie(movie: any): void;
+  abstract deleteMovie(movie: any): Observable<any>;
 
 }

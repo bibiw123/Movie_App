@@ -1,10 +1,6 @@
+import { GenreModel } from "./genre.model";
 import { Review } from "./review.model";
 
-
-interface Genre {
-    id: number,
-    name: string
-}
 
 export class MovieModel {
     id: number;
@@ -14,7 +10,7 @@ export class MovieModel {
     image_landscape: string;
     image_portrait: string;
     score: number;
-    genres: Genre[];
+    genres: GenreModel[];
     date: Date;
     hasVideo: boolean;
     video?: string | undefined;

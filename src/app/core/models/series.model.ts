@@ -1,9 +1,6 @@
+import { GenreModel } from "./genre.model";
 import { Review } from "./review.model";
 
-type Genre = {
-    id: number,
-    name: string
-}
 
 export class TvShowModel {
     id: number;
@@ -13,7 +10,7 @@ export class TvShowModel {
     image_landscape: string;
     image_portrait: string;
     score: number;
-    genres: Genre[];
+    genres: GenreModel[];
     date: Date;
     video: any[];
     reviews: Review[];

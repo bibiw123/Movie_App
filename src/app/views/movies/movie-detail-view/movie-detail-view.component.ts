@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
+import { UserGateway } from '../../../core/ports/user.gateway';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class MovieDetailViewComponent implements OnInit {
     private _route: ActivatedRoute,
     private _sanitize: DomSanitizer,
     private _TmdbGateway: TMDBGateway,
-    public authGateway: AuthGateway
+    public authGateway: AuthGateway,
+    private _userGateway: UserGateway
   ) { }
 
   ngOnInit() {
@@ -41,8 +43,11 @@ export class MovieDetailViewComponent implements OnInit {
     return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
   }
 
-  addMovieToWatchlistAction(movie: MovieModel) {
+  addMovieToWatchListAction(movie: MovieModel) {
     console.log(movie);
+    this._userGateway.postMovie(movie)
   }
+
+
 
 }
