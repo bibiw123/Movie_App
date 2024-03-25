@@ -8,7 +8,9 @@ import { MovieModel } from '../models/movie.model';
 import { TvShowModel } from '../models/series.model';
 import { moviesData } from '../data/movies.data';
 import { tvShowsData } from '../data/series.data';
-import { MovieDTOMapper, PostMovieDTO } from '../dto/postMovie.dto';
+import { MovieDTOMapper, PostMovieDTO } from '../dto/postmovie.dto';
+
+
 
 
 @Injectable({
