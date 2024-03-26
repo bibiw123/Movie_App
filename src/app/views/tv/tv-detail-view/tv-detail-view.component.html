@@ -1,4 +1,4 @@
-@if(tvshow$ | async; as serie) {
+@if(serie) {
 
 <div class="container">
 
@@ -10,7 +10,7 @@
         <h1>{{serie.titre}}</h1>
     </div>
 
-    <div class="row gy-4">
+    <section class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
 
@@ -70,6 +70,28 @@
             <h2>Avis</h2>
         </div>
 
-    </div>
+    </section>
+
+
+    <!-- Details Saison & épisodes -->
+    <section>
+        <!-- dropdown season -->
+        <mat-form-field>
+            <mat-label>Saison</mat-label>
+            <mat-select [formControl]="selectSeasonField">
+                @for (season of serie.seasons; track season.id) {
+                <mat-option [value]="season.season_number">{{season.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <div class="row">
+
+
+        </div>
+    </section>
+
+
+
+
 </div>
 }

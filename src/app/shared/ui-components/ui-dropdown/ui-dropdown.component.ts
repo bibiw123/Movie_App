@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Genre } from '../../data/genres.data';
+import { SeasonModel } from '../../../core/models/series.model';
 
 @Component({
   selector: 'ui-dropdown',
@@ -11,7 +12,7 @@ export class DropdownComponent {
   @Output() OnSelectItemEvent = new EventEmitter<Genre>();
 
   isMenuOpened: boolean = false;
-  selectedGenre!: Genre | undefined
+  selectedGenre!: Genre | undefined | SeasonModel;
 
   openCloseMenu() {
     this.isMenuOpened = !this.isMenuOpened;

@@ -177,6 +177,28 @@ export class TMDBService implements TMDBGateway {
       )
   }
 
+  /**
+   * API TMBD
+   * tv/{series_id}/season/{season_number}
+   * @param serieId 
+   * @param seasonNumber 
+   */
+  getEpisodesFromApi(serieId: number, seasonNumber: number): any {
+    const ENDPOINT = `/tv/${serieId}/season/${seasonNumber}`;
+    let options = {
+      params: {
+        language: 'fr',
+        append_to_response: 'videos'
+      }
+    }
+    this.http.get(this.TMDB_URL + ENDPOINT, options)
+      //.pipe()
+      .subscribe((response: any) => {
+        console.log(response)
+      })
+
+  }
+
 
 
   /**

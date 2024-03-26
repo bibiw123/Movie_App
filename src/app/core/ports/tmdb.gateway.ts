@@ -32,6 +32,7 @@ export abstract class TMDBGateway {
     abstract getTvShowFromApi(): Observable<TvShowModel[]>;
     abstract getNextTvShowFromApi(): Observable<TvShowModel[]>;
     abstract getOneTvShowFromApi(id: string): Observable<TvShowModel>;
+    abstract getEpisodesFromApi(serieId: number, seasonNumber: number): any;
     // search
     abstract search(userSearchText: string): Observable<any>
 

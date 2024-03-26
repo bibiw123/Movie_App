@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { UserGateway } from '../../../core/ports/user.gateway';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tv-detail-view',
@@ -15,7 +16,10 @@ import { UserGateway } from '../../../core/ports/user.gateway';
   styleUrl: './tv-detail-view.component.scss'
 })
 export class TvDetailViewComponent {
-  tvshow$!: Observable<TvShowModel>
+  serie!: TvShowModel;
+  selectSeasonField: FormControl = new FormControl();
+
+
   constructor(
     private _route: ActivatedRoute,
     private _sanitize: DomSanitizer,
@@ -26,12 +30,18 @@ export class TvDetailViewComponent {
   ) { }
 
   ngOnInit() {
-    // 1 On récupere l'id de la sérue dans l'URL
+    // 1 On récupere l'id de la série dans l'URL
     const tvShowId: string = this._route.snapshot.params['id'];
-    this.tvshow$ = this._TmdbGateway.getOneTvShowFromApi(tvShowId).pipe(
-      tap(console.log)
-    )
-    // 2 dans la view (tvshow$ | async; as tvshow)
+    this._TmdbGateway.getOneTvShowFromApi(tvShowId).subscribe((tvshow: TvShowModel) => {
+      this.serie = tvshow;
+
+    });
+
+    this.selectSeasonField.valueChanges.subscribe(value => {
+      console.log(value);
+      this._TmdbGateway.getEpisodesFromApi(this.serie.id, value)
+    });
+
   }
 
   getFullVideoUrl(key: string): SafeResourceUrl {

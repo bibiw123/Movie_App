@@ -1,6 +1,19 @@
 import { GenreModel } from "./genre.model";
 import { Review } from "./review.model";
 
+export type EpisodeModel = {
+
+}
+
+export type SeasonModel = {
+    id: number
+    air_date: Date
+    episode_count: number
+    name: string;
+    season_number: number;
+    episodes: EpisodeModel[]
+}
+
 
 export class TvShowModel {
     id: number;
@@ -14,6 +27,7 @@ export class TvShowModel {
     date: Date;
     video: any[];
     reviews: Review[];
+    seasons: SeasonModel[];
     constructor(tv: any) {
         this.id = tv.id;
         this.titre = tv.name;
@@ -26,5 +40,6 @@ export class TvShowModel {
         this.date = tv.first_air_date;
         this.video = tv.videos?.results.length > 0 ? tv.videos.results : undefined;
         this.reviews = []
+        this.seasons = tv.seasons ? tv.seasons : [];
     }
 }
