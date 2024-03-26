@@ -1,0 +1,31 @@
+.matselect-custom.mat-mdc-select-panel {
+    background: rgba(0, 0, 0, 0.914);
+    color: var(--white-color);
+}
+
+.matselect-custom.mat-mdc-select-panel {
+    --mat-option-label-text-color: #fff !important;
+    --mdc-filled-text-field-container-color: #000;
+}
+
+.matselect-custom.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    --mdc-filled-text-field-container-color: #000;
+    border-radius: 50px !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: #000 !important;
+}
+
+.mat-mdc-select {
+    --mat-select-enabled-trigger-text-color: #e7e7e7 !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label,
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    color: #6c7ded !important;
+}
+
+.mat-mdc-select-arrow {
+    --mat-select-enabled-arrow-color: #fff
+}

@@ -28,6 +28,9 @@
 @import 'assets/scss/_slider.scss';
 @import 'assets/scss/_snackbar.scss';
 
+/* Custom design MaterialAngular Components **/
+@import 'assets/scss/_material.scss';
+
 
 body {
     height: 100vh;
@@ -80,7 +83,7 @@ img {
     }
 }
 
-
+/* Custom design MaterialAngular Components **/
 
 
 .arrow {
@@ -196,7 +199,7 @@ a {
 
 /* Scrollbar  */
 *::-webkit-scrollbar {
-    width: 0.85em !important;
+    width: 0.55em !important;
 }
 
 *::-webkit-scrollbar-track {

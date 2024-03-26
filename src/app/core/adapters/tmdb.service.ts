@@ -191,11 +191,11 @@ export class TMDBService implements TMDBGateway {
         append_to_response: 'videos'
       }
     }
-    this.http.get(this.TMDB_URL + ENDPOINT, options)
-      //.pipe()
-      .subscribe((response: any) => {
-        console.log(response)
-      })
+    return this.http.get(this.TMDB_URL + ENDPOINT, options)
+    //.pipe()
+    // .subscribe((response: any) => {
+    //   console.log(response)
+    // })
 
   }
 

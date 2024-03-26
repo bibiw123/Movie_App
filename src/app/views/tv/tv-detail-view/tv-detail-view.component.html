@@ -75,19 +75,33 @@
 
     <!-- Details Saison & épisodes -->
     <section>
+
         <!-- dropdown season -->
-        <mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>Saison</mat-label>
-            <mat-select [formControl]="selectSeasonField">
+            <mat-select panelClass="matselect-custom" [formControl]="selectSeasonAction" disableOptionCentering>
                 @for (season of serie.seasons; track season.id) {
-                <mat-option [value]="season.season_number">{{season.name}}</mat-option>
+                <mat-option [value]="season">{{season.name}}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
+
+        <!-- liste des épisodes-->
+        @if(seasonDetails){
         <div class="row">
-
-
+            @for (episode of seasonDetails.episodes; track episode.id) {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
+                    <div class="card-body">
+                        <h5 class="card-title">{{episode.name}}</h5>
+                        <p class="card-text">{{episode.overview}}</p>
+                    </div>
+                </div>
+            </div>
+            }
         </div>
+        }
     </section>
 
 

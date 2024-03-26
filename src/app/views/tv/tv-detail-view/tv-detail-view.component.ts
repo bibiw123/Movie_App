@@ -17,8 +17,8 @@ import { FormControl } from '@angular/forms';
 })
 export class TvDetailViewComponent {
   serie!: TvShowModel;
-  selectSeasonField: FormControl = new FormControl();
-
+  seasonDetails: any;
+  selectSeasonAction: FormControl = new FormControl();
 
   constructor(
     private _route: ActivatedRoute,
@@ -30,18 +30,20 @@ export class TvDetailViewComponent {
   ) { }
 
   ngOnInit() {
-    // 1 On récupere l'id de la série dans l'URL
+    // id de la série dans l'URL
     const tvShowId: string = this._route.snapshot.params['id'];
+    // Récupération de la série
     this._TmdbGateway.getOneTvShowFromApi(tvShowId).subscribe((tvshow: TvShowModel) => {
       this.serie = tvshow;
-
     });
-
-    this.selectSeasonField.valueChanges.subscribe(value => {
-      console.log(value);
-      this._TmdbGateway.getEpisodesFromApi(this.serie.id, value)
+    // Récupération des épisodes d'une saison
+    this.selectSeasonAction.valueChanges.subscribe(season => {
+      this._TmdbGateway.getEpisodesFromApi(this.serie.id, season.season_number)
+        .subscribe((seasonDetails: any) => {
+          console.log(seasonDetails)
+          this.seasonDetails = seasonDetails;
+        });
     });
-
   }
 
   getFullVideoUrl(key: string): SafeResourceUrl {
