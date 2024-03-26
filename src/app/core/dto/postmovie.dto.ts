@@ -34,6 +34,7 @@ export class MovieDTOMapper {
 
     static mapToMovieModel(movie: MovieResponseDTO): MovieModel {
         return {
+            api_id: movie.id?movie.id:undefined,
             tmdb_id: movie.id_tmdb,
             titre: movie.title,
             duration: movie.duration,

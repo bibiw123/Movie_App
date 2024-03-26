@@ -26,7 +26,7 @@ export class UserService implements UserGateway {
    * createUserModelAfterLogin()
    * Role: construire un user:UserModel {username, email, watchList, reviews}
    *       et pousser cette donnée dans le STORE, this._user$.next(user)
-   * 
+   *
    * Les compoments peuvent alors consommer "user$ | async"
    * afin d'afficher les données utilisateur dans les vues HTML
    */
@@ -50,11 +50,14 @@ export class UserService implements UserGateway {
       })
   }
 
+  getUser(): UserModel{
+    return this._user$.getValue() as UserModel
+  }
 
   /**** WATCHLIST MOVIES ****/
 
-  /** 
-   * endpoint: [GET] /movies 
+  /**
+   * endpoint: [GET] /movies
    * Role: récupérer la liste movies watchlist du user
    * @returns Observable<MovieModel[]>
    */
@@ -69,8 +72,8 @@ export class UserService implements UserGateway {
       )
   }
 
-  /** 
-   * endpoint: [POST] /movies 
+  /**
+   * endpoint: [POST] /movies
    * Role: poster un movie dans la watchlist du user
    * @returns Observable<MovieModel[]>
    */
@@ -78,10 +81,12 @@ export class UserService implements UserGateway {
     const endpoint = '/movies';
     const movieDto: PostMovieDTO = MovieDTOMapper.mapFromMovieModel(movie)
     this.http.post(this.apiurl + endpoint, movieDto).subscribe(
-      apiResponse => {
+      (apiResponse : any) => {
         let user: UserModel | Partial<UserModel> = this._user$.getValue();
         if (user.watchList) {
+          movie.api_id = apiResponse.id
           user.watchList.movies = [movie, ...user.watchList.movies]
+          console.log( user);
           this._user$.next(user)
           this.alert.show('Film ajouté à la watchlist', 'success')
         }
@@ -89,17 +94,29 @@ export class UserService implements UserGateway {
     )
   }
 
-  /** 
-   * endpoint: [DELETE] /movies/:id 
+  /**
+   * endpoint: [DELETE] /movies/:id
    * Role: supprimer un movie de la watchlist du user
-   * @param movieId 
+   * @param movieId
    */
   deleteMovie(movieId: number): void {
-    const endpoint = '/movies';
+    const endpoint = `/movies/${movieId}`;
     // 1 faire la request HTTP delete, puis recuperer la response (movieid)
     // 2 le back-end a répondu, donc on delete le film dans "user.watchlist.movies" (avec .filter)
     // https://herewecode.io/fr/blog/supprimer-element-tableau-javascript/#:~:text=Si%20on%20souhaite%20supprimer%20le,rapidement%20avec%20la%20m%C3%A9thode%20shift.&text=On%20peut%20aussi%20utiliser%20la,d'une%20cha%C3%AEne%20de%20caract%C3%A8res.
     // 3 Déclencher le changement dans le store ._user$
+
+    this.http.delete(this.apiurl + endpoint).subscribe(
+      apiResponse => {
+        let user: UserModel | Partial<UserModel> = this._user$.getValue();
+        if (user.watchList) {
+          user.watchList.movies = user.watchList.movies.filter(movie => movie.api_id !== movieId);
+          this._user$.next(user);
+          this.alert.show('Film supprimé de la watchlist', 'success');
+        }
+      },
+    );
+
   }
 
 
@@ -122,10 +139,10 @@ export class UserService implements UserGateway {
   /**
    * méthode utilitaire
    * isMovieInWatchlist
-   * rôle: permet aux components de vérifier 
+   * rôle: permet aux components de vérifier
    *       si un movie est dans la watchlist du user
-   * @param movie 
-   * @returns boolean 
+   * @param movie
+   * @returns boolean
    */
   isMovieInWatchlist(movie: MovieModel): boolean {
     let user = this._user$.getValue();

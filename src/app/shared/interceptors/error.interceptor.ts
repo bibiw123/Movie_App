@@ -34,7 +34,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 break;
               case 401:
                 this._alert.show(error.errorMessage, 'error');
-                this._route.navigate(['/login']);
+                //this._route.navigate(['/login']);
                 break;
               case 403:
                 this._alert.show(error.errorMessage, 'error')

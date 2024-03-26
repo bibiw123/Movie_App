@@ -66,7 +66,7 @@ export class TokenInterceptor implements HttpInterceptor {
       let endpoint = Utils.getUrlEndpoint(this.MYAPI_URL, request.url);
       // verify if the request exists in endPoint[] we defined
       let requestIsAnAuthEnpoint = this.apiAuthEndpoints.find(item =>
-        item.endpoint === endpoint &&
+        endpoint.includes(item.endpoint)&&
         (item.method === request.method || item.method === 'ALL')
       );
       console.log('requestIsAnAuthEnpoint:', requestIsAnAuthEnpoint);
