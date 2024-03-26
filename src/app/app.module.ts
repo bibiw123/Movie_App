@@ -38,6 +38,7 @@ import { AuthService } from './core/adapters/auth.service';
 import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.component';
 import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
+import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { UserService } from './core/adapters/user.service';
     // pipes & directives
     PrintdurationPipe,
     SliderComponent,
+    YtPlayerComponent,
     //ClickoutsideDirective
   ],
 

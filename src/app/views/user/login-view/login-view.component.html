@@ -8,6 +8,9 @@
                 <label>Email</label>
                 <input type="text" type="text" formControlName="email" placeholder="hello@gmail.com">
                 <!-- paragraphe erreur -->
+                @if (loginForm.controls['email'].hasError("required") && isSubmitted) {
+                <p class="error">Votre email est requis</p>
+                }
                 @if (loginForm.controls['email'].hasError("email") && isSubmitted) {
                 <p class="error">Veuillez indiquer un email valide</p>
                 }
@@ -16,6 +19,10 @@
             <div>
                 <label>Mot de passe</label>
                 <input type="password" formControlName="password">
+                <!-- paragraphe erreur -->
+                @if (loginForm.controls['password'].errors && isSubmitted) {
+                <p class="error">Mot de passe requis - min 8 caractères</p>
+                }
             </div>
 
             <button type="submit">Connexion</button>
@@ -25,5 +32,6 @@
                 <a routerLink="/register">Créer un compte</a>
             </p>
         </form>
+        <button (click)="loginFred()">Connecter Fred</button>
     </div>
 </section>

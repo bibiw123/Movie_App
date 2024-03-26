@@ -5,6 +5,11 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AlertService } from '../services/alert.service';
 
+type APIErrorResponse = {
+  errorMessage: string,
+  status: number
+}
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
@@ -21,30 +26,33 @@ export class ErrorInterceptor implements HttpInterceptor {
         error: (err) => {
           console.log(err)
           if (err instanceof HttpErrorResponse) {
+            const error = err.error as APIErrorResponse;
             switch (err.status) {
               case 400:
                 // if (req.url.includes(this.MY_API+'/users') && req.method=='POST')
-                this._alert.show(err.error.message);
+                this._alert.show(error.errorMessage, 'error');
                 break;
               case 401:
-                this._alert.show(err.error.message);
+                this._alert.show(error.errorMessage, 'error');
                 this._route.navigate(['/login']);
                 break;
               case 403:
-                this._alert.show(err.error.message)
+                this._alert.show(error.errorMessage, 'error')
                 break;
               case 404:
-                this._alert.show(err.error.message)
+                this._alert.show(error.errorMessage, 'error')
                 break;
               case 419:
-                this._alert.show(err.error.message)
+                this._alert.show(error.errorMessage, 'error')
                 break;
               case 409:
-                this._alert.show(err.error.message)
+                this._alert.show(error.errorMessage, 'error')
                 break;
-
+              case 500:
+                this._alert.show(error.errorMessage, 'error')
+                break;
               default:
-                this._alert.show("Erreur serveur")
+                this._alert.show("Erreur serveur", 'error')
             }
           }
 

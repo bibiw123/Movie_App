@@ -47,18 +47,17 @@ export class TMDBService implements TMDBGateway {
   /**
    * API TMDB
    * endpoint : /discover/movie
+   * role : récupérer les films à découvrir
    * @returns @Observable<MovieModel>
    */
   getMoviesFromApi(): Observable<MovieModel[]> {
     if (this._movies$.getValue().length === 0) {
       const ENDPOINT = `/discover/movie`;
-      let options = {
-        params: { language: 'fr' }
-      }
+      let options = { params: { language: 'fr' } }
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) => response.results
-            .slice(0, 12)
+            .slice(0, 18)
             .map(
               (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
             )
@@ -73,9 +72,7 @@ export class TMDBService implements TMDBGateway {
   getPrevMoviesFromApi(): Observable<MovieModel[]> {
     this.moviesPageNumber--;
     const ENDPOINT = `/discover/movie`;
-    let options = {
-      params: { language: 'fr', page: this.moviesPageNumber }
-    }
+    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
     this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map((response: any) =>
@@ -84,28 +81,19 @@ export class TMDBService implements TMDBGateway {
           )
         )
       )
-      //fairela request HTTP
-      .subscribe((response: MovieModel[]) => {
-        //let movies = this.movies$$.getValue();
-        let newMovies = [...response];
+      .subscribe((newMovies: MovieModel[]) => {
         this._movies$.next(newMovies);
       })
-
     return this._movies$.asObservable()
   }
 
 
   getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]> {
-    if (!pageNumber) {
-      this.moviesPageNumber++;
-    }
-    else {
-      this.moviesPageNumber = pageNumber;
-    }
+    !pageNumber
+      ? this.moviesPageNumber++
+      : this.moviesPageNumber = pageNumber;
     const ENDPOINT = `/discover/movie`;
-    let options = {
-      params: { language: 'fr', page: this.moviesPageNumber }
-    }
+    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
     this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map((response: any) =>
@@ -114,16 +102,10 @@ export class TMDBService implements TMDBGateway {
           )
         )
       )
-      //fairela request HTTP
-      .subscribe((response: MovieModel[]) => {
-        //let movies = this.movies$$.getValue();
-        let newMovies = [...response];
+      .subscribe((newMovies: MovieModel[]) => {
         this._movies$.next(newMovies);
       })
-
     return this._movies$.asObservable()
-
-
   }
 
   /**
@@ -132,14 +114,9 @@ export class TMDBService implements TMDBGateway {
    * @returns @Observable<TvShowModel[]>
    */
   getTvShowFromApi(): Observable<TvShowModel[]> {
-    if (this._tv$.getValue().length > 0) {
-      return this._tv$.asObservable()
-    }
-    else {
+    if (this._tv$.getValue().length === 0) {
       const ENDPOINT = `/discover/tv`;
-      let options = {
-        params: { language: 'fr' }
-      }
+      let options = { params: { language: 'fr' } }
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) =>
@@ -152,8 +129,8 @@ export class TMDBService implements TMDBGateway {
           )
         )
         .subscribe(response => this._tv$.next(response))
-      return this._tv$.asObservable()
     }
+    return this._tv$.asObservable()
   }
 
   /**
@@ -214,12 +191,9 @@ export class TMDBService implements TMDBGateway {
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
-      .pipe(
-        map(
-          (response: any) => response.results.map((item: any) => new SearchModel(item))
-        )
-      )
-
+      .pipe(map(
+        (response: any) => response.results.map((item: any) => new SearchModel(item))
+      ))
   }
 
 

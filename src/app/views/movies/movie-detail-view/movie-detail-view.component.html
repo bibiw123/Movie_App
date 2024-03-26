@@ -10,22 +10,31 @@
         <h1>{{movie.titre}}</h1>
     </div>
 
-    <div class="row">
+    <div class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
+
             @if(authGateway.isAuth$ | async) {
-            <button class="addtowatchlist" (click)="addOrRemoveMovieToWatchListAction(movie)">
-                Ajouter à ma liste
-                <i class="fa-regular fa-heart" [class.addtowatchlist-true]="userGateway.isMovieInWatchlist(movie)"
-                    [class.fa-solid]="userGateway.isMovieInWatchlist(movie)"></i>
+
+            <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
+            @if(userGateway.isMovieInWatchlist(movie)) {
+            <button class="addtowatchlist" (click)="removeMovieToWatchListAction(movie)">
+                Retirer de ma liste <i class="fa-solid fa-xmark"></i>
             </button>
             }
+            @else{
+            <!-- BOUTON "RETIRER A LA WATCHLIST" -->
+            <button (click)="addMovieToWatchListAction(movie)" class="addtowatchlist addtowatchlist-true">
+                Ajouter à ma liste <i class="fa-solid fa-plus"></i>
+            </button>
+            }
+
+            }
+
+            <!-- Si il y a une video -->
             @if(movie.video) {
-            <div class="video-container">
-                <iframe width="560" height="315" [src]="getFullVideoUrl(movie.video)" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
-            </div>
+            <ui-yt-player [videoKey]="movie.video"></ui-yt-player>
+            <!-- Si il n'y a pas de video -->
             }@else {
             <div class="">
                 <img [src]="getFullImageUrl(movie.image_landscape)" [alt]="movie.titre">

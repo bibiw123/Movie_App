@@ -35,21 +35,17 @@ export class MovieDetailViewComponent implements OnInit {
     // 3 Pour afficher @if(movie$ | async; as movie) dans la vue HTML
   }
 
-  getFullVideoUrl(key: string): SafeResourceUrl {
-    return this._sanitize.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/" + key);
-  }
-
   getFullImageUrl(fragmentUrl: string) {
     return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
   }
 
-  addOrRemoveMovieToWatchListAction(movie: MovieModel) {
-    if (this.userGateway.isMovieInWatchlist(movie) == false) {
-      this.userGateway.postMovie(movie)
-    }
-    else {
-      //this._userGateway.deleteMovie(movie.id)
-    }
+  addMovieToWatchListAction(movie: MovieModel) {
+    console.log('addMovieToWatchListAction', movie)
+    this.userGateway.postMovie(movie)
+  }
+
+  removeMovieToWatchListAction(movie: MovieModel) {
+    this.userGateway.deleteMovie(movie.api_id)
   }
 
 

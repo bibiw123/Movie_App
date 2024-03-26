@@ -9,11 +9,18 @@ export class AlertService {
   constructor(private snackbar: MatSnackBar) { }
 
   show(message: string, type?: 'error' | 'success' | 'info') {
+    //if (!message) return;
+    let cssclass = '';
+    switch (type) {
+      case 'error': cssclass = 'error-snackbar'; break;
+      case 'success': cssclass = 'success-snackbar'; break;
+      default: cssclass = 'info-snackbar'; // default value
+    }
     this.snackbar.open(message, 'Fermer', {
-      duration: 10000,
+      duration: 6000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
-      panelClass: 'showbar'
+      panelClass: ['showbar', cssclass]
     })
   }
 }

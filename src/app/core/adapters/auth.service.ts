@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 import { Credentials } from '../models/user.model';
 import { AlertService } from '../../shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService implements AuthGateway {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) { }
 
   /* STORE isAuth : BehaviorSubject _isAuth$ */
@@ -53,7 +55,8 @@ export class AuthService implements AuthGateway {
     const endpoint = "/logout"
     this._isAuth$.next(false)
     this.userService.resetUserData()
-    this.alert.show('Vous êtes déconnecté(e)')
+    this.alert.show('Vous êtes déconnecté(e)', 'success')
+    this.router.navigate([''])
     return this.http.get(this.apiurl + endpoint)
   }
 

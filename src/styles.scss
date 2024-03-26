@@ -26,6 +26,7 @@
 @import 'assets/scss/_navbar.scss';
 @import 'assets/scss/_pagination.scss';
 @import 'assets/scss/_slider.scss';
+@import 'assets/scss/_snackbar.scss';
 
 body {
     background-color: #13151c;
@@ -51,24 +52,10 @@ img {
     border-radius: 7px;
 }
 
+
+
 .block-view {
-    margin-top: 80px;
-}
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-position: center center;
-    background-size: cover;
-    /* background-image: url("../img/img-1.jpg"); */
-    transition: all 0.5s ease-in-out;
-}
-
-header.slider {
-    // transform: translateY(-124px);
-    margin-top: -124px;
+    margin-top: 110px;
 }
 
 .menus.sticky {

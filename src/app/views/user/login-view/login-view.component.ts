@@ -26,8 +26,8 @@ export class LoginViewComponent {
 
   ngOnInit() {
     this.loginForm = this.formbuilder.group({
-      email: ['', [Validators.email]],
-      password: ''
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
     })
   }
 
@@ -47,10 +47,20 @@ export class LoginViewComponent {
     if (this.loginForm.valid) {
       this.authGateway.login(credentials).subscribe((response: any) => {
         this.userGateway.createUserModelAfterLogin(response.user)
-        this.alert.show("Vous êtes bien connecté(e)");
+        this.alert.show("Vous êtes bien connecté(e)", 'success');
         this.router.navigate(['']);
       })
     }
+    else {
+      this.alert.show("Corrigez vos erreurs", 'error');
+    }
   }
 
+  loginFred() {
+    this.loginForm.setValue({
+      email: 'fred2@gmail.com',
+      password: 'Fred-2024#'
+    });
+    this.onSubmitLoginForm();
+  }
 }

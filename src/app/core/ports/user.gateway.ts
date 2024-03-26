@@ -9,7 +9,7 @@ export abstract class UserGateway {
   abstract setUser$(user: UserModel | null): void
   abstract createUserModelAfterLogin(user: SimpleUser): void
 
-  abstract fetchWatchlistMovies(): Observable<MovieResponseDTO>
+  abstract fetchWatchlistMovies(): Observable<MovieModel[]>
   abstract fetchWatchlistSeries(): Observable<any>
 
   abstract postMovie(movie: any): void;
