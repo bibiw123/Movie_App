@@ -12,7 +12,7 @@ button {
     position: relative;
     transition: all 0.3s ease 0s;
     box-sizing: border-box;
-    color:rgb(221, 221, 221);
+    color: rgb(221, 221, 221);
     border: none;
     padding: 0px 15px 0px 16px;
     height: 36px;
@@ -27,13 +27,13 @@ button:hover {
 }
 
 ul {
-    background-color: rgb(221, 221, 221);
+    background-color: #22242c;
     padding: 3px 0px;
     position: absolute;
     top: 45px;
     z-index: 999;
     width: 150px;
-    border: 1px solid rgb(221, 221, 221);
+    border: 1px solid rgb(94 94 94);
 }
 
 ul li {
@@ -46,6 +46,6 @@ ul li {
 
 ul li:hover,
 ul li.selected {
-    background-color:rgb(182, 71, 213);
+    background-color: rgb(182, 71, 213);
     cursor: pointer;
 }
