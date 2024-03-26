@@ -45,7 +45,7 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   removeMovieToWatchListAction(movie: MovieModel) {
-    this.userGateway.deleteMovie(movie.api_id)
+    //this.userGateway.deleteMovie(movie.api_id)
   }
 
 

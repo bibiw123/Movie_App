@@ -24,4 +24,8 @@ export class TvListViewComponent {
     console.log(genre)
   }
 
+  findNextMoviesAction() {
+    this._TmdbGateway.getNextTvShowFromApi()
+  }
+
 }

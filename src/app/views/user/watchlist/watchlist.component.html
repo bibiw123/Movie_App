@@ -1,20 +1,20 @@
-<!-- Si l'utilisateur n'est pas connecté -->
-@if(!(authService.isAuth$ | async)) {
+@if(userService.user$ | async; as user) {
+
+<!-- 1- Si l'utilisateur n'a RIEN dans sa watchList -->
+@if(user.watchList.movies.length===0 && user.watchList.series.length===0) {
 <div class="container p-5">
     <div class="d-flex flex-column justify-content-center align-items-center block">
         <i class="fa-solid fa-circle-plus"></i>
         <h1>Votre liste est vide</h1>
-        <p class="text-center">Le contenu que vous ajoutez à votre liste apparaît ici.</p>
+        <p class="text-center">Les films et séries que vous ajouterez à votre liste apparaîtront ici.</p>
     </div>
 </div>
 }
-
 @else {
-<!-- Si l'utilisateur EST connecté -->
-<!-- PARTIE 1: watchlist movies-->
-@if(userService.user$ | async; as user) {
-<section>
+<!-- Si l'utilisateur A des movies ou series dans sa watchList -->
 
+<!-- PARTIE 1: watchlist movies-->
+<section>
     <div class="container">
         <h2 class="label">Ma liste de films</h2>
         <div class="row">
@@ -26,6 +26,9 @@
             }
 
         </div>
+        @if(user.watchList.movies.length===0) {
+        <p>Les films que vous ajouterez à votre liste apparaîtront ici.</p>
+        }
     </div>
 </section>
 
@@ -42,7 +45,11 @@
             }
 
         </div>
+        @if(user.watchList.series.length===0) {
+        <p>Les séries que vous ajouterez à votre liste apparaîtront ici.</p>
+        }
     </div>
 </section>
+
 }
 }

@@ -33,4 +33,8 @@ export class MovieListViewComponent {
     // Request TMDV /movie/
   }
 
+  findNextMoviesAction(pageNumber?: number) {
+    this._TmdbGateway.getNextMoviesFromApi()
+  }
+
 }

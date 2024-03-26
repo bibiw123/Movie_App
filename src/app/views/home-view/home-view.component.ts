@@ -11,7 +11,7 @@ import { TMDBGateway } from '../../core/ports/tmdb.gateway';
 export class HomeViewComponent {
 
   movies!: MovieModel[];
-  tv!: TvShowModel[];
+  series!: TvShowModel[];
   pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   constructor(
@@ -23,19 +23,16 @@ export class HomeViewComponent {
     this.TmdbGateway.getMoviesFromApi();
     // récuperer les 5 premieres series
     this.TmdbGateway.getTvShowFromApi();
+
+    // filtrer les 6 premiers movies
+    this.TmdbGateway.movies$.subscribe(moviesFromSource => {
+      this.movies = moviesFromSource.slice(0, 6)
+    })
+    // filtrer les 6 premières series
+    this.TmdbGateway.tv$.subscribe(seriesFromSource => {
+      this.series = seriesFromSource.slice(0, 6)
+    })
   }
 
-  findNextMoviesAction(pageNumber?: number) {
-    if (pageNumber) {
-      this.TmdbGateway.getNextMoviesFromApi(pageNumber)
-    }
-    else {
-      this.TmdbGateway.getNextMoviesFromApi()
-    }
-  }
-
-  findPrevMoviesAction() {
-    this.TmdbGateway.getPrevMoviesFromApi()
-  }
 
 }

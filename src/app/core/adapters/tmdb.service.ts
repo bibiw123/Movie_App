@@ -14,6 +14,7 @@ import { TMDBGateway } from '../ports/tmdb.gateway';
 export class TMDBService implements TMDBGateway {
 
   moviesPageNumber = 1;
+  seriesPageNumber = 1;
 
   private TMDB_URL: string = environment.TMDB_API_URL;
 
@@ -57,7 +58,6 @@ export class TMDBService implements TMDBGateway {
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) => response.results
-            .slice(0, 18)
             .map(
               (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
             )
@@ -103,7 +103,9 @@ export class TMDBService implements TMDBGateway {
         )
       )
       .subscribe((newMovies: MovieModel[]) => {
-        this._movies$.next(newMovies);
+        let allCurrentMovies = this._movies$.getValue();
+        let allNewMovies = [...allCurrentMovies, ...newMovies];
+        this._movies$.next(allNewMovies);
       })
     return this._movies$.asObservable()
   }
@@ -121,7 +123,6 @@ export class TMDBService implements TMDBGateway {
         .pipe(
           map((response: any) =>
             response.results
-              .slice(0, 6)
               .map(
                 (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
               )
@@ -130,6 +131,28 @@ export class TMDBService implements TMDBGateway {
         )
         .subscribe(response => this._tv$.next(response))
     }
+    return this._tv$.asObservable()
+  }
+
+  getNextTvShowFromApi(): Observable<TvShowModel[]> {
+    this.seriesPageNumber++
+
+    const ENDPOINT = `/discover/movie`;
+    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
+    this.http.get(this.TMDB_URL + ENDPOINT, options)
+      .pipe(
+        map((response: any) =>
+          response.results
+            .map(
+              (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
+            )
+        )
+      )
+      .subscribe((newTvShows: TvShowModel[]) => {
+        let allCurrentSeries = this._tv$.getValue();
+        let allNewSeries = [...allCurrentSeries, ...newTvShows];
+        this._tv$.next(allNewSeries);
+      })
     return this._tv$.asObservable()
   }
 

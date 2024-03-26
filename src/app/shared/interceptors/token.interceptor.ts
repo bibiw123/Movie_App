@@ -16,14 +16,13 @@ export class TokenInterceptor implements HttpInterceptor {
   private apiAuthEndpoints: Endpoint[] = [
     { endpoint: '/watchlist', method: 'ALL' },
     { endpoint: '/reviews', method: 'POST' },
-    { endpoint: '/movies', method: 'POST' },
+    { endpoint: '/movies', method: 'ALL' },
     { endpoint: '/series', method: 'POST' },
     // add other...
   ];
   TMDB_URL = environment.TMDB_API_URL;
   TMDB_TOKEN = environment.TMDB_TOKEN;
   MYAPI_URL = environment.API_URL;
-  USER_TOKEN = this._authSvc.getTokenFromLocalStorage();
 
   constructor(private _authSvc: AuthGateway) { }
 
@@ -42,9 +41,11 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     // SI notre API et SI l'url necessite l'authentification
+    console.log(this.isUrlNeedsUserToken(req));
     if (this.isUrlNeedsUserToken(req)) {
-      if (this.USER_TOKEN !== null)
-        cloneRequest = this.addBearerToken(req, this.USER_TOKEN);
+      const token = this._authSvc.getTokenFromLocalStorage();
+      if (token !== null)
+        cloneRequest = this.addBearerToken(req, token);
     }
 
     return next.handle(cloneRequest);
@@ -66,8 +67,9 @@ export class TokenInterceptor implements HttpInterceptor {
       // verify if the request exists in endPoint[] we defined
       let requestIsAnAuthEnpoint = this.apiAuthEndpoints.find(item =>
         item.endpoint === endpoint &&
-        item.method === request.method || item.method === 'ALL'
+        (item.method === request.method || item.method === 'ALL')
       );
+      console.log('requestIsAnAuthEnpoint:', requestIsAnAuthEnpoint);
       if (requestIsAnAuthEnpoint) {
         return true;
       }

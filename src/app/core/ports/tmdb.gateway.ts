@@ -24,12 +24,15 @@ export abstract class TMDBGateway {
 
     abstract movies$: Observable<MovieModel[]>;
     abstract tv$: Observable<TvShowModel[]>;
+    // movies
     abstract getMoviesFromApi(): Observable<MovieModel[]>;
     abstract getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]>
-    abstract getPrevMoviesFromApi(): Observable<MovieModel[]>
     abstract getMovieFromApi(id: string): Observable<MovieModel>
+    // series
     abstract getTvShowFromApi(): Observable<TvShowModel[]>;
+    abstract getNextTvShowFromApi(): Observable<TvShowModel[]>;
     abstract getOneTvShowFromApi(id: string): Observable<TvShowModel>;
+    // search
     abstract search(userSearchText: string): Observable<any>
 
 }

@@ -6,6 +6,8 @@ import { TMDBService } from '../../../core/adapters/tmdb.service';
 import { TvShowModel } from '../../../core/models/series.model';
 import { Location } from '@angular/common';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
+import { AuthGateway } from '../../../core/ports/auth.gateway';
+import { UserGateway } from '../../../core/ports/user.gateway';
 
 @Component({
   selector: 'app-tv-detail-view',
@@ -18,7 +20,9 @@ export class TvDetailViewComponent {
     private _route: ActivatedRoute,
     private _sanitize: DomSanitizer,
     public location: Location,
-    private _TmdbGateway: TMDBGateway
+    private _TmdbGateway: TMDBGateway,
+    public authGateway: AuthGateway,
+    public userGateway: UserGateway
   ) { }
 
   ngOnInit() {
@@ -36,6 +40,10 @@ export class TvDetailViewComponent {
 
   getBackdropImage(tvshow: TvShowModel) {
     return `background: url(https://image.tmdb.org/t/p/w1280/${tvshow.image_landscape})`;
+  }
+
+  getFullImageUrl(image: string) {
+    return `https://image.tmdb.org/t/p/w500/${image}`;
   }
 
 }

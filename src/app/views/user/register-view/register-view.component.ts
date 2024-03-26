@@ -67,7 +67,7 @@ export class RegisterViewComponent {
       this.authGateway.register(this.registerForm.value)
         .subscribe((reponse) => {
           console.log(reponse);
-          this.alert.show("Vous êtes bien inscrit");
+          this.alert.show("Vous êtes bien inscrit", 'success');
           this.router.navigate(["login"])
         })
     }

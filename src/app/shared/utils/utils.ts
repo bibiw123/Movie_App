@@ -10,6 +10,7 @@ export class Utils {
      * return "/auth/login"
      */
     static getUrlEndpoint(baseUrl: string, fullUrl: string): string {
+        console.log('endpoint:', fullUrl.split(baseUrl)[1])
         return fullUrl.split(baseUrl)[1]
     }
 }

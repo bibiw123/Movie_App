@@ -16,5 +16,6 @@ export abstract class UserGateway {
   abstract deleteMovie(movie: any): void;
 
   abstract isMovieInWatchlist(movie: MovieModel): boolean
+  abstract resetUserData(): void
 
 }

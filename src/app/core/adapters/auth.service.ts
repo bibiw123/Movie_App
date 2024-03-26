@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { Credentials } from '../models/user.model';
 import { AlertService } from '../../shared/services/alert.service';
 import { Router } from '@angular/router';
+import { UserGateway } from '../ports/user.gateway';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService implements AuthGateway {
   apiurl = environment.API_URL
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private userService: UserGateway,
     private alert: AlertService,
     private router: Router
   ) { }
@@ -25,20 +26,23 @@ export class AuthService implements AuthGateway {
   private _isAuth$ = new BehaviorSubject<boolean>(false);
   public isAuth$: Observable<boolean> = this._isAuth$.asObservable()
 
+  /**
+   * role: créer un nouveau user
+   * @param user 
+   * @returns 
+   */
   register(user: any): Observable<any> {
     const endpoint = "/register"
     return this.http.post(this.apiurl + endpoint, user)
   }
 
+  /**
+   * role: login le user
+   * @param user 
+   * @returns 
+   */
   login(user: Credentials): Observable<any> {
     const endpoint = "/login";
-    // return of({
-    //   token: "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTExMzQyOTAsImV4cCI6MTcxMTc2MDEwNywic3ViIjoiZnJlZG9AZ21haWwuY29tIiwiZW1haWwiOiJmcmVkb0BnbWFpbC5jb20ifQ.lKjV5_MbQGD7XBEVkeeAoTSQZQmx2fjMlECg5QA6QoFo2OeJ_CnvOc9FY09fm-3k",
-    //   user: {
-    //     username: "fred",
-    //     email: "fred@gmail.com"
-    //   }
-    // })
     return this.http.post(this.apiurl + endpoint, user)
       .pipe(
         tap((response: any) => {
@@ -51,19 +55,32 @@ export class AuthService implements AuthGateway {
       )
   }
 
+  /**
+   * role: logout le user
+   * @returns 
+   */
   logout(): Observable<any> {
     const endpoint = "/logout"
-    this._isAuth$.next(false)
     this.userService.resetUserData()
+    this._isAuth$.next(false)
+    localStorage.removeItem("token");
     this.alert.show('Vous êtes déconnecté(e)', 'success')
     this.router.navigate([''])
     return this.http.get(this.apiurl + endpoint)
   }
 
+  /**
+   * role: stocker le token dans le localStorage
+   * @param token 
+   */
   storeTokenInLocalStorage(token: string): void {
     localStorage.setItem("token", token)
   }
 
+  /**
+   * role: récupérer le token du localStorage
+   * @returns 
+   */
   getTokenFromLocalStorage(): string | null {
     return localStorage.getItem("token")
   }
