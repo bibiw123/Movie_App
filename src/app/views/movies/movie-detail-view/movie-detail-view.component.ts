@@ -45,7 +45,13 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   removeMovieToWatchListAction(movie: MovieModel) {
-    //this.userGateway.deleteMovie(movie.api_id)
+    console.log(movie)
+    let foundMovie =  this.userGateway.getUser().watchList.movies.find(item=>item.tmdb_id === movie.tmdb_id)
+    if (foundMovie){
+      console.log(foundMovie)
+      this.userGateway.deleteMovie(foundMovie.api_id)
+    }
+
   }
 
 

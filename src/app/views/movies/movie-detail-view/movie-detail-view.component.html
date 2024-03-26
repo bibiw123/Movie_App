@@ -16,14 +16,14 @@
 
             @if(authGateway.isAuth$ | async) {
 
-            <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
+            <!-- BOUTON "RETIRER A LA WATCHLIST" -->
             @if(userGateway.isMovieInWatchlist(movie)) {
             <button class="addtowatchlist" (click)="removeMovieToWatchListAction(movie)">
                 Retirer de ma liste <i class="fa-solid fa-xmark"></i>
             </button>
             }
             @else{
-            <!-- BOUTON "RETIRER A LA WATCHLIST" -->
+            <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
             <button (click)="addMovieToWatchListAction(movie)" class="addtowatchlist addtowatchlist-true">
                 Ajouter à ma liste <i class="fa-solid fa-plus"></i>
             </button>
