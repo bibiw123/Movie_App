@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MovieModel } from '../../../core/models/movie.model';
 import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { UserGateway } from '../../../core/ports/user.gateway';
-
 
 @Component({
   selector: 'app-movie-detail-view',
@@ -21,7 +19,6 @@ export class MovieDetailViewComponent implements OnInit {
   constructor(
     public location: Location,
     private _route: ActivatedRoute,
-    private _sanitize: DomSanitizer,
     private _TmdbGateway: TMDBGateway,
     public authGateway: AuthGateway,
     public userGateway: UserGateway
@@ -40,19 +37,19 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   addMovieToWatchListAction(movie: MovieModel) {
-    console.log('addMovieToWatchListAction', movie)
     this.userGateway.postMovie(movie)
   }
 
   removeMovieToWatchListAction(movie: MovieModel) {
-    console.log(movie)
-    let foundMovie =  this.userGateway.getUser().watchList.movies.find(item=>item.tmdb_id === movie.tmdb_id)
-    if (foundMovie){
-      console.log(foundMovie)
-      this.userGateway.deleteMovie(foundMovie.api_id)
-    }
-
+    const userWatchList = this.userGateway.getUser().watchList.movies
+    const foundMovie = userWatchList.find(item => item.tmdb_id === movie.tmdb_id)
+    if (foundMovie) this.userGateway.deleteMovie(foundMovie.api_id)
   }
+
+  changeMovieWatchedStatus(event: Event) {
+    //this.userGateway.patchMovie($event)
+  }
+
 
 
 }

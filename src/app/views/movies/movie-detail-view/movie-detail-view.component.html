@@ -16,29 +16,23 @@
 
             @if(authGateway.isAuth$ | async) {
 
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1">A voir</label>
+            <div class="toolbar">
+                <ui-button-group (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
 
-                <input type="radio" class="btn-check" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">En cours</label>
-
-                <input type="radio" class="btn-check" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio3">Vu</label>
+                <!-- BOUTON "RETIRER A LA WATCHLIST" -->
+                @if(userGateway.isMovieInWatchlist(movie)) {
+                <button class="addtowatchlist active" (click)="removeMovieToWatchListAction(movie)">
+                    Dans ma liste <i class="fa-solid fa-heart"></i>
+                </button>
+                }
+                @else{
+                <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
+                <button (click)="addMovieToWatchListAction(movie)" class="addtowatchlist addtowatchlist-true">
+                    Ajouter à ma liste <i class="fa-regular fa-heart"></i>
+                </button>
+                }
             </div>
 
-            <!-- BOUTON "RETIRER A LA WATCHLIST" -->
-            @if(userGateway.isMovieInWatchlist(movie)) {
-            <button class="addtowatchlist" (click)="removeMovieToWatchListAction(movie)">
-                Retirer de ma liste <i class="fa-solid fa-xmark"></i>
-            </button>
-            }
-            @else{
-            <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
-            <button (click)="addMovieToWatchListAction(movie)" class="addtowatchlist addtowatchlist-true">
-                Ajouter à ma liste <i class="fa-solid fa-plus"></i>
-            </button>
-            }
 
 
             }

@@ -49,7 +49,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this._alert.show(error.errorMessage, 'error')
                 break;
               case 500:
-                this._alert.show(error.errorMessage, 'error')
+                this._alert.show('Erreur serveur', 'error')
                 break;
               default:
                 this._alert.show("Erreur serveur", 'error')

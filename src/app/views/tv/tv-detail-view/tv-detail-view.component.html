@@ -1,5 +1,4 @@
 @if(serie) {
-
 <div class="container">
 
     <!-- Titre film et bouton "back"-->
@@ -13,7 +12,6 @@
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
-
             @if(authGateway.isAuth$ | async) {
 
             <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
@@ -29,16 +27,7 @@
             </button>
             } -->
 
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1">A voir</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">En cours</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-primary active" for="btnradio3">Vu</label>
-            </div>
+            <!-- <ui-button-group (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group> -->
 
             }
 
@@ -73,7 +62,7 @@
     <!-- Details Saison & épisodes -->
     <section>
 
-        <!-- dropdown season -->
+        <!-- dropdown select season -->
         <mat-form-field appearance="fill">
             <mat-label>Saison</mat-label>
             <mat-select panelClass="matselect-custom" [formControl]="selectSeasonAction" disableOptionCentering>
@@ -85,10 +74,12 @@
 
         <!-- liste des épisodes-->
         @if(seasonDetails){
-        <div class="row">
+
+        <div class="row g-4">
             @for (episode of seasonDetails.episodes; track episode.id) {
-            <div class="col-12 col-md-4 col-lg-3">
+            <div class="col-12 col-lg-6 col-xl-4 col-xxl-3">
                 <div class="card">
+                    <ui-button-group (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group>
                     <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
                     <div class="card-body">
                         <h3 class="card-title">{{episode.name}}</h3>
@@ -98,6 +89,7 @@
             </div>
             }
         </div>
+
         }
     </section>
 

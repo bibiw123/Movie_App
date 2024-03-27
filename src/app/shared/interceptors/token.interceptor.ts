@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
     { endpoint: '/watchlist', method: 'ALL' },
     { endpoint: '/reviews', method: 'POST' },
     { endpoint: '/movies', method: 'ALL' },
-    { endpoint: '/series', method: 'POST' },
+    { endpoint: '/series', method: 'ALL' },
     // add other...
   ];
   TMDB_URL = environment.TMDB_API_URL;
@@ -66,7 +66,7 @@ export class TokenInterceptor implements HttpInterceptor {
       let endpoint = Utils.getUrlEndpoint(this.MYAPI_URL, request.url);
       // verify if the request exists in endPoint[] we defined
       let requestIsAnAuthEnpoint = this.apiAuthEndpoints.find(item =>
-        endpoint.includes(item.endpoint)&&
+        endpoint.includes(item.endpoint) &&
         (item.method === request.method || item.method === 'ALL')
       );
       console.log('requestIsAnAuthEnpoint:', requestIsAnAuthEnpoint);

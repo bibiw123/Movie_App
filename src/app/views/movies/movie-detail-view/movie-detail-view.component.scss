@@ -5,6 +5,26 @@
     margin-bottom: 10px;
 }
 
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .addtowatchlist {
+        background: #123;
+
+        &:hover {
+            background: rgb(30, 40, 49);
+        }
+
+        &.active {
+            background: #4f49d2
+        }
+    }
+}
+
+
 span i {
     font-size: 70%;
     color: rgb(85, 80, 190);
@@ -24,7 +44,7 @@ p {
 
 .btn-group,
 .addtowatchlist {
-    transform: translate(0px, -14px);
+    transform: translate(0px, 0px);
 }
 
 h2 {
@@ -64,7 +84,7 @@ span.badge {
     margin-right: 15px;
     background-color: rgb(85, 80, 190) !important;
     margin-bottom: 16px;
-    padding: 0px 10px;
+    padding: 5px 10px;
     border-radius: 30px;
     font-size: 15px;
 }

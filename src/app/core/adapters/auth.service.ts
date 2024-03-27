@@ -52,6 +52,8 @@ export class AuthService implements AuthGateway {
           if (apiResponse.token && apiResponse.token.length) {
             this.storeTokenInLocalStorage(apiResponse.token);
             this._isAuth$.next(true);
+            const user = new UserModel(apiResponse.user);
+            this.userService.setUser$(user);
             this.userService.createUserModelAfterLogin(apiResponse.user);
           }
         })

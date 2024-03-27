@@ -66,6 +66,7 @@ img {
     color: var(--white-color);
 }
 
+
 .arrow {
     position: static;
     background-color: rgba(0, 0, 0, 0.23);
@@ -263,5 +264,13 @@ a {
 
 
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

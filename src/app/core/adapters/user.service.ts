@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { UserGateway } from '../ports/user.gateway';
-import { BehaviorSubject, Observable, Subject, forkJoin, map, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { SimpleUser, UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MovieModel } from '../models/movie.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
+import { TvShowModel } from '../models/series.model';
 
 
 @Injectable({
@@ -34,7 +35,7 @@ export class UserService implements UserGateway {
   */
   createUserModelAfterLogin(user: SimpleUser): Observable<UserModel | undefined> {
     const userWatchList$ = of(user).pipe(
-      switchMap((user) => {
+      switchMap((user: SimpleUser) => {
         return forkJoin([
           this.fetchWatchlistMovies(),
           //this.fetchWatchlistSeries()
@@ -44,7 +45,11 @@ export class UserService implements UserGateway {
     );
     userWatchList$
       .pipe(
-        map(apiResponse => new UserModel(user, apiResponse[0], apiResponse[1]))
+        map(apiResponse => {
+          return new UserModel(user)
+            .setWatchListMovies(apiResponse[0])
+            .setWatchListSeries(apiResponse[1])
+        })
       )
       .subscribe((userLoggedIn: UserModel) => {
         console.log('created user after login:', userLoggedIn)
@@ -143,10 +148,17 @@ export class UserService implements UserGateway {
    * Role: récupérer la liste series watchlist du user
    * @returns Observable<SerieModel[]>
    */
-  fetchWatchlistSeries(): Observable<any> {
+  fetchWatchlistSeries(): Observable<TvShowModel[]> {
     const endpoint = '/series'
     return this.http.get(this.apiurl + endpoint)
+      .pipe(map((apiResponse: any) =>
+        apiResponse.map(
+          (movie: MovieResponseDTO) => MovieDTOMapper.mapToMovieModel(movie)
+        )
+      ))
   }
+
+
 
 
 

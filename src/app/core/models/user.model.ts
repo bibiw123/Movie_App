@@ -11,16 +11,32 @@ export class WatchList {
     }
 }
 
-// type UserModel
+/**
+ * UserModel
+ * Role: représente un utilisateur dans l'application
+ * Cette donnée est très importante car elle est utilisée dans plusieurs composants
+ * exemple : user.watchList.movies pour afficher la liste des films du user
+ *           user.watchList.series pour afficher la liste des series du user
+ *           user.username pour afficher le nom du user
+ * @param user
+*/
 export class UserModel {
     username: string;
     email: string;
     watchList: WatchList
 
-    constructor(user: any, movies: MovieModel[], series: TvShowModel[]) {
+    constructor(user: SimpleUser) {
         this.username = user.username;
         this.email = user.email;
-        this.watchList = new WatchList(movies, series)
+        this.watchList = new WatchList([], [])
+    }
+    setWatchListMovies(movies: MovieModel[]): UserModel {
+        this.watchList.movies = movies
+        return this
+    }
+    setWatchListSeries(series: TvShowModel[]): UserModel {
+        this.watchList.series = series;
+        return this
     }
 }
 

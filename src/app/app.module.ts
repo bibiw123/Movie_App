@@ -29,6 +29,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
@@ -40,6 +43,7 @@ import { SliderComponent } from './shared/ui-components/ui-slider/ui-slider.comp
 import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
 import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.component';
+import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-button-group.component';
 
 
 @NgModule({
@@ -65,6 +69,7 @@ import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.co
     PrintdurationPipe,
     SliderComponent,
     YtPlayerComponent,
+    ButtonGroupComponent,
     //ClickoutsideDirective
   ],
 
@@ -75,7 +80,9 @@ import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.co
     ReactiveFormsModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatIconModule
   ],
 
   providers: [
