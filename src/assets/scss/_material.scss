@@ -1,5 +1,6 @@
 .matselect-custom.mat-mdc-select-panel {
-    background: rgba(0, 0, 0, 0.914);
+    background: #0e0e13 !important;
+    ;
     color: var(--white-color);
 }
 
@@ -14,11 +15,18 @@
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: #000 !important;
+    background-color: #0e0e13 !important;
 }
 
 .mat-mdc-select {
-    --mat-select-enabled-trigger-text-color: #e7e7e7 !important;
+    --mat-select-enabled-trigger-text-color: #ffffff !important;
+}
+
+.mdc-text-field--filled {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label,

@@ -3,11 +3,12 @@ import { AuthGateway } from '../ports/auth.gateway';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from './user.service';
-import { Credentials } from '../models/user.model';
 import { AlertService } from '../../shared/services/alert.service';
 import { Router } from '@angular/router';
 import { UserGateway } from '../ports/user.gateway';
+import { UserRegisterDTO } from '../dto/user-register.dto';
+import { UserCredentialsDTO, UserCredentialsResponseDTO } from '../dto/user-credentials.dto';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,34 +23,36 @@ export class AuthService implements AuthGateway {
     private router: Router
   ) { }
 
-  /* STORE isAuth : BehaviorSubject _isAuth$ */
+  /**************************************** 
+  * STORE isAuth : BehaviorSubject _isAuth$ 
+  *****************************************/
   private _isAuth$ = new BehaviorSubject<boolean>(false);
   public isAuth$: Observable<boolean> = this._isAuth$.asObservable()
 
   /**
    * role: créer un nouveau user
-   * @param user 
-   * @returns 
+   * @param user UserRegisterDTO
+   * @returns Observable<number>
    */
-  register(user: any): Observable<any> {
+  register(user: UserRegisterDTO): Observable<number> {
     const endpoint = "/register"
-    return this.http.post(this.apiurl + endpoint, user)
+    return this.http.post<number>(this.apiurl + endpoint, user)
   }
 
   /**
    * role: login le user
-   * @param user 
-   * @returns 
+   * @param user UserCredentialsDTO
+   * @returns Observable<UserCredentialsResponseDTO>
    */
-  login(user: Credentials): Observable<any> {
+  login(user: UserCredentialsDTO): Observable<UserCredentialsResponseDTO> {
     const endpoint = "/login";
-    return this.http.post(this.apiurl + endpoint, user)
+    return this.http.post<UserCredentialsResponseDTO>(this.apiurl + endpoint, user)
       .pipe(
-        tap((response: any) => {
-          if (response.token && response.token.length) {
-            this.storeTokenInLocalStorage(response.token);
+        tap((apiResponse: UserCredentialsResponseDTO) => {
+          if (apiResponse.token && apiResponse.token.length) {
+            this.storeTokenInLocalStorage(apiResponse.token);
             this._isAuth$.next(true);
-            this.userService.createUserModelAfterLogin(response.user);
+            this.userService.createUserModelAfterLogin(apiResponse.user);
           }
         })
       )
@@ -79,7 +82,7 @@ export class AuthService implements AuthGateway {
 
   /**
    * role: récupérer le token du localStorage
-   * @returns 
+   * @returns token
    */
   getTokenFromLocalStorage(): string | null {
     return localStorage.getItem("token")

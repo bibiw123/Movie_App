@@ -10,7 +10,7 @@
         <h1>{{serie.titre}}</h1>
     </div>
 
-    <section class="row gy-4">
+    <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
 
@@ -31,13 +31,13 @@
 
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+                <label class="btn btn-outline-primary" for="btnradio1">A voir</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+                <label class="btn btn-outline-primary" for="btnradio2">En cours</label>
 
                 <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+                <label class="btn btn-outline-primary active" for="btnradio3">Vu</label>
             </div>
 
             }
@@ -52,7 +52,7 @@
         <!-- BLOC DROITE: TEXTES-->
         <div class="col-12 col-lg-6">
 
-            <p>
+            <p class="d-flex">
                 <span><i class="fa-solid fa-circle"></i>Sortie {{serie.date | date:'MM-yyyy'}}</span>
                 <span><i class="fa-solid fa-circle"></i>Durée {{serie.episode_runtime | printduration}}</span>
             </p>
@@ -65,12 +65,9 @@
             <h2>Résumé</h2>
             <p class="resume">{{serie.resume}}</p>
 
-            <hr>
-            <!-- FORMULAIRE DE COMMENTAIRE-->
-            <h2>Avis</h2>
         </div>
 
-    </section>
+    </main>
 
 
     <!-- Details Saison & épisodes -->
@@ -90,11 +87,11 @@
         @if(seasonDetails){
         <div class="row">
             @for (episode of seasonDetails.episodes; track episode.id) {
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-4 col-lg-3">
                 <div class="card">
                     <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
                     <div class="card-body">
-                        <h5 class="card-title">{{episode.name}}</h5>
+                        <h3 class="card-title">{{episode.name}}</h3>
                         <p class="card-text">{{episode.overview}}</p>
                     </div>
                 </div>

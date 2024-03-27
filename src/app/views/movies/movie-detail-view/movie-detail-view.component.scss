@@ -11,13 +11,21 @@ span i {
     margin-right: 5px;
 }
 
-p span {
-    margin-right: 10px;
+
+p {
     display: flex;
-    align-items: center;
+
+    span {
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+    }
 }
 
-
+.btn-group,
+.addtowatchlist {
+    transform: translate(0px, -14px);
+}
 
 h2 {
     margin-top: 20px;

@@ -3,8 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { AlertService } from '../../../shared/services/alert.service';
 import { Router } from '@angular/router';
-import { Credentials } from '../../../core/models/user.model';
 import { UserGateway } from '../../../core/ports/user.gateway';
+import { UserCredentialsDTO } from '../../../core/dto/user-credentials.dto';
 
 @Component({
   selector: 'app-login-view',
@@ -42,7 +42,7 @@ export class LoginViewComponent {
   onSubmitLoginForm() {
     console.log(this.loginForm.value);
     this.isSubmitted = true;
-    const credentials: Credentials = this.loginForm.value;
+    const credentials: UserCredentialsDTO = this.loginForm.value;
 
     if (this.loginForm.valid) {
       this.authGateway.login(credentials).subscribe((response: any) => {

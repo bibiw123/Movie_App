@@ -18,14 +18,14 @@
 </section>
 
 <!-- PARTIE 3: cards series-->
-<section id="movies">
+<section id="series">
     <div class="container">
         <h2 class="label">Par ici les nouveautés séries</h2>
         <div class="row">
 
             @for (itemSerie of series; track itemSerie.id) {
             <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-4 col-lg-2 g-3">
-                <ui-card [routerLink]="['/movies', itemSerie.id]" [item]="itemSerie"></ui-card>
+                <ui-card [routerLink]="['/tv', itemSerie.id]" [item]="itemSerie"></ui-card>
             </div>
             }
 

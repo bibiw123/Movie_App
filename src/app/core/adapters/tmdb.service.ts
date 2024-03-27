@@ -136,9 +136,8 @@ export class TMDBService implements TMDBGateway {
 
   getNextTvShowFromApi(): Observable<TvShowModel[]> {
     this.seriesPageNumber++
-
-    const ENDPOINT = `/discover/movie`;
-    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
+    const ENDPOINT = `/discover/tv`;
+    let options = { params: { language: 'fr', page: this.seriesPageNumber } }
     this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map((response: any) =>

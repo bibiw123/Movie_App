@@ -7,7 +7,7 @@ export abstract class UserGateway {
 
   abstract user$: Observable<any>
   abstract setUser$(user: UserModel | null): void
-  abstract createUserModelAfterLogin(user: SimpleUser): void
+  abstract createUserModelAfterLogin(user: SimpleUser): Observable<UserModel | undefined>
   abstract getUser(): UserModel
 
   abstract fetchWatchlistMovies(): Observable<MovieModel[]>

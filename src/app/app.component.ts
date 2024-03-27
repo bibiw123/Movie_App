@@ -25,7 +25,7 @@ export class AppComponent {
    * @returns Observable<Event[]>
    */
   userIsInactiveSince(durationInMinutes: number): Observable<Event[]> {
-    const click$ = fromEvent(document, 'click');
+    const click$ = fromEvent(document, 'click')
     const keyup$ = fromEvent(document, 'keydown');
     const mousemove$ = fromEvent(document, 'mousemove');
     return combineLatest([click$, keyup$, mousemove$])

@@ -26,9 +26,3 @@ export class UserModel {
 
 // type SimpleUser
 export type SimpleUser = Pick<UserModel, 'username' | 'email'>
-
-// type Credentials
-export type Credentials = {
-    email: string,
-    password: string
-}

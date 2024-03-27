@@ -35,6 +35,7 @@ export class TvDetailViewComponent {
     // Récupération de la série
     this._TmdbGateway.getOneTvShowFromApi(tvShowId).subscribe((tvshow: TvShowModel) => {
       this.serie = tvshow;
+      this.selectSeasonAction.setValue(tvshow.seasons[0]);
     });
     // Récupération des épisodes d'une saison
     this.selectSeasonAction.valueChanges.subscribe(season => {

@@ -5,7 +5,6 @@ import { SimpleUser, UserModel } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MovieModel } from '../models/movie.model';
-import { TvShowModel } from '../models/series.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
 
@@ -18,19 +17,22 @@ export class UserService implements UserGateway {
   constructor(private http: HttpClient, private alert: AlertService) { }
   apiurl = environment.API_URL;
 
-  /* STORE user : BehaviorSubject _user$ */
-  private _user$: BehaviorSubject<Partial<UserModel>> = new BehaviorSubject({})
-  public user$: Observable<any> = this._user$.asObservable();
+  /************************************
+   * STORE user: BehaviorSubject _user$ 
+  ************************************/
+  private _user$ = new BehaviorSubject<UserModel | undefined>(undefined);
+  public user$: Observable<UserModel | undefined> = this._user$.asObservable();
+
 
   /**
    * createUserModelAfterLogin()
    * Role: construire un user:UserModel {username, email, watchList, reviews}
    *       et pousser cette donnée dans le STORE, this._user$.next(user)
    *
-   * Les compoments peuvent alors consommer "user$ | async"
+   * Les components peuvent alors consommer "user$ | async"
    * afin d'afficher les données utilisateur dans les vues HTML
-   */
-  createUserModelAfterLogin(user: SimpleUser): void {
+  */
+  createUserModelAfterLogin(user: SimpleUser): Observable<UserModel | undefined> {
     const userWatchList$ = of(user).pipe(
       switchMap((user) => {
         return forkJoin([
@@ -48,10 +50,32 @@ export class UserService implements UserGateway {
         console.log('created user after login:', userLoggedIn)
         this._user$.next(userLoggedIn);
       })
+    return this._user$.asObservable()
   }
 
-  getUser(): UserModel{
+  /**
+   * getUser()
+   * Role: getter pour récupérer le user dans le STORE
+   * @returns UserModel
+  */
+  getUser(): UserModel {
     return this._user$.getValue() as UserModel
+  }
+
+  /**
+   * role : set user in the store
+   * @param user UserModel
+  */
+  public setUser$(user: UserModel): void {
+    this._user$.next(user)
+  }
+
+  /**
+    * role : reset user in the store
+    * @param user UserModel
+  */
+  resetUserData() {
+    this._user$.next(undefined)
   }
 
   /**** WATCHLIST MOVIES ****/
@@ -68,25 +92,23 @@ export class UserService implements UserGateway {
         apiResponse.map(
           (movie: MovieResponseDTO) => MovieDTOMapper.mapToMovieModel(movie)
         )
-      )
-      )
+      ))
   }
 
   /**
    * endpoint: [POST] /movies
    * Role: poster un movie dans la watchlist du user
-   * @returns Observable<MovieModel[]>
+   * @param movie MovieModel
    */
   postMovie(movie: MovieModel): void {
     const endpoint = '/movies';
     const movieDto: PostMovieDTO = MovieDTOMapper.mapFromMovieModel(movie)
     this.http.post(this.apiurl + endpoint, movieDto).subscribe(
-      (apiResponse : any) => {
-        let user: UserModel | Partial<UserModel> = this._user$.getValue();
-        if (user.watchList) {
+      (apiResponse: any) => {
+        let user: UserModel | undefined = this._user$.getValue();
+        if (user?.watchList) {
           movie.api_id = apiResponse.id
           user.watchList.movies = [movie, ...user.watchList.movies]
-          console.log( user);
           this._user$.next(user)
           this.alert.show('Film ajouté à la watchlist', 'success')
         }
@@ -97,26 +119,20 @@ export class UserService implements UserGateway {
   /**
    * endpoint: [DELETE] /movies/:id
    * Role: supprimer un movie de la watchlist du user
-   * @param movieId
+   * @param movieId number
    */
   deleteMovie(movieId: number): void {
     const endpoint = `/movies/${movieId}`;
-    // 1 faire la request HTTP delete, puis recuperer la response (movieid)
-    // 2 le back-end a répondu, donc on delete le film dans "user.watchlist.movies" (avec .filter)
-    // https://herewecode.io/fr/blog/supprimer-element-tableau-javascript/#:~:text=Si%20on%20souhaite%20supprimer%20le,rapidement%20avec%20la%20m%C3%A9thode%20shift.&text=On%20peut%20aussi%20utiliser%20la,d'une%20cha%C3%AEne%20de%20caract%C3%A8res.
-    // 3 Déclencher le changement dans le store ._user$
-
     this.http.delete(this.apiurl + endpoint).subscribe(
       apiResponse => {
-        let user: UserModel | Partial<UserModel> = this._user$.getValue();
-        if (user.watchList) {
+        let user: UserModel | undefined = this._user$.getValue();
+        if (user?.watchList) {
           user.watchList.movies = user.watchList.movies.filter(movie => movie.api_id !== movieId);
           this._user$.next(user);
           this.alert.show('Film supprimé de la watchlist', 'success');
         }
-      },
+      }
     );
-
   }
 
 
@@ -151,15 +167,6 @@ export class UserService implements UserGateway {
         watchlistMovieItem => watchlistMovieItem.tmdb_id === movie.tmdb_id)
     }
     return false;
-  }
-
-  public setUser$(user: UserModel): void {
-    this._user$.next(user)
-
-  }
-
-  resetUserData() {
-    this._user$.next({})
   }
 
 }
