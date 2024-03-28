@@ -8,6 +8,7 @@ import { MovieModel } from '../models/movie.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
 import { TvShowModel } from '../models/serie.model';
+import { PostSerieDTO, SerieDTOMapper } from '../dto/postserie.dto';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class UserService implements UserGateway {
   apiurl = environment.API_URL;
 
   /************************************
-   * STORE user: BehaviorSubject _user$ 
+   * STORE user: BehaviorSubject _user$
   ************************************/
   private _user$ = new BehaviorSubject<UserModel | undefined>(undefined);
   public user$: Observable<UserModel | undefined> = this._user$.asObservable();
@@ -140,7 +141,26 @@ export class UserService implements UserGateway {
     );
   }
 
-
+/**
+   * endpoint: [POST] /series
+   * Role: poster une série  dans la watchlist du user
+   * @param serie TvShowModel
+   */
+  postSerie(serie: TvShowModel): void {
+  const endpoint = '/series';
+  const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel (serie)
+  this.http.post(this.apiurl + endpoint, serieDTO).subscribe(
+    (apiResponse: any) => {
+      let user: UserModel | undefined = this._user$.getValue();
+      if (user?.watchList) {
+        serie.api_id = apiResponse.id
+        user.watchList.series = [serie, ...user.watchList.series]
+        this._user$.next(user)
+        this.alert.show('Série ajoutée à la watchlist')
+      }
+    }
+  )
+}
 
 
 

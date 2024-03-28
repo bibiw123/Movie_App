@@ -14,8 +14,11 @@ export abstract class UserGateway {
   abstract fetchWatchlistMovies(): Observable<MovieModel[]>
   abstract fetchWatchlistSeries(): Observable<any>
 
-  abstract postMovie(movie: any): void;
+  abstract postMovie(movie: MovieModel): void;
   abstract deleteMovie(movie: any): void;
+
+  abstract postSerie(serie: TvShowModel): void;
+  //abstract deleteSerie(serie: any): void;
 
   abstract isMovieInWatchlist(movie: MovieModel): boolean
   abstract isSerieInWatchlist(serie: TvShowModel): boolean

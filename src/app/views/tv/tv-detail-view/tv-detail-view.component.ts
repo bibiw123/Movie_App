@@ -68,11 +68,15 @@ export class TvDetailViewComponent {
 
   addSerieToWatchListAction(serie: TvShowModel) {
     console.log(serie);
+    this.userGateway.postSerie(serie)
     // appeler la methode du service userGateway.postSerie(serie)
   }
 
   removeSerieToWatchListAction(serie: TvShowModel) {
     console.log(serie);
+  //   const userWatchList = this.userGateway.getUser().watchList.series
+  //   const foundSerie = userWatchList.find(item => item.tmdb_id === serie.tmdb_id)
+  //   if (foundSerie) this.userGateway.deleteSerie(foundSerie.api_id)
   }
 
 }

@@ -68,7 +68,7 @@ export class TvShowModelMapper {
             date: tvshow.first_air_date,
             video: tvshow.videos?.results ? tvshow.videos?.results : [],
             reviews: [],
-            seasons: tvshow.seasons,
+            seasons: tvshow.seasons.map( (season:any) => season.id_tmdb = season.id),
             status: tvshow.status
         }
     }
