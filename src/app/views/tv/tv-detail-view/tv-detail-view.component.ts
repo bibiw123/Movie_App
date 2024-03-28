@@ -74,9 +74,9 @@ export class TvDetailViewComponent {
 
   removeSerieToWatchListAction(serie: TvShowModel) {
     console.log(serie);
-  //   const userWatchList = this.userGateway.getUser().watchList.series
-  //   const foundSerie = userWatchList.find(item => item.tmdb_id === serie.tmdb_id)
-  //   if (foundSerie) this.userGateway.deleteSerie(foundSerie.api_id)
+    const userWatchList = this.userGateway.getUser().watchList.series
+    const foundSerie = userWatchList.find(item => item.tmdb_id === serie.tmdb_id)
+    if (foundSerie) this.userGateway.deleteSerie(foundSerie.api_id)
   }
 
 }

@@ -18,7 +18,7 @@ export abstract class UserGateway {
   abstract deleteMovie(movie: any): void;
 
   abstract postSerie(serie: TvShowModel): void;
-  //abstract deleteSerie(serie: any): void;
+  abstract deleteSerie(serie: any): void;
 
   abstract isMovieInWatchlist(movie: MovieModel): boolean
   abstract isSerieInWatchlist(serie: TvShowModel): boolean

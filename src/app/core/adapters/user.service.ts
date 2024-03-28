@@ -161,6 +161,24 @@ export class UserService implements UserGateway {
       }
     )
   }
+  /**
+   * endpoint: [DELETE] /series/:id
+   * Role: supprimer une série de la watchlist du user
+   * @param serieId number
+   */
+  deleteSerie(serieId: number): void {
+    const endpoint = `/series/${serieId}`;
+    this.http.delete(this.apiurl + endpoint).subscribe(
+      (apiResponse) => {
+        let user: UserModel | undefined = this._user$.getValue();
+        if (user?.watchList) {
+          user.watchList.series = user.watchList.series.filter(serie => serie.api_id !== serieId);
+          this._user$.next(user);
+          this.alert.show('Série supprimée de la watchlist');
+        }
+      }
+    );
+  }
 
 
 
