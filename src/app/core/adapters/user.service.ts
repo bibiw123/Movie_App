@@ -115,7 +115,7 @@ export class UserService implements UserGateway {
           movie.api_id = apiResponse.id
           user.watchList.movies = [movie, ...user.watchList.movies]
           this._user$.next(user)
-          this.alert.show('Film ajouté à la watchlist', 'success')
+          this.alert.show('Film ajouté à la watchlist')
         }
       }
     )
@@ -129,12 +129,12 @@ export class UserService implements UserGateway {
   deleteMovie(movieId: number): void {
     const endpoint = `/movies/${movieId}`;
     this.http.delete(this.apiurl + endpoint).subscribe(
-      apiResponse => {
+      (apiResponse) => {
         let user: UserModel | undefined = this._user$.getValue();
         if (user?.watchList) {
           user.watchList.movies = user.watchList.movies.filter(movie => movie.api_id !== movieId);
           this._user$.next(user);
-          this.alert.show('Film supprimé de la watchlist', 'success');
+          this.alert.show('Film supprimé de la watchlist');
         }
       }
     );

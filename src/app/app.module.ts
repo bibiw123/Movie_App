@@ -31,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
@@ -82,7 +83,8 @@ import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-
     MatMenuModule,
     MatSelectModule,
     MatButtonToggleModule,
-    MatIconModule
+    MatIconModule,
+    MatTabsModule
   ],
 
   providers: [

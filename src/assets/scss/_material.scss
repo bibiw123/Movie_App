@@ -1,3 +1,25 @@
+.mat-mdc-tab-header {
+    border-bottom: 2px solid #ffffffa8;
+    --mat-tab-header-label-text-size: 1.1rem;
+    --mat-tab-header-label-text-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.mat-mdc-tab-group,
+.mat-mdc-tab-nav-bar {
+    --mdc-tab-indicator-active-indicator-color: #ffffff;
+    --mat-tab-header-active-label-text-color: #ffffff;
+    --mat-tab-header-inactive-label-text-color: rgba(255, 255, 255, 0.458);
+    --mat-tab-header-inactive-focus-label-text-color: rgba(0, 0, 0, 0.6);
+    --mat-tab-header-inactive-hover-label-text-color: #fff;
+    --mat-tab-header-active-focus-label-text-color: #ffffff;
+    --mat-tab-header-active-hover-label-text-color: #ffffff;
+    --mat-tab-header-active-focus-indicator-color: #ffffff;
+    --mat-tab-header-active-hover-indicator-color: #ffffff;
+}
+
+
 mat-pseudo-checkbox {
     display: none !important;
 }
@@ -30,9 +52,13 @@ mat-pseudo-checkbox {
     --mat-standard-button-toggle-label-text-line-height: 40px;
     --mat-standard-button-toggle-label-text-weight: 400;
 
-    --mat-standard-button-toggle-selected-state-text-color: #fff;
-    --mat-standard-button-toggle-selected-state-background-color: #5550be;
+    --mat-standard-button-toggle-selected-state-text-color: #e0cd8f;
+    --mat-standard-button-toggle-selected-state-background-color: #323f4e;
+}
 
+.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    color: #c3ad51;
+    background-color: #323f4e;
 }
 
 .mat-button-toggle {

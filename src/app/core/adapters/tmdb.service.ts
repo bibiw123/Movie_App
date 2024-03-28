@@ -167,7 +167,7 @@ export class TMDBService implements TMDBGateway {
     let options = {
       params: {
         language: 'fr',
-        append_to_response: 'videos'
+        append_to_response: 'videos,credits'
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)

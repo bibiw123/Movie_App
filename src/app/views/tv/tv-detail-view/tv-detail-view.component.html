@@ -40,10 +40,23 @@
 
         <!-- BLOC DROITE: TEXTES-->
         <div class="col-12 col-lg-6">
-
+            <p class="d-flex info">
+                <span><i class="fa-solid fa-circle"></i>{{serie.seasons.length}} saisons</span>
+                <span>
+                    <i class="fa-solid fa-circle"></i>
+                    {{serie.episode_count}} épisodes
+                    @if(serie.episode_runtime && serie.episode_runtime > 0) {
+                    ({{serie.episode_runtime | printduration}})
+                    }
+                </span>
+            </p>
             <p class="d-flex">
-                <span><i class="fa-solid fa-circle"></i>Sortie {{serie.date | date:'MM-yyyy'}}</span>
-                <span><i class="fa-solid fa-circle"></i>Durée {{serie.episode_runtime | printduration}}</span>
+                @if(serie.last_air_date){
+                <span>{{serie.date | date:'yyyy'}} - {{serie.last_air_date | date:'yyyy'}}</span>
+                }
+                @else {
+                <span>Sortie {{serie.date | date:'yyyy'}}</span>
+                }
             </p>
             @for(genre of serie.genres; track genre.id ) {
             <span class="badge rounded-pill text-bg-light">
@@ -51,9 +64,12 @@
             </span>
             }
 
+            @if(serie.resume) {
             <h2>Résumé</h2>
             <p class="resume">{{serie.resume}}</p>
-
+            }
+            @else {
+            <p class="resume">Pas de résumé disponible</p>}
         </div>
 
     </main>
@@ -61,36 +77,78 @@
 
     <!-- Details Saison & épisodes -->
     <section>
+        <mat-tab-group animationDuration="0" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Épisodes">
+                <!-- dropdown select season -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Saison</mat-label>
+                    <mat-select panelClass="matselect-custom" [formControl]="selectSeasonAction" disableOptionCentering>
+                        @for (season of serie.seasons; track season.id) {
+                        <mat-option [value]="season">{{season.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
 
-        <!-- dropdown select season -->
-        <mat-form-field appearance="fill">
-            <mat-label>Saison</mat-label>
-            <mat-select panelClass="matselect-custom" [formControl]="selectSeasonAction" disableOptionCentering>
-                @for (season of serie.seasons; track season.id) {
-                <mat-option [value]="season">{{season.name}}</mat-option>
+                <!-- liste des épisodes-->
+                @if(seasonDetails){
+
+                <div class="row g-4">
+                    @for (episode of seasonDetails.episodes; track episode.id) {
+                    <div class="col-12 col-lg-6 col-xl-4 col-xxl-3">
+                        <div class="card">
+                            <ui-button-group
+                                (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group>
+                            <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
+                            <div class="card-body">
+                                <h3 class="card-title">{{episode.name}}</h3>
+                                <p class="card-text">{{episode.overview}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
                 }
-            </mat-select>
-        </mat-form-field>
-
-        <!-- liste des épisodes-->
-        @if(seasonDetails){
-
-        <div class="row g-4">
-            @for (episode of seasonDetails.episodes; track episode.id) {
-            <div class="col-12 col-lg-6 col-xl-4 col-xxl-3">
-                <div class="card">
-                    <ui-button-group (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group>
-                    <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
-                    <div class="card-body">
-                        <h3 class="card-title">{{episode.name}}</h3>
-                        <p class="card-text">{{episode.overview}}</p>
+            </mat-tab>
+            <mat-tab label="Détails">
+                <!-- TAB Détail-->
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="col-12 col-md-4">
+                        <h4>Créé par</h4>
+                        <ul>
+                            @for(creator of serie.created_by; track creator.id ) {
+                            <li>
+                                {{creator.name}}
+                            </li>
+                            }
+                        </ul>
+                        <h4>Équipe</h4>
+                        <ul>
+                            @for(person of serie.credits?.crew; track person.id) {
+                            <li>{{person.name}}</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <h4>Acteurs</h4>
+                        <ul
+                            style="display: flex;flex-wrap: wrap; justify-content: space-evenly; text-align: center; list-style: none;">
+                            @for(actor of serie.credits?.cast; track actor.id) {
+                            <li>
+                                <img style="width: 150px;" [src]="getFullImageUrl(actor?.profile_path)"
+                                    [alt]="actor.name">
+                                {{actor.name}}
+                            </li>
+                            }
+                        </ul>
                     </div>
                 </div>
-            </div>
-            }
-        </div>
+            </mat-tab>
+            <mat-tab label="Vidéos">
+                Vidéos
+            </mat-tab>
+        </mat-tab-group>
 
-        }
+
     </section>
 
 
