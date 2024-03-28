@@ -10,6 +10,7 @@ import { LoginViewComponent } from './views/user/login-view/login-view.component
 import { TvDetailViewComponent } from './views/tv/tv-detail-view/tv-detail-view.component';
 import { WatchlistComponent } from './views/user/watchlist/watchlist.component';
 import { PersonDetailViewComponent } from './views/person/person-detail-view/person-detail-view.component';
+import { authGuard } from './shared/guards/auth.guard';
 
 // ajouter les routes
 const routes: Routes = [
@@ -26,7 +27,7 @@ const routes: Routes = [
   // user views
   { path: 'register', component: RegisterViewComponent },
   { path: 'login', component: LoginViewComponent },
-  { path: 'watchlist', component: WatchlistComponent }
+  { path: 'watchlist', component: WatchlistComponent, canActivate: [authGuard] }
 
 ];
 
