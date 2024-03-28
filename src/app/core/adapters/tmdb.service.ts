@@ -34,10 +34,10 @@ export class TMDBService implements TMDBGateway {
 
   constructor(private http: HttpClient) { }
   /*
-    Comment MAPPER les réponses API 
+    Comment MAPPER les réponses API
     dans notre modèle de données Frontend ?
-    
-    Observable.pipe( operator ) 
+
+    Observable.pipe( operator )
     > accepte en parametres un/des opérateur(s) de transformation
       ex: map(), filter(), etc....
     > return un Observable
@@ -181,8 +181,8 @@ export class TMDBService implements TMDBGateway {
   /**
    * API TMBD
    * tv/{series_id}/season/{season_number}
-   * @param serieId 
-   * @param seasonNumber 
+   * @param serieId
+   * @param seasonNumber
    */
   getEpisodesFromApi(serieId: number, seasonNumber: number): any {
     const ENDPOINT = `/tv/${serieId}/season/${seasonNumber}`;
@@ -213,7 +213,7 @@ export class TMDBService implements TMDBGateway {
     let options = {
       params: {
         language: 'fr',
-        append_to_response: 'videos'
+        append_to_response: 'videos,credits'
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)

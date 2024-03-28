@@ -71,5 +71,39 @@
         </div>
 
     </div>
+
+    <section>
+
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+        <mat-tab label="Détails">
+          <div style="display: flex;flex-wrap: wrap;">
+            <div class="col-12 col-md-4">
+
+                <h4>Équipe</h4>
+                <ul>
+                    @for(person of movie.credits.crew; track person.id) {
+                    <li>{{person.name}}</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-12 col-md-8">
+                <h4>Acteurs</h4>
+                <ul
+                    style="display: flex;flex-wrap: wrap; justify-content: space-evenly; text-align: center; list-style: none;">
+                    @for(actor of movie.credits.cast; track actor.id) {
+                    <li>
+                        <img style="width: 150px;" [src]="getFullImageUrl(actor?.profile_path)"
+                            [alt]="actor.name">
+                        {{actor.name}}
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        </mat-tab>
+        <mat-tab label="Vidéos">Content 2</mat-tab>
+      </mat-tab-group>
+
+    </section>
 </div>
 }

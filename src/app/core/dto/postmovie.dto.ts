@@ -36,6 +36,7 @@ export class MovieDTOMapper {
         return {
             api_id: movie.id?movie.id:undefined,
             tmdb_id: movie.id_tmdb,
+            credits: {cast:[], crew:[]},
             titre: movie.title,
             duration: movie.duration,
             resume: movie.overview,

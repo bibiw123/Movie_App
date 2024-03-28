@@ -33,7 +33,12 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   getFullImageUrl(fragmentUrl: string) {
-    return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
+    if (fragmentUrl == null){
+      return "https://placehold.co/500x750?text=Image+non+disponible"
+    }
+    else{
+      return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
+    }
   }
 
   addMovieToWatchListAction(movie: MovieModel) {
