@@ -66,4 +66,13 @@ export class TvDetailViewComponent {
     console.log(event);
   }
 
+  addSerieToWatchListAction(serie: TvShowModel) {
+    console.log(serie);
+    // appeler la methode du service userGateway.postSerie(serie)
+  }
+
+  removeSerieToWatchListAction(serie: TvShowModel) {
+    console.log(serie);
+  }
+
 }

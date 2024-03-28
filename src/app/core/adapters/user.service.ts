@@ -141,6 +141,9 @@ export class UserService implements UserGateway {
   }
 
 
+
+
+
   /**** WATCHLIST MOVIES ****/
 
   /**
@@ -177,6 +180,24 @@ export class UserService implements UserGateway {
     if (user?.watchList?.movies) {
       return user.watchList?.movies.some(
         watchlistMovieItem => watchlistMovieItem.tmdb_id === movie.tmdb_id)
+    }
+    return false;
+  }
+
+  /**
+   * méthode utilitaire
+   * isSerieInWatchlist
+   * rôle: permet aux components de vérifier
+   *      si une série est dans la watchlist du user
+   * @param serie
+   * @returns boolean
+   *
+   */
+  isSerieInWatchlist(serie: TvShowModel): boolean {
+    let user = this._user$.getValue();
+    if (user?.watchList?.series) {
+      return user.watchList?.series.some(
+        watchlistSerieItem => watchlistSerieItem.tmdb_id === serie.tmdb_id)
     }
     return false;
   }

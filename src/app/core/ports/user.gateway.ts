@@ -2,6 +2,7 @@ import { Observable } from "rxjs";
 import { SimpleUser, UserModel } from "../models/user.model";
 import { MovieModel } from "../models/movie.model";
 import { MovieResponseDTO } from "../dto/postmovie.dto";
+import { TvShowModel } from "../models/serie.model";
 
 export abstract class UserGateway {
 
@@ -17,6 +18,7 @@ export abstract class UserGateway {
   abstract deleteMovie(movie: any): void;
 
   abstract isMovieInWatchlist(movie: MovieModel): boolean
+  abstract isSerieInWatchlist(serie: TvShowModel): boolean
   abstract resetUserData(): void
 
 }

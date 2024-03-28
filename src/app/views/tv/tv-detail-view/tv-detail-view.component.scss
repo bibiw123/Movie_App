@@ -6,6 +6,13 @@ main {
     margin-top: 10px;
 }
 
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 .row.display-flex {
     display: flex;
     flex-wrap: wrap;

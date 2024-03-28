@@ -14,20 +14,20 @@
         <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
 
-            <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
-            <!-- @if(userGateway.isMovieInWatchlist(serie)) {
-            <button class="addtowatchlist" (click)="removeMovieToWatchListAction(movie)">
-                Retirer de ma liste <i class="fa-solid fa-xmark"></i>
-            </button>
-            }
-            @else{
-            BOUTON "RETIRER A LA WATCHLIST"
-            <button (click)="addMovieToWatchListAction(movie)" class="addtowatchlist addtowatchlist-true">
-                Ajouter à ma liste <i class="fa-solid fa-plus"></i>
-            </button>
-            } -->
-
-            <!-- <ui-button-group (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group> -->
+            <div class="toolbar">
+                <!-- BOUTON "RETIRER A LA WATCHLIST" -->
+                @if(userGateway.isSerieInWatchlist(serie)) {
+                <button class="addtowatchlist active" (click)="removeSerieToWatchListAction(serie)">
+                    Dans ma liste <i class="fa-solid fa-heart"></i>
+                </button>
+                }
+                @else{
+                <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
+                <button (click)="addSerieToWatchListAction(serie)" class="addtowatchlist addtowatchlist-true">
+                    Ajouter à ma liste <i class="fa-regular fa-heart"></i>
+                </button>
+                }
+            </div>
 
             }
 
