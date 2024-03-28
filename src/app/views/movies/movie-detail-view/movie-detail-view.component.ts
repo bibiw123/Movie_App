@@ -28,7 +28,7 @@ export class MovieDetailViewComponent implements OnInit {
     // 1 On récupere l'id dans l'URL
     const movieId: string = this._route.snapshot.params['id'];
     // 2 On demande au service de nous donner le film correspondant
-    this.movie$ = this._TmdbGateway.getMovieFromApi(movieId)
+    this.movie$ = this._TmdbGateway.getMovieFromApi(movieId);
     // 3 Pour afficher @if(movie$ | async; as movie) dans la vue HTML
   }
 
@@ -49,7 +49,5 @@ export class MovieDetailViewComponent implements OnInit {
   changeMovieWatchedStatus(event: Event) {
     //this.userGateway.patchMovie($event)
   }
-
-
 
 }

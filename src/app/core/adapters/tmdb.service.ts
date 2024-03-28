@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MovieModel, MovieModelMapper } from '../models/movie.model';
-import { TvShowModel } from '../models/series.model';
+import { TvShowModel, TvShowModelMapper } from '../models/serie.model';
 import { SearchModel } from '../models/search.model';
 import { TMDBGateway } from '../ports/tmdb.gateway';
+
 
 
 @Injectable({
@@ -59,7 +60,7 @@ export class TMDBService implements TMDBGateway {
         .pipe(
           map((response: any) => response.results
             .map(
-              (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
+              (movieResponseFromApi: any) => MovieModelMapper.mapFromTmdb(movieResponseFromApi)
             )
           )
         )
@@ -124,12 +125,11 @@ export class TMDBService implements TMDBGateway {
           map((response: any) =>
             response.results
               .map(
-                (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
+                (tvshowResponseFromApi: any) => TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi)
               )
-            //.filter((tvShow: TvShowModel) => tvShow.resume.length)
           )
         )
-        .subscribe(response => this._tv$.next(response))
+        .subscribe((response: TvShowModel[]) => this._tv$.next(response))
     }
     return this._tv$.asObservable()
   }
@@ -143,7 +143,7 @@ export class TMDBService implements TMDBGateway {
         map((response: any) =>
           response.results
             .map(
-              (tvshowFromApi: any) => new TvShowModel(tvshowFromApi)
+              (tvshowResponseFromApi: any) => TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi)
             )
         )
       )
@@ -172,8 +172,8 @@ export class TMDBService implements TMDBGateway {
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
-        map(response => new TvShowModel(response))
-      )
+        map(tvshowResponseFromApi => TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi))
+      );
   }
 
   /**

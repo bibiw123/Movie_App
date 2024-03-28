@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TMDBService } from '../../../core/adapters/tmdb.service';
-import { TvShowModel } from '../../../core/models/series.model';
+import { TvShowModel } from '../../../core/models/serie.model';
 import { Location } from '@angular/common';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 import { AuthGateway } from '../../../core/ports/auth.gateway';
@@ -40,7 +40,7 @@ export class TvDetailViewComponent {
     });
     // fetch des épisodes d'une saison quand l'utilisateur selectionne une saison
     this.selectSeasonAction.valueChanges.subscribe(season => {
-      this._TmdbGateway.getEpisodesFromApi(this.serie.id, season.season_number)
+      this._TmdbGateway.getEpisodesFromApi(this.serie.tmdb_id, season.season_number)
         .subscribe((seasonDetails: any) => {
           console.log(seasonDetails)
           this.seasonDetails = seasonDetails;

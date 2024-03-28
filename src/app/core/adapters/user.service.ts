@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { MovieModel } from '../models/movie.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
-import { TvShowModel } from '../models/series.model';
+import { TvShowModel } from '../models/serie.model';
 
 
 @Injectable({
@@ -38,8 +38,8 @@ export class UserService implements UserGateway {
       switchMap((user: SimpleUser) => {
         return forkJoin([
           this.fetchWatchlistMovies(),
-          //this.fetchWatchlistSeries()
-          of([])
+          this.fetchWatchlistSeries()
+          //of([])
         ]);
       })
     );

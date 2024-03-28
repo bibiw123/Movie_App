@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TvShowModel } from '../../../core/models/series.model';
+import { TvShowModel } from '../../../core/models/serie.model';
 import { Observable } from 'rxjs';
 import { Genre, genresTv } from '../../../shared/data/genres.data';
 import { TMDBGateway } from '../../../core/ports/tmdb.gateway';

@@ -1,4 +1,4 @@
-import { TvShowModel } from "../models/series.model";
+import { TvShowModel } from "../models/serie.model";
 
 export let tvShowsData: TvShowModel[] = [
     {

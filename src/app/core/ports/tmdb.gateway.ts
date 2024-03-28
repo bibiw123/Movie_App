@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { MovieModel } from "../models/movie.model";
-import { TvShowModel } from "../models/series.model";
+import { TvShowModel } from "../models/serie.model";
 
 /* 
     Dans le cadre de l'architecture port/adapter (clean architecture)

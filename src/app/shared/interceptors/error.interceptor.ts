@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { AlertService } from '../services/alert.service';
 
 type APIErrorResponse = {
-  errorMessage: string,
+  error_message: string,
   status: number
 }
 
@@ -28,25 +28,26 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (err instanceof HttpErrorResponse) {
             const error = err.error as APIErrorResponse;
             switch (err.status) {
+              // detecter si error_message est une instanceof string ou un objet
               case 400:
                 // if (req.url.includes(this.MY_API+'/users') && req.method=='POST')
-                this._alert.show(error.errorMessage, 'error');
+                this._alert.show(error.error_message, 'error');
                 break;
               case 401:
-                this._alert.show(error.errorMessage, 'error');
+                this._alert.show(error.error_message, 'error');
                 //this._route.navigate(['/login']);
                 break;
               case 403:
-                this._alert.show(error.errorMessage, 'error')
+                this._alert.show(error.error_message, 'error')
                 break;
               case 404:
-                this._alert.show(error.errorMessage, 'error')
+                this._alert.show(error.error_message, 'error')
                 break;
               case 419:
-                this._alert.show(error.errorMessage, 'error')
+                this._alert.show(error.error_message, 'error')
                 break;
               case 409:
-                this._alert.show(error.errorMessage, 'error')
+                this._alert.show(error.error_message, 'error')
                 break;
               case 500:
                 this._alert.show('Erreur serveur', 'error')

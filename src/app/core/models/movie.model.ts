@@ -2,6 +2,8 @@ import { MovieResponseDTO, PostMovieDTO } from "../dto/postmovie.dto";
 import { GenreModel } from "./genre.model";
 import { Review } from "./review.model";
 
+// MovieModel est notre model de données pour les films sur notre application
+// ex: dans un component movie.titre pour afficher le titre du film
 export type MovieModel = {
     api_id?: number;
     tmdb_id: number;
@@ -19,7 +21,19 @@ export type MovieModel = {
     reviews: Review[];
 }
 
-
+/**
+ * Cette classe expose les méthodes de mapping des données de film 
+ * en provenance de l'API TMDB
+ * 
+ * elles sont utilisées dans TBDBService
+ * au moment où on fait une http request pour récupérer les films
+ * exemple: 
+ * 
+ * this.http.get('https://api.themoviedb.org/3/discover/movies').pipe(
+ *  (responseFromTmdb) => MovieModelMapper.mapFromTmdb(responseFromTmdb) : MovieModel
+ * )
+ * 
+ */
 export class MovieModelMapper {
 
     static mapFromTmdb(movie: any): MovieModel {

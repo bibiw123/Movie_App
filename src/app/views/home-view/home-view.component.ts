@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MovieModel } from '../../core/models/movie.model';
-import { TvShowModel } from '../../core/models/series.model';
+import { TvShowModel } from '../../core/models/serie.model';
 import { TMDBGateway } from '../../core/ports/tmdb.gateway';
 
 @Component({
@@ -10,9 +10,8 @@ import { TMDBGateway } from '../../core/ports/tmdb.gateway';
 })
 export class HomeViewComponent {
 
-  movies!: MovieModel[];
-  series!: TvShowModel[];
-  pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  movies!: MovieModel[]; // 6 films à afficher
+  series!: TvShowModel[]; // 6 series à afficher
 
   constructor(
     public TmdbGateway: TMDBGateway
@@ -24,14 +23,16 @@ export class HomeViewComponent {
     // récuperer les 5 premieres series
     this.TmdbGateway.getTvShowFromApi();
 
-    // filtrer les 6 premiers movies
+
+    // filtrer les 6 premiers movies à afficher
     this.TmdbGateway.movies$.subscribe(moviesFromSource => {
       this.movies = moviesFromSource.slice(0, 6)
     })
-    // filtrer les 6 premières series
+    // filtrer les 6 premières series à afficher
     this.TmdbGateway.tv$.subscribe(seriesFromSource => {
       this.series = seriesFromSource.slice(0, 6)
     })
+
   }
 
 
