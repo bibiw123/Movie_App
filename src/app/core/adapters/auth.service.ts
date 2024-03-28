@@ -89,4 +89,8 @@ export class AuthService implements AuthGateway {
   getTokenFromLocalStorage(): string | null {
     return localStorage.getItem("token")
   }
+
+  isAuth(): boolean {
+    return this._isAuth$.getValue();
+  }
 }

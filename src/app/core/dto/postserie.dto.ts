@@ -14,7 +14,26 @@ export type SerieDTO = {
     title: string,
     score: number,
     genres: GenreModel[],
-    seasons: SeasonModel[]
+    seasons: SeasonDTO[]
+}
+
+export type EpisodeDTO = {
+    id_tmdb: number,
+    air_date: Date,
+    episode_number: number,
+    season_number: number,
+    image_path: string,
+    title: string,
+    overview: string,
+    duration: number
+}
+
+export type SeasonDTO = {
+    id_tmdb: number,
+    poster_path: string,
+    season_number: number,
+    overview: string,
+    // episodes: EpisodeDTO[]
 }
 
 export type PostSerieDTO = Omit<SerieDTO, 'id'>
@@ -34,9 +53,22 @@ export class SerieDTOMapper {
             title: serie.titre,
             score: serie.score,
             genres: serie.genres,
-            seasons: serie.seasons
+            seasons: this.mapSeasons(serie.seasons)
         }
     }
+
+    static mapSeasons(seasons: SeasonModel[]): SeasonDTO[] {
+        return seasons.map(season => {
+            return {
+                id_tmdb: season.id_tmdb,
+                poster_path: season.poster_path,
+                season_number: season.season_number,
+                overview: season.overview,
+                // episodes: season.episodes
+            }
+        })
+    }
+
 
 }
 

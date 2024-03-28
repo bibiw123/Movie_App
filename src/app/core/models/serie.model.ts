@@ -15,6 +15,8 @@ export type EpisodeModel = {
 
 export type SeasonModel = {
     id_tmdb: number
+    overview: string
+    poster_path: string
     air_date: Date
     episode_count: number
     name: string;
@@ -68,7 +70,7 @@ export class TvShowModelMapper {
             date: tvshow.first_air_date,
             video: tvshow.videos?.results ? tvshow.videos?.results : [],
             reviews: [],
-            seasons: tvshow.seasons.map( (season:any) => season.id_tmdb = season.id),
+            seasons: tvshow?.seasons?.map((season: any) => season.id_tmdb = season.id) ? tvshow?.seasons : [],
             status: tvshow.status
         }
     }

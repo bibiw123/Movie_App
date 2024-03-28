@@ -7,6 +7,8 @@ import { AlertService } from '../services/alert.service';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthGateway)
   const alert = inject(AlertService)
-  alert.show("Veuillez vous connecter pour utiliser cette fonctionnalité")
+  if (authService.isAuth() === false) {
+    alert.show("Veuillez vous connecter pour utiliser cette fonctionnalité")
+  }
   return authService.isAuth$;
 };

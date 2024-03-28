@@ -125,8 +125,10 @@ export class TMDBService implements TMDBGateway {
           map((response: any) =>
             response.results
               .map(
-                (tvshowResponseFromApi: any) => TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi)
-              )
+                (tvshowResponseFromApi: any) => {
+                  console.log(tvshowResponseFromApi)
+                  return TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi)
+                })
           )
         )
         .subscribe((response: TvShowModel[]) => this._tv$.next(response))
@@ -167,7 +169,7 @@ export class TMDBService implements TMDBGateway {
     let options = {
       params: {
         language: 'fr',
-        append_to_response: 'videos,credits'
+        append_to_response: 'videos,credits,season/1,season/2'
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)

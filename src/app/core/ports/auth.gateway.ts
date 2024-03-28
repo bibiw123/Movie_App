@@ -8,5 +8,6 @@ export abstract class AuthGateway {
     abstract logout(): Observable<any>
     abstract storeTokenInLocalStorage(token: string): void
     abstract getTokenFromLocalStorage(): string | null
+    abstract isAuth(): boolean
 
 }

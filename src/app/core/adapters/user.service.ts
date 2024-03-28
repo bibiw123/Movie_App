@@ -141,26 +141,26 @@ export class UserService implements UserGateway {
     );
   }
 
-/**
-   * endpoint: [POST] /series
-   * Role: poster une série  dans la watchlist du user
-   * @param serie TvShowModel
-   */
+  /**
+     * endpoint: [POST] /series
+     * Role: poster une série  dans la watchlist du user
+     * @param serie TvShowModel
+     */
   postSerie(serie: TvShowModel): void {
-  const endpoint = '/series';
-  const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel (serie)
-  this.http.post(this.apiurl + endpoint, serieDTO).subscribe(
-    (apiResponse: any) => {
-      let user: UserModel | undefined = this._user$.getValue();
-      if (user?.watchList) {
-        serie.api_id = apiResponse.id
-        user.watchList.series = [serie, ...user.watchList.series]
-        this._user$.next(user)
-        this.alert.show('Série ajoutée à la watchlist')
+    const endpoint = '/series';
+    const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel(serie)
+    this.http.post(this.apiurl + endpoint, serieDTO).subscribe(
+      (apiResponse: any) => {
+        let user: UserModel | undefined = this._user$.getValue();
+        if (user?.watchList) {
+          serie.api_id = apiResponse.id
+          user.watchList.series = [serie, ...user.watchList.series]
+          this._user$.next(user)
+          this.alert.show('Série ajoutée à la watchlist')
+        }
       }
-    }
-  )
-}
+    )
+  }
 
 
 
