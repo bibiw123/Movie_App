@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthGateway } from './core/ports/auth.gateway';
 import { Observable, combineLatest, debounceTime, fromEvent, interval, tap, throttle } from 'rxjs';
+import { LoaderService } from './shared/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,9 @@ import { Observable, combineLatest, debounceTime, fromEvent, interval, tap, thro
 })
 export class AppComponent {
   title = 'movieapp';
+  isLoading$ = this.loaderService.isLoading;
 
-  constructor(private authGateway: AuthGateway) { }
+  constructor(private authGateway: AuthGateway, private loaderService:LoaderService) { }
 
   ngOnInit() {
     // this.userIsInactiveSince(1).subscribe((event) => {
@@ -21,7 +23,7 @@ export class AppComponent {
 
   /**
    * Role: emit a value after X minutes of user inactivity
-   * @param durationInMinutes 
+   * @param durationInMinutes
    * @returns Observable<Event[]>
    */
   userIsInactiveSince(durationInMinutes: number): Observable<Event[]> {

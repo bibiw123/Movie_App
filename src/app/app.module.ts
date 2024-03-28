@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
@@ -45,6 +46,8 @@ import { UserGateway } from './core/ports/user.gateway';
 import { UserService } from './core/adapters/user.service';
 import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.component';
 import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-button-group.component';
+import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
+
 
 
 @NgModule({
@@ -84,7 +87,8 @@ import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-
     MatSelectModule,
     MatButtonToggleModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
   ],
 
   providers: [
@@ -93,6 +97,9 @@ import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-
     { provide: AuthGateway, useClass: AuthService },
     { provide: UserGateway, useClass: UserService },
 
+
+    // Interceptor: TokenInterceptor - pour ajouter un token à la request
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     // Interceptor: TokenInterceptor - pour ajouter un token à la request
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     // Interceptor: ErrorInterceptor - pour traiter les erreurs HTTP (401, 403, 404, 400, 500)
