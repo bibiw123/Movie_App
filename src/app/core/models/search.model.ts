@@ -3,6 +3,7 @@ export class SearchModel {
     titre: string;
     image_landscape: string;
     image_portrait: string;
+    score:number;
     media_type: 'movie' | 'tv' | 'person'
 
     constructor(responseFromApi: any) {
@@ -20,5 +21,6 @@ export class SearchModel {
             ? responseFromApi.poster_path
             : responseFromApi.profile_path,
             this.media_type = responseFromApi.media_type
+        this.score = responseFromApi.vote_average
     }
 }

@@ -9,11 +9,11 @@
         </button>
         <h1>{{movie.titre}}</h1>
     </div>
-
+    <!-- <ui-star score="5"></ui-star> -->
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
-
+          <ui-star [score]="movie.score"></ui-star>
             @if(authGateway.isAuth$ | async) {
 
             <div class="toolbar">

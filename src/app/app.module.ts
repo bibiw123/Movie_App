@@ -47,6 +47,7 @@ import { UserService } from './core/adapters/user.service';
 import { YtPlayerComponent } from './shared/ui-components/yt-player/yt-player.component';
 import { ButtonGroupComponent } from './shared/ui-components/ui-button-group/ui-button-group.component';
 import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
+import { UiStarComponent } from './shared/ui-components/ui-star/ui-star.component';
 
 
 
@@ -74,6 +75,7 @@ import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
     SliderComponent,
     YtPlayerComponent,
     ButtonGroupComponent,
+    UiStarComponent,
     //ClickoutsideDirective
   ],
 
