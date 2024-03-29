@@ -29,7 +29,6 @@ export class MovieListViewComponent {
   }
 
   selectGenre(genre: Genre) {
-    console.log(genre)
     // Request TMDV /movie/
   }
 

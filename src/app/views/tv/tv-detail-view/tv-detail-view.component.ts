@@ -10,6 +10,7 @@ import { AuthGateway } from '../../../core/ports/auth.gateway';
 import { UserGateway } from '../../../core/ports/user.gateway';
 import { FormControl } from '@angular/forms';
 import { UIButtonDataModel } from '../../../shared/ui-components/ui-button-group/ui-button-group.component';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-tv-detail-view',
@@ -28,6 +29,7 @@ export class TvDetailViewComponent {
     private _TmdbGateway: TMDBGateway,
     public authGateway: AuthGateway,
     public userGateway: UserGateway,
+    public loaderService: LoaderService
   ) { }
 
   ngOnInit() {
@@ -82,7 +84,6 @@ export class TvDetailViewComponent {
   }
 
   removeSerieToWatchListAction(serie: TvShowModel) {
-    console.log(serie);
     const userWatchList = this.userGateway.getUser().watchList.series
     const foundSerie = userWatchList.find(item => item.tmdb_id === serie.tmdb_id)
     if (foundSerie) this.userGateway.deleteSerie(foundSerie.api_id)

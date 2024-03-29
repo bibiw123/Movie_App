@@ -19,6 +19,7 @@ export type MovieModel = {
     date: Date;
     hasVideo: boolean;
     video?: string | undefined;
+    status?: number;
     //videos: any[];
     reviews: Review[];
 }
@@ -42,7 +43,7 @@ export class MovieModelMapper {
         return {
             tmdb_id: movie.id,
             titre: movie.title,
-            credits : movie.credits,
+            credits: movie.credits,
             resume: movie.overview,
             duration: movie.runtime ? movie.runtime : undefined,
             image_landscape: movie.backdrop_path,

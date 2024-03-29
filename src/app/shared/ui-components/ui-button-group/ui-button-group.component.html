@@ -1,9 +1,9 @@
 <!-- BOUTONS "A voir" | "En cours" | "Vu" | "Abandon"-->
 <mat-button-toggle-group (change)="selectButton(group.value)" #group="matButtonToggleGroup">
 
-    @for(button of watchedStatusButtons; track button.label) {
+    @for(button of watchedStatusButtons; track button.label; let i=$index) {
 
-    <mat-button-toggle ckecked [value]="button.value">
+    <mat-button-toggle [class.mat-button-toggle-checked]="status===i" ckecked [value]="button.value">
         {{ button.label }}
     </mat-button-toggle>
 

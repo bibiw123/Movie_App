@@ -12,22 +12,23 @@
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
-          <ui-star [score]="serie.score"></ui-star>
             @if(authGateway.isAuth$ | async) {
 
 
             <div class="toolbar">
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isSerieInWatchlist(serie)) {
-                <button class="addtowatchlist active" (click)="removeSerieToWatchListAction(serie)">
+                <button [disabled]="(loaderService.isLoading| async)" class="addtowatchlist active"
+                    (click)="removeSerieToWatchListAction(serie)">
                     Retirer de ma liste <i class="fa-solid fa-heart"></i>
                 </button>
                 }
                 @else{
 
                 <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
-                <button [disabled]="seasonDetails===undefined || seasonDetails?.episodes.length===0"
-                    (click)="addSerieToWatchListAction(serie)" class="addtowatchlist addtowatchlist-true">
+                <button [disabled]="seasonDetails===undefined 
+                || seasonDetails?.episodes.length===0" (click)="addSerieToWatchListAction(serie)"
+                    class="addtowatchlist addtowatchlist-true">
                     Ajouter à ma liste <i class="fa-regular fa-heart"></i>
                 </button>
                 }

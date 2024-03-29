@@ -17,7 +17,7 @@ export class AlertService {
       default: cssclass = 'info-snackbar'; // default value
     }
     this.snackbar.open(message, 'Fermer', {
-      duration: 6000,
+      duration: 106000,
       verticalPosition: 'top',
       horizontalPosition: 'center',
       panelClass: ['showbar', cssclass]

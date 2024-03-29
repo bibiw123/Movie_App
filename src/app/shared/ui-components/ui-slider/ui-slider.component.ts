@@ -8,12 +8,11 @@ import { MovieModel } from '../../../core/models/movie.model';
 })
 export class SliderComponent {
 
+  // en entrée, on reçoit un tableau d'items de type MovieModel
+  // on peut alors itérer sur ce tableau pour afficher les items du slider
   @Input() items!: MovieModel[];
   activeSlide: number = 0
 
-  ngOnInit() {
-    console.log('Slider items', this.items);
-  }
 
   nextSlide() {
     this.activeSlide++;

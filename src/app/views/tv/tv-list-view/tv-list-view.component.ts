@@ -11,13 +11,13 @@ import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 })
 export class TvListViewComponent {
 
-  tvshows$: Observable<TvShowModel[]> = this._TmdbGateway.getTvShowFromApi();
+  tvshows$: Observable<TvShowModel[]> = this._TmdbGateway.tv$;
   genres: Genre[] = genresTv;
 
   constructor(private _TmdbGateway: TMDBGateway) { }
 
   ngOnInit() {
-    console.log(this.tvshows$)
+    this._TmdbGateway.getTvShowFromApi();
   }
 
   selectGenre(genre: Genre) {

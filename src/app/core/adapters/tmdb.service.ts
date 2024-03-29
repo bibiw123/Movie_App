@@ -15,7 +15,7 @@ import { TMDBGateway } from '../ports/tmdb.gateway';
 export class TMDBService implements TMDBGateway {
 
   moviesPageNumber = 1;
-  seriesPageNumber = 4;
+  seriesPageNumber = 5;
 
   private TMDB_URL: string = environment.TMDB_API_URL;
 
@@ -33,18 +33,6 @@ export class TMDBService implements TMDBGateway {
 
 
   constructor(private http: HttpClient) { }
-  /*
-    Comment MAPPER les réponses API
-    dans notre modèle de données Frontend ?
-
-    Observable.pipe( operator )
-    > accepte en parametres un/des opérateur(s) de transformation
-      ex: map(), filter(), etc....
-    > return un Observable
-
-    Ainsi on délégue au service la responsabilité de mapper les
-    reponses API en modeles d'objets côté front-end
-  */
 
   /**
    * API TMDB
@@ -69,26 +57,13 @@ export class TMDBService implements TMDBGateway {
     return this._movies$.asObservable();
   }
 
-
-  getPrevMoviesFromApi(): Observable<MovieModel[]> {
-    this.moviesPageNumber--;
-    const ENDPOINT = `/discover/movie`;
-    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
-    this.http.get(this.TMDB_URL + ENDPOINT, options)
-      .pipe(
-        map((response: any) =>
-          response.results.map(
-            (movieFromApi: any) => MovieModelMapper.mapFromTmdb(movieFromApi)
-          )
-        )
-      )
-      .subscribe((newMovies: MovieModel[]) => {
-        this._movies$.next(newMovies);
-      })
-    return this._movies$.asObservable()
-  }
-
-
+  /**
+   * API TMDB
+   * endpoint : /discover/movie
+   * role : récupérer les films à découvrir de la page suivante
+   * @param pageNumber optionnel
+   * @returns @Observable<MovieModel>
+   */
   getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]> {
     !pageNumber
       ? this.moviesPageNumber++
@@ -111,9 +86,11 @@ export class TMDBService implements TMDBGateway {
     return this._movies$.asObservable()
   }
 
+
   /**
    * API TMDB
    * endpoint : /discover/tv
+   * role : récupérer les séries à découvrir
    * @returns @Observable<TvShowModel[]>
    */
   getTvShowFromApi(): Observable<TvShowModel[]> {
@@ -126,7 +103,6 @@ export class TMDBService implements TMDBGateway {
             response.results
               .map(
                 (tvshowResponseFromApi: any) => {
-                  console.log(tvshowResponseFromApi)
                   return TvShowModelMapper.mapFromTmdb(tvshowResponseFromApi)
                 })
           )
@@ -136,6 +112,14 @@ export class TMDBService implements TMDBGateway {
     return this._tv$.asObservable()
   }
 
+
+  /**
+   * API TMDB
+   * endpoint : /discover/tv
+   * role : récupérer les séries à découvrir de la page suivante
+   * @param pageNumber optionnel
+   * @returns @Observable<TvShowModel[]>
+   */
   getNextTvShowFromApi(): Observable<TvShowModel[]> {
     this.seriesPageNumber++
     const ENDPOINT = `/discover/tv`;
@@ -157,19 +141,21 @@ export class TMDBService implements TMDBGateway {
     return this._tv$.asObservable()
   }
 
+
   /**
   * API TMDB
   * endpoint: /tv/{id}
-  * queryParam: append_to_response=videos
+  * role : récupérer une série
+  * @param id number
+  * queryParam: append_to_response=videos,credits
   * @returns @Observable<TvShowModel>
-  * // https://api.themoviedb.org/3/tv/{series_id}/credits
   */
   getOneTvShowFromApi(id: string): Observable<TvShowModel> {
     const ENDPOINT = `/tv/${id}`;
     let options = {
       params: {
         language: 'fr',
-        append_to_response: 'videos,credits,season/1,season/2'
+        append_to_response: 'videos,credits'
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
@@ -193,17 +179,13 @@ export class TMDBService implements TMDBGateway {
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
-    //.pipe()
-    // .subscribe((response: any) => {
-    //   console.log(response)
-    // })
-
   }
 
 
 
   /**
    * API TMDB
+   * role : récupérer un film
    * endpoint: /movie/{id}
    * queryParam: append_to_response=videos
    * @returns @Observable<MovieModel>
@@ -224,6 +206,7 @@ export class TMDBService implements TMDBGateway {
 
   /**
    * API TMDB
+   * role : rechercher un film, une série ou une personne
    * endpoint /search/multi
    * queryParams userSearchText : string
    * @returns Observable<any> (movies, tvshows, or people)
@@ -246,7 +229,6 @@ export class TMDBService implements TMDBGateway {
         )
       )
   }
-
 
 
 }

@@ -33,10 +33,11 @@ export class MovieDTOMapper {
     }
 
     static mapToMovieModel(movie: MovieResponseDTO): MovieModel {
+        console.log(movie)
         return {
-            api_id: movie.id?movie.id:undefined,
+            api_id: movie.id ? movie.id : 0,
             tmdb_id: movie.id_tmdb,
-            credits: {cast:[], crew:[]},
+            credits: { cast: [], crew: [] },
             titre: movie.title,
             duration: movie.duration,
             resume: movie.overview,

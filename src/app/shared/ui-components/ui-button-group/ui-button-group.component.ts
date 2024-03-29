@@ -12,6 +12,8 @@ export type UIButtonDataModel = {
 })
 export class ButtonGroupComponent {
 
+  @Input() status: number = 0;
+
   watchedStatusButtons: UIButtonDataModel[] = [
     { label: 'A voir', value: 0 },
     { label: 'En cours', value: 1 },

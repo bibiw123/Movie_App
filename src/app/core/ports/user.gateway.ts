@@ -16,6 +16,7 @@ export abstract class UserGateway {
 
   abstract postMovie(movie: MovieModel): void;
   abstract deleteMovie(movie: any): void;
+  abstract PostMovieStatusChange(movie: MovieModel, status: 0 | 1 | 2 | 3): Observable<any>;
 
   abstract postSerie(serie: TvShowModel): Observable<TvShowModel>;
   abstract deleteSerie(serie: any): void;

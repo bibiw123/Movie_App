@@ -15,8 +15,10 @@
         <div class="col-12 col-lg-6">
             @if(authGateway.isAuth$ | async) {
 
+            @if(userGateway.user$ | async; as user) {
             <div class="toolbar">
-                <ui-button-group (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
+                <ui-button-group [status]="movieStatus"
+                    (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
 
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isMovieInWatchlist(movie)) {
@@ -31,6 +33,7 @@
                 </button>
                 }
             </div>
+            }
 
 
 

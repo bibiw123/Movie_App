@@ -15,6 +15,8 @@ import { UserGateway } from '../../../core/ports/user.gateway';
 export class MovieDetailViewComponent implements OnInit {
 
   movie$!: Observable<MovieModel>
+  movie!: MovieModel
+  movieStatus: number = 0;
 
   constructor(
     public location: Location,
@@ -30,13 +32,23 @@ export class MovieDetailViewComponent implements OnInit {
     // 2 On demande au service de nous donner le film correspondant
     this.movie$ = this._TmdbGateway.getMovieFromApi(movieId);
     // 3 Pour afficher @if(movie$ | async; as movie) dans la vue HTML
+
+    this.movie$.subscribe(movie => {
+      this.movie = movie;
+      console.log(this.movie);
+      let myMovie = this.userGateway.getUser().watchList.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
+      this.movieStatus = myMovie ? myMovie.status ? myMovie.status : 0 : 0;
+      console.log(this.movieStatus);
+    })
+
+
   }
 
   getFullImageUrl(fragmentUrl: string) {
-    if (fragmentUrl == null){
+    if (fragmentUrl == null) {
       return "https://placehold.co/500x750?text=Image+non+disponible"
     }
-    else{
+    else {
       return 'https://image.tmdb.org/t/p/w500' + fragmentUrl;
     }
   }
@@ -51,8 +63,16 @@ export class MovieDetailViewComponent implements OnInit {
     if (foundMovie) this.userGateway.deleteMovie(foundMovie.api_id)
   }
 
-  changeMovieWatchedStatus(event: Event) {
+  changeMovieWatchedStatus(event: 0 | 1 | 2 | 3) {
     //this.userGateway.patchMovie($event)
+    this.movieStatus = event;
+    let user = this.userGateway.getUser();
+    let movie = this.movie;
+    let foundMovieInWatchList = user.watchList.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
+    if (foundMovieInWatchList) {
+      movie.api_id = foundMovieInWatchList.api_id;
+    }
+    this.userGateway.PostMovieStatusChange(this.movie, event).subscribe()
   }
 
 }
