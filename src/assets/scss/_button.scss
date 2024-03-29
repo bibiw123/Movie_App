@@ -20,6 +20,13 @@ button,
     }
 }
 
+button:disabled,
+.btn:disabled {
+    background: #5c6070;
+    color: #ededed;
+    cursor: not-allowed;
+}
+
 // Make the div behave like a button
 .btn-group,
 .btn-group-vertical {

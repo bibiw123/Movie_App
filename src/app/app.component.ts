@@ -15,10 +15,10 @@ export class AppComponent {
   constructor(private authGateway: AuthGateway, private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.userIsInactiveSince(1).subscribe((event) => {
-      console.log('logout apres 10 secondes');
-      this.authGateway.logout()
-    });
+    // this.userIsInactiveSince(1).subscribe((event) => {
+    //   console.log('logout apres 10 secondes');
+    //   this.authGateway.logout()
+    // });
   }
 
   /**

@@ -11,6 +11,7 @@ main {
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .row.display-flex {
@@ -18,7 +19,7 @@ main {
   flex-wrap: wrap;
 }
 
-.row.display-flex > [class*='col-'] {
+.row.display-flex>[class*='col-'] {
   display: flex;
   flex-direction: column;
 }

@@ -17,8 +17,10 @@ export abstract class UserGateway {
   abstract postMovie(movie: MovieModel): void;
   abstract deleteMovie(movie: any): void;
 
-  abstract postSerie(serie: TvShowModel): void;
+  abstract postSerie(serie: TvShowModel): Observable<TvShowModel>;
   abstract deleteSerie(serie: any): void;
+
+  abstract postEpisodes(serie: TvShowModel, episodes: any, tmdbSeasonId: number, status: number): Observable<any>;
 
   abstract isMovieInWatchlist(movie: MovieModel): boolean
   abstract isSerieInWatchlist(serie: TvShowModel): boolean

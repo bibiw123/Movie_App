@@ -28,23 +28,13 @@ export class HomeViewComponent {
     // filtrer les 6 premiers movies à afficher
     this.TmdbGateway.movies$.subscribe(moviesFromSource => {
       this.movies = moviesFromSource.slice(0, 6)
-      const random = this.getRandomInt(7, moviesFromSource.length - 1);
-      this.randomSlider = moviesFromSource.slice(random, moviesFromSource.length - 1) // films au hasard pour le slider
+      this.randomSlider = moviesFromSource.slice(7, 15)
     })
     // filtrer les 6 premières series à afficher
     this.TmdbGateway.tv$.subscribe(seriesFromSource => {
       this.series = seriesFromSource.slice(0, 6)
     });
 
-
   }
-
-  // utils
-  getRandomInt(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
 
 }

@@ -1,6 +1,6 @@
 import { GenreModel } from "../models/genre.model"
 import { MovieModel } from "../models/movie.model"
-import { SeasonModel, TvShowModel } from "../models/serie.model"
+import { EpisodeModel, SeasonModel, TvShowModel } from "../models/serie.model"
 
 
 export type SerieDTO = {
@@ -67,6 +67,20 @@ export class SerieDTOMapper {
                 // episodes: season.episodes
             }
         })
+    }
+
+    static mapFromEpisodeModel(episode: any): EpisodeDTO {
+        return {
+            id_tmdb: episode.id,
+            air_date: episode.air_date,
+            episode_number: episode.episode_number,
+            season_number: episode.season_number,
+            image_path: episode.still_path,
+            title: episode.name,
+            overview: episode.overview,
+            duration: 45
+        }
+
     }
 
 

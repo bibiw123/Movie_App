@@ -239,10 +239,10 @@ export class TMDBService implements TMDBGateway {
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map(
-        (response: any) => response.results.map((item: any) => new SearchModel(item))
-      ),
+          (response: any) => response.results.map((item: any) => new SearchModel(item))
+        ),
         tap(
-        (searchResult) => this._searchResults$.next(searchResult)
+          (searchResult) => this._searchResults$.next(searchResult)
         )
       )
   }

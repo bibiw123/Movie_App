@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TMDBService } from '../../../core/adapters/tmdb.service';
@@ -42,7 +42,6 @@ export class TvDetailViewComponent {
     this.selectSeasonAction.valueChanges.subscribe(season => {
       this._TmdbGateway.getEpisodesFromApi(this.serie.tmdb_id, season.season_number)
         .subscribe((seasonDetails: any) => {
-          console.log(seasonDetails)
           this.seasonDetails = seasonDetails;
         });
     });
@@ -62,14 +61,24 @@ export class TvDetailViewComponent {
       : `https://image.tmdb.org/t/p/w500/${this.serie.image_landscape}`;
   }
 
-  changeEpisodeWatchedStatus(event: Event) {
-    console.log(event);
-  }
+
 
   addSerieToWatchListAction(serie: TvShowModel) {
-    console.log(serie);
-    this.userGateway.postSerie(serie)
-    // appeler la methode du service userGateway.postSerie(serie)
+    // appeler la methode du service userGateway.postSerie(serie) et en cas de succès
+    // appeler la methode userGateway.postEpisodes(serie, this.seasonDetails.episodes, apiResponse.id_tmdb)
+    this.userGateway.postSerie(serie).pipe(
+      switchMap(
+        (apiResponse: any) => {
+          serie.api_id = apiResponse.id
+          return this.userGateway.postEpisodes(
+            serie,
+            this.seasonDetails.episodes,
+            apiResponse.seasons[0].id_tmdb,
+            0
+          )
+        }
+      )
+    ).subscribe()
   }
 
   removeSerieToWatchListAction(serie: TvShowModel) {
@@ -77,6 +86,13 @@ export class TvDetailViewComponent {
     const userWatchList = this.userGateway.getUser().watchList.series
     const foundSerie = userWatchList.find(item => item.tmdb_id === serie.tmdb_id)
     if (foundSerie) this.userGateway.deleteSerie(foundSerie.api_id)
+  }
+
+
+  changeEpisodeWatchedStatus(event: number, episode: any) {
+    const status: number = event;
+    this.userGateway.postEpisodes(this.serie, [episode], this.seasonDetails.id, status)
+      .subscribe()
   }
 
 }

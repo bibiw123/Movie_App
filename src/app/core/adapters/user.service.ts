@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { MovieModel } from '../models/movie.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
-import { TvShowModel } from '../models/serie.model';
+import { EpisodeModel, TvShowModel } from '../models/serie.model';
 import { PostSerieDTO, SerieDTOMapper } from '../dto/postserie.dto';
 
 
@@ -35,15 +35,16 @@ export class UserService implements UserGateway {
    * afin d'afficher les données utilisateur dans les vues HTML
   */
   createUserModelAfterLogin(user: SimpleUser): Observable<UserModel | undefined> {
-    const userWatchList$ = of(user).pipe(
-      switchMap((user: SimpleUser) => {
-        return forkJoin([
-          this.fetchWatchlistMovies(),
-          this.fetchWatchlistSeries()
-          //of([])
-        ]);
-      })
-    );
+    const userWatchList$ = of(user)
+      .pipe(
+        switchMap((user: SimpleUser) => {
+          return forkJoin([
+            this.fetchWatchlistMovies(),
+            this.fetchWatchlistSeries()
+            //of([])
+          ]);
+        })
+      );
     userWatchList$
       .pipe(
         map(apiResponse => {
@@ -116,7 +117,7 @@ export class UserService implements UserGateway {
           movie.api_id = apiResponse.id
           user.watchList.movies = [movie, ...user.watchList.movies]
           this._user$.next(user)
-          this.alert.show('Film ajouté à la watchlist')
+          this.alert.show('Film ajouté à ma liste')
         }
       }
     )
@@ -135,7 +136,7 @@ export class UserService implements UserGateway {
         if (user?.watchList) {
           user.watchList.movies = user.watchList.movies.filter(movie => movie.api_id !== movieId);
           this._user$.next(user);
-          this.alert.show('Film supprimé de la watchlist');
+          this.alert.show('Film supprimé de ma liste');
         }
       }
     );
@@ -146,21 +147,60 @@ export class UserService implements UserGateway {
      * Role: poster une série  dans la watchlist du user
      * @param serie TvShowModel
      */
-  postSerie(serie: TvShowModel): void {
+  postSerie(serie: TvShowModel): Observable<any> {
     const endpoint = '/series';
     const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel(serie)
-    this.http.post(this.apiurl + endpoint, serieDTO).subscribe(
-      (apiResponse: any) => {
-        let user: UserModel | undefined = this._user$.getValue();
-        if (user?.watchList) {
-          serie.api_id = apiResponse.id
-          user.watchList.series = [serie, ...user.watchList.series]
-          this._user$.next(user)
-          this.alert.show('Série ajoutée à la watchlist')
-        }
-      }
-    )
+    return this.http.post(this.apiurl + endpoint, serieDTO)
   }
+
+  postEpisodes(serie: TvShowModel, episodes: any, seasonTbmdId: number, status = 0): Observable<any> {
+    console.log('serie à user$.next()', serie)
+    let options = { params: { status: status } }
+    const endpoint = '/episodes/' + seasonTbmdId;
+    const episodesDTO = episodes.map((episode: EpisodeModel) => {
+      return SerieDTOMapper.mapFromEpisodeModel(episode)
+    })
+    return this.http.post(this.apiurl + endpoint, episodesDTO, options)
+      .pipe(
+        tap(
+          (apiResponse: any) => {
+            let user: UserModel | undefined = this._user$.getValue();
+            console.log('user', user)
+            if (user?.watchList) {
+              // on ajoute la série à la watchlist si elle n'y est pas
+              if ((user.watchList.series.some(item => serie.tmdb_id === item.tmdb_id)) === false) {
+                user.watchList.series = [serie, ...user.watchList.series]
+                this._user$.next(user)
+                this.alert.show('Série ajoutée à ma liste')
+              }
+              // on met à jour le statut de l'épisode
+              else {
+                const serieInWatchlist = user.watchList.series.find(item => serie.tmdb_id === item.tmdb_id);
+                if (serieInWatchlist) {
+                  const season = serieInWatchlist.seasons.find(season => season.id_tmdb === seasonTbmdId);
+                  const episodes = season?.episodes
+                  // if(!episodes) {
+                  //   season?.episodes = []
+                  // }
+
+
+                  // if (episodeToUpdate) {
+                  //   episodeToUpdate.forEach((episode, index) => {
+                  //     episode.status = episodesDTO[index].status
+                  //   })
+                  // }
+                }
+                this.alert.show('Statut de l\'épisode mis à jour', 'info')
+              }
+
+            }
+          }
+        )
+      )
+
+  }
+
+
   /**
    * endpoint: [DELETE] /series/:id
    * Role: supprimer une série de la watchlist du user
@@ -174,7 +214,7 @@ export class UserService implements UserGateway {
         if (user?.watchList) {
           user.watchList.series = user.watchList.series.filter(serie => serie.api_id !== serieId);
           this._user$.next(user);
-          this.alert.show('Série supprimée de la watchlist');
+          this.alert.show('Série supprimée de la list');
         }
       }
     );
