@@ -12,6 +12,7 @@
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
+          <ui-star [score]="serie.score"></ui-star>
             @if(authGateway.isAuth$ | async) {
 
             <div class="toolbar">
