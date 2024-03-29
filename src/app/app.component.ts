@@ -12,13 +12,13 @@ export class AppComponent {
   title = 'movieapp';
   isLoading$ = this.loaderService.isLoading;
 
-  constructor(private authGateway: AuthGateway, private loaderService:LoaderService) { }
+  constructor(private authGateway: AuthGateway, private loaderService: LoaderService) { }
 
   ngOnInit() {
-    // this.userIsInactiveSince(1).subscribe((event) => {
-    //   console.log('logout apres 10 secondes');
-    //   this.authGateway.logout()
-    // });
+    this.userIsInactiveSince(1).subscribe((event) => {
+      console.log('logout apres 10 secondes');
+      this.authGateway.logout()
+    });
   }
 
   /**
@@ -29,8 +29,8 @@ export class AppComponent {
   userIsInactiveSince(durationInMinutes: number): Observable<Event[]> {
     const click$ = fromEvent(document, 'click')
     const keyup$ = fromEvent(document, 'keydown');
-    const mousemove$ = fromEvent(document, 'mousemove');
-    return combineLatest([click$, keyup$, mousemove$])
+    //const mousemove$ = fromEvent(document, 'mousemove');
+    return combineLatest([click$, keyup$])
       .pipe(debounceTime(durationInMinutes * 60000)) // quand le user arrête toute activité au bout de X minutes)
   }
 

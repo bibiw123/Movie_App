@@ -61,8 +61,6 @@ export class RegisterViewComponent {
   onSubmitRegisterForm() {
 
     this.isSubmitted = true
-    console.log(this.registerForm)
-    console.log(this.registerForm.value)
     if (this.registerForm.valid) {
       this.authGateway.register(this.registerForm.value)
         .subscribe((reponse) => {

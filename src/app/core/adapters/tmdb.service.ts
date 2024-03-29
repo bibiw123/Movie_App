@@ -15,7 +15,7 @@ import { TMDBGateway } from '../ports/tmdb.gateway';
 export class TMDBService implements TMDBGateway {
 
   moviesPageNumber = 1;
-  seriesPageNumber = 1;
+  seriesPageNumber = 4;
 
   private TMDB_URL: string = environment.TMDB_API_URL;
 
@@ -119,7 +119,7 @@ export class TMDBService implements TMDBGateway {
   getTvShowFromApi(): Observable<TvShowModel[]> {
     if (this._tv$.getValue().length === 0) {
       const ENDPOINT = `/discover/tv`;
-      let options = { params: { language: 'fr' } }
+      let options = { params: { language: 'fr', page: this.seriesPageNumber } }
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) =>

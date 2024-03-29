@@ -10,7 +10,7 @@
         <h1>{{movie.titre}}</h1>
     </div>
 
-    <div class="row gy-4">
+    <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
 
@@ -65,44 +65,41 @@
             <h2>Résumé</h2>
             <p class="resume">{{movie.resume}}</p>
 
-            <hr>
-            <!-- FORMULAIRE DE COMMENTAIRE-->
-            <h2>Avis</h2>
         </div>
 
-    </div>
+    </main>
 
     <section>
 
-      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-        <mat-tab label="Détails">
-          <div style="display: flex;flex-wrap: wrap;">
-            <div class="col-12 col-md-4">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Détails">
+                <div style="display: flex;flex-wrap: wrap;">
+                    <div class="col-12 col-md-4">
 
-                <h4>Équipe</h4>
-                <ul>
-                    @for(person of movie.credits.crew; track person.id) {
-                    <li>{{person.name}}</li>
-                    }
-                </ul>
-            </div>
-            <div class="col-12 col-md-8">
-                <h4>Acteurs</h4>
-                <ul
-                    style="display: flex;flex-wrap: wrap; justify-content: space-evenly; text-align: center; list-style: none;">
-                    @for(actor of movie.credits.cast; track actor.id) {
-                    <li>
-                        <img style="width: 150px;" [src]="getFullImageUrl(actor?.profile_path)"
-                            [alt]="actor.name">
-                        {{actor.name}}
-                    </li>
-                    }
-                </ul>
-            </div>
-        </div>
-        </mat-tab>
-        <mat-tab label="Vidéos">Content 2</mat-tab>
-      </mat-tab-group>
+                        <h4>Équipe</h4>
+                        <ul>
+                            @for(person of movie.credits.crew; track person.id) {
+                            <li>{{person.name}}</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <h4>Acteurs</h4>
+                        <ul
+                            style="display: flex;flex-wrap: wrap; justify-content: space-evenly; text-align: center; list-style: none;">
+                            @for(actor of movie.credits.cast; track actor.id) {
+                            <li>
+                                <img style="width: 150px;" [src]="getFullImageUrl(actor?.profile_path)"
+                                    [alt]="actor.name">
+                                {{actor.name}}
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Vidéos">Content 2</mat-tab>
+        </mat-tab-group>
 
     </section>
 </div>

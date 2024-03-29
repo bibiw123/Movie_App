@@ -2,8 +2,7 @@
     background: transparent;
     transition-duration: .3s;
     z-index: 999;
-    border: 3px solid transparent;
-    padding: 1px;
+    position: relative;
 }
 
 img {
@@ -13,9 +12,22 @@ img {
 }
 
 .card:hover {
-    transform: scale(1.07);
-    border: 3px solid #fff;
+    transform: scale(1.05);
     cursor: pointer;
+}
+
+.card .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to top, rgb(255 0 0 / 0%), rgb(0 0 0 / 0%), rgb(19 19 19 / 45%));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition-duration: .3s;
 }
 
 h2 {

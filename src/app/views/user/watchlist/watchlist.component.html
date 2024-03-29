@@ -13,6 +13,25 @@
 @else {
 <!-- Si l'utilisateur A des movies ou series dans sa watchList -->
 
+<!-- PARTIE 1: watchlist series-->
+<section>
+    <div class="container">
+        <h2 class="label">Ma liste de séries</h2>
+        <div class="row">
+
+            @for (itemMovie of (user.watchList.series); track itemMovie.tmdb_id) {
+            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-3">
+                <ui-card [routerLink]="['/tv', itemMovie.tmdb_id]" [item]="itemMovie"></ui-card>
+            </div>
+            }
+
+        </div>
+        @if(user.watchList.series.length===0) {
+        <p>Les séries que vous ajouterez à votre liste apparaîtront ici.</p>
+        }
+    </div>
+</section>
+
 <!-- PARTIE 1: watchlist movies-->
 <section>
     <div class="container">
@@ -28,25 +47,6 @@
         </div>
         @if(user.watchList.movies.length===0) {
         <p>Les films que vous ajouterez à votre liste apparaîtront ici.</p>
-        }
-    </div>
-</section>
-
-<!-- PARTIE 2: watchlist series-->
-<section>
-    <div class="container">
-        <h2 class="label">Ma liste de séries</h2>
-        <div class="row">
-
-            @for (itemMovie of (user.watchList.series); track itemMovie.tmdb_id) {
-            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-3">
-                <ui-card [routerLink]="['/tv', itemMovie.tmdb_id]" [item]="itemMovie"></ui-card>
-            </div>
-            }
-
-        </div>
-        @if(user.watchList.series.length===0) {
-        <p>Les séries que vous ajouterez à votre liste apparaîtront ici.</p>
         }
     </div>
 </section>

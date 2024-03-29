@@ -2,6 +2,7 @@
     <div class="container">
         <h2 class="label">Tv & séries</h2>
         <ui-dropdown (OnSelectItemEvent)="selectGenre($event)" [items]="genres" />
+
         <div class="row">
 
             @for (itemTvShow of tvshows$ | async; track itemTvShow.tmdb_id) {

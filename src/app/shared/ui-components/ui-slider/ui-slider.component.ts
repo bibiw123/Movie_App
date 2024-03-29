@@ -8,18 +8,16 @@ import { MovieModel } from '../../../core/models/movie.model';
 })
 export class SliderComponent {
 
-  @Input() items!: MovieModel[] | null
+  @Input() items!: MovieModel[];
   activeSlide: number = 0
-  sliders = this.items
 
   ngOnInit() {
-
-    console.log(this.items)
+    console.log('Slider items', this.items);
   }
 
   nextSlide() {
     this.activeSlide++;
-    if (this.activeSlide > this.sliders!.length - 1) {
+    if (this.activeSlide > this.items.length - 1) {
       this.activeSlide = 0;
     }
   }
@@ -27,7 +25,7 @@ export class SliderComponent {
   previousSlide() {
     this.activeSlide--;
     if (this.activeSlide < 0) {
-      this.activeSlide = this.sliders!.length - 1;
+      this.activeSlide = this.items.length - 1;
     }
   }
 
