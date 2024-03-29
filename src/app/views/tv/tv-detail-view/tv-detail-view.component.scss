@@ -1,142 +1,152 @@
 main {
-    padding: 6px 20px 25px;
-    background-color: rgb(14 14 19 / 47%);
-    border-radius: 10px;
-    margin: 0px;
-    margin-top: 10px;
+  padding: 6px 20px 25px;
+  background-color: rgb(14 14 19 / 47%);
+  border-radius: 10px;
+  margin: 0px;
+  margin-top: 10px;
 }
 
 .toolbar {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .row.display-flex {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.row.display-flex>[class*='col-'] {
-    display: flex;
-    flex-direction: column;
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
-    position: relative;
+  position: relative;
 }
 
 .card ui-button-group {
-    width: 100%;
-    position: absolute;
-    top: 125px;
-    right: 0px;
+  width: 100%;
+  position: absolute;
+  top: 125px;
+  right: 0px;
 }
 
 .card h3 {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.card-image {
+  aspect-ratio: 16/9;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .card-body {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    opacity: .6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: .6;
 }
 
 section {
-    padding: 20px 0;
+  padding: 20px 0;
 }
 
 .title-block {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin-bottom: 10px;
 }
 
 span i {
-    font-size: 70%;
-    color: rgb(85, 80, 190);
-    margin-right: 5px;
+  font-size: 70%;
+  color: rgb(85, 80, 190);
+  margin-right: 5px;
 }
 
 
 p {
-    display: flex;
+  display: flex;
 
-    span {
-        margin-right: 5px;
-        margin-left: 5px;
-        display: flex;
-        align-items: center;
-    }
+  span {
+    margin-right: 5px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+  }
 }
 
 p.info {
-    margin: 0;
+  margin: 0;
 }
 
 
 h2 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 
 .btn-goback {
-    font-size: 2rem;
-    transform: translate(-11px, 0px);
+  font-size: 2rem;
+  transform: translate(-11px, 0px);
 }
 
 .btn-goback:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .video-container {
-    padding-bottom: 56.25%;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
+  padding-bottom: 56.25%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 p.resume {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 span.badge {
-    margin-right: 11px;
-    background-color: rgb(85, 80, 190) !important;
-    margin-bottom: 16px;
-    padding: 3px 9px;
-    border-radius: 30px;
-    font-size: 15px;
-    line-height: 30px;
+  margin-right: 11px;
+  background-color: rgb(85, 80, 190) !important;
+  margin-bottom: 16px;
+  padding: 3px 9px;
+  border-radius: 30px;
+  font-size: 15px;
+  line-height: 30px;
 }
 
 
 .bkg-black {
-    background-image: radial-gradient(farthest-side at 73% 21%, transparent, rgb(35, 38, 68));
-    position: absolute;
-    inset: 0px;
-    z-index: -1;
+  background-image: radial-gradient(farthest-side at 73% 21%, transparent, rgb(35, 38, 68));
+  position: absolute;
+  inset: 0px;
+  z-index: -1;
 }
 
 button.addtowatchlist i {
-    transform: translate(17px, 2px);
-    font-size: 1.3rem;
-    color: rgb(147 144 202);
+  transform: translate(17px, 2px);
+  font-size: 1.3rem;
+  color: rgb(147 144 202);
 }

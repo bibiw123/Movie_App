@@ -98,7 +98,9 @@
                         <div class="card">
                             <ui-button-group
                                 (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group>
-                            <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
+                            <div class="card-image">
+                              <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
+                            </div>
                             <div class="card-body">
                                 <h3 class="card-title">{{episode.name}}</h3>
                                 <p class="card-text">{{episode.overview}}</p>

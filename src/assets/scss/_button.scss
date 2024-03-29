@@ -123,7 +123,7 @@ button,
             right: 1px;
             bottom: -4px;
             z-index: 5;
-            pointer-event: none;
+            pointer-events: none;
             cursor: pointer;
 
             box-shadow: 0 0 0 $borderWidth $borderColor;
