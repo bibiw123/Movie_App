@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchModel } from '../../core/models/search.model';
+import { TMDBGateway } from '../../core/ports/tmdb.gateway';
 
 @Component({
   selector: 'app-search-view',
@@ -8,10 +9,11 @@ import { SearchModel } from '../../core/models/search.model';
 })
 export class SearchViewComponent {
 
-  results!: SearchModel[];
+  constructor(private tmdbGateway : TMDBGateway){}
+  results$ = this.tmdbGateway.searchResults$;
 
-  getSearchResults(results: any) {
-    this.results = results
-  }
+  // getSearchResults(results: any) {
+  //   this.results = results
+  // }
 
 }

@@ -1,12 +1,11 @@
 <div class="container">
 
     <!-- searchbar -->
-    <ui-searchbar (onResultsEvent)="getSearchResults($event)"
-        class="animate__animated animate__fadeInUp"></ui-searchbar>
+    <ui-searchbar class="animate__animated animate__fadeInUp"></ui-searchbar>
 
     <!-- Afficher les resultats -->
     <section class="row">
-        @for(result of results; track result.id) {
+        @for(result of results$ | async; track result.id) {
         <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
 
             @switch (result.media_type) {

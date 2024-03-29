@@ -1,22 +1,23 @@
 import { Observable } from "rxjs";
 import { MovieModel } from "../models/movie.model";
 import { TvShowModel } from "../models/serie.model";
+import { SearchModel } from "../models/search.model";
 
-/* 
+/*
     Dans le cadre de l'architecture port/adapter (clean architecture)
     Le service TMDBService implémente cette classe APIExternalMoviesGateway
 
-    Le principe :          PORT                ADAPTER 1 
-    |COMPONENT| =====>   |Gateway|  =====>  |TMDBService|                   
+    Le principe :          PORT                ADAPTER 1
+    |COMPONENT| =====>   |Gateway|  =====>  |TMDBService|
                       (abstractClass)       (Service Concret)
 
-                                              OU ADAPTER 2 
-                                    =====>  |OtherService|                   
+                                              OU ADAPTER 2
+                                    =====>  |OtherService|
                                             (Service Concret)
-                                            
-                                              OU ADAPTER 3 
-                                    =====>  |OtherService|                   
-                                            (Service Concret) 
+
+                                              OU ADAPTER 3
+                                    =====>  |OtherService|
+                                            (Service Concret)
 
 
 */
@@ -24,6 +25,7 @@ export abstract class TMDBGateway {
 
     abstract movies$: Observable<MovieModel[]>;
     abstract tv$: Observable<TvShowModel[]>;
+    abstract searchResults$: Observable<SearchModel[]>;
     // movies
     abstract getMoviesFromApi(): Observable<MovieModel[]>;
     abstract getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MovieModel, MovieModelMapper } from '../models/movie.model';
 import { TvShowModel, TvShowModelMapper } from '../models/serie.model';
@@ -237,9 +237,14 @@ export class TMDBService implements TMDBGateway {
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)
-      .pipe(map(
+      .pipe(
+        map(
         (response: any) => response.results.map((item: any) => new SearchModel(item))
-      ))
+      ),
+        tap(
+        (searchResult) => this._searchResults$.next(searchResult)
+        )
+      )
   }
 
 
