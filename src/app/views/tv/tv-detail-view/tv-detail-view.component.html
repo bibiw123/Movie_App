@@ -18,7 +18,7 @@
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isSerieInWatchlist(serie)) {
                 <button class="addtowatchlist active" (click)="removeSerieToWatchListAction(serie)">
-                    Dans ma liste <i class="fa-solid fa-heart"></i>
+                    Retirer de ma liste <i class="fa-solid fa-heart"></i>
                 </button>
                 }
                 @else{
