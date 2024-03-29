@@ -29,8 +29,8 @@ export class AppComponent {
   userIsInactiveSince(durationInMinutes: number): Observable<Event[]> {
     const click$ = fromEvent(document, 'click')
     const keyup$ = fromEvent(document, 'keydown');
-    //const mousemove$ = fromEvent(document, 'mousemove');
-    return combineLatest([click$, keyup$])
+    const mousemove$ = fromEvent(document, 'mousemove');
+    return combineLatest([click$, keyup$, mousemove$])
       .pipe(debounceTime(durationInMinutes * 60000)) // quand le user arrête toute activité au bout de X minutes)
   }
 

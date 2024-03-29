@@ -2,11 +2,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 99vh;
   background-position: center center;
   background-size: cover;
   /* background-image: url("../img/img-1.jpg"); */
   transition: all 0.5s ease-in-out;
+  margin-bottom: 20px;
 }
 
 header.slider {
