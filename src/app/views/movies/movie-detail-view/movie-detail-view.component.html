@@ -13,11 +13,12 @@
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
-          <ui-star [score]="movie.score"></ui-star>
             @if(authGateway.isAuth$ | async) {
 
+            @if(userGateway.user$ | async; as user) {
             <div class="toolbar">
-                <ui-button-group (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
+                <ui-button-group [status]="movieStatus"
+                    (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
 
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isMovieInWatchlist(movie)) {
@@ -32,6 +33,7 @@
                 </button>
                 }
             </div>
+            }
 
 
 
@@ -55,6 +57,7 @@
             <p>
                 <span><i class="fa-solid fa-circle"></i>Sortie {{movie.date | date:'MM-yyyy'}}</span>
                 <span><i class="fa-solid fa-circle"></i>Durée {{movie.duration | printduration}}</span>
+                <ui-star [score]="movie.score"></ui-star>
             </p>
             @for(genre of movie.genres; track genre.id ) {
             <span class="badge">

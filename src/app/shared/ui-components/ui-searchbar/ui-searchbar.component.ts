@@ -13,26 +13,24 @@ import { Router } from '@angular/router';
 export class SearchbarComponent {
 
   searchInput = new FormControl();
-  results!: SearchModel[];
   @Output() onResultsEvent = new EventEmitter()
 
   constructor(private _TmdbGateway: TMDBGateway, private _router: Router) { }
 
   ngOnInit() {
     // 1 traiter la saisie du user
+    //   debounceTime(500) : attend 500ms après la dernière saisie
     let search$ = this.searchInput.valueChanges.pipe(
-      // filter(val => val.length > 2),
       debounceTime(500)
     );
 
-    // 2 request
+    // 2 request search
+    //   switchMap : annule la requête précédente si une nouvelle est émise
     search$
       .pipe(
         switchMap(data => this._TmdbGateway.search(data))
       )
       .subscribe((data: SearchModel[]) => {
-        console.log(data)
-        this.results = data;
         this.onResultsEvent.emit(data)
       })
   }

@@ -1,3 +1,17 @@
+.mat-mdc-snack-bar-container {
+    margin: 50px !important;
+    position: static;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__label {
+    --mdc-snackbar-supporting-text-size: 16px;
+}
+
+.mat-mdc-snack-bar-container {
+    margin: 50px;
+    position: static;
+}
+
 .success-snackbar {
     --mdc-snackbar-container-color: #0e8b6b;
     --mdc-snackbar-supporting-text-color: white !important;
@@ -18,36 +32,6 @@
     --mat-snack-bar-button-color: #007bff !important;
 
 }
-
-// .cdk-overlay-pane {
-//     position: fixed !important;
-//     top: 50px;
-// }
-
-
-
-// .success-snackbar {
-//     .mat-mdc-snack-bar-container .mdc-snackbar__surface {
-//         background-color: #0e8b6b !important;
-//         color: white !important;
-//     }
-
-//     --mdc-snackbar-supporting-text-color: white !important;
-//     --mat-mdc-snack-bar-button-color: white !important;
-//     white-space: pre-wrap
-// }
-
-// .error-snackbar {
-//     .mat-mdc-snack-bar-container .mdc-snackbar__surface {
-//         background-color: #7b112a !important;
-//         color: white !important;
-//     }
-
-//     --mdc-snackbar-container-color: #7b112a !important;
-//     --mdc-snackbar-supporting-text-color: white !important;
-//     --mat-mdc-snack-bar-button-color: white !important;
-//     white-space: pre-wrap
-// }
 
 .showbar {
     z-index: 999999;

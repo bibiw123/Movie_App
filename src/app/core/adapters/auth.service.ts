@@ -90,6 +90,11 @@ export class AuthService implements AuthGateway {
     return localStorage.getItem("token")
   }
 
+  /**
+   * role: vérifier si l'utilisateur est authentifié
+   * attention : ce n'est pas réactif, la donnée est brute et non observable
+   * @returns boolean
+   */
   isAuth(): boolean {
     return this._isAuth$.getValue();
   }

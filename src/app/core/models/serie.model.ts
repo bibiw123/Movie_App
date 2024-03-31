@@ -49,6 +49,7 @@ export type TvShowModel = {
     reviews: Review[];
     seasons: SeasonModel[];
     status: number | undefined;
+    episodes?: any[];
 }
 
 export class TvShowModelMapper {

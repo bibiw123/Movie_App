@@ -10,15 +10,15 @@ import { LoaderService } from './shared/services/loader.service';
 })
 export class AppComponent {
   title = 'movieapp';
-  isLoading$ = this.loaderService.isLoading;
+  isLoading$: Observable<boolean> = this.loaderService.isLoading;
 
-  constructor(private authGateway: AuthGateway, private loaderService: LoaderService) { }
+  constructor(private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.userIsInactiveSince(1).subscribe((event) => {
-      console.log('logout apres 10 secondes');
-      this.authGateway.logout()
-    });
+    // this.userIsInactiveSince(1).subscribe((event) => {
+    //   console.log('logout apres 10 secondes');
+    //   this.authGateway.logout()
+    // });
   }
 
   /**

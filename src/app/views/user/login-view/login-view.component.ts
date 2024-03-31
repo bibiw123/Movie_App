@@ -63,6 +63,7 @@ export class LoginViewComponent {
     });
     this.onSubmitLoginForm();
   }
+
   loginAnge() {
     this.loginForm.setValue({
       email: 'ange@gmail.com',

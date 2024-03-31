@@ -12,24 +12,27 @@
     <main class="row gy-4">
         <!-- BLOC GAUCHE: VIDEO -->
         <div class="col-12 col-lg-6">
-          <ui-star [score]="serie.score"></ui-star>
             @if(authGateway.isAuth$ | async) {
+
 
             <div class="toolbar">
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isSerieInWatchlist(serie)) {
-                <button class="addtowatchlist active" (click)="removeSerieToWatchListAction(serie)">
+                <button [disabled]="(loaderService.isLoading| async)" class="addtowatchlist active"
+                    (click)="removeSerieToWatchListAction(serie)">
                     Retirer de ma liste <i class="fa-solid fa-heart"></i>
                 </button>
                 }
                 @else{
+
                 <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
-                <button (click)="addSerieToWatchListAction(serie)" class="addtowatchlist addtowatchlist-true">
+                <button [disabled]="seasonDetails===undefined 
+                || seasonDetails?.episodes.length===0" (click)="addSerieToWatchListAction(serie)"
+                    class="addtowatchlist addtowatchlist-true">
                     Ajouter à ma liste <i class="fa-regular fa-heart"></i>
                 </button>
                 }
             </div>
-
             }
 
             <!-- Image -->
@@ -50,6 +53,8 @@
                     ({{serie.episode_runtime | printduration}})
                     }
                 </span>
+                <ui-star [score]="serie.score"></ui-star>
+
             </p>
             <p class="d-flex">
                 @if(serie.last_air_date){
@@ -96,17 +101,25 @@
                 <div class="row g-4">
                     @for (episode of seasonDetails.episodes; track episode.id) {
                     <div class="col-12 col-lg-6 col-xl-4 col-xxl-3">
+                        <!-- Card Episode -->
                         <div class="card">
+                            <!-- 
+                                Button status s'affichent SI
+                                user est connecté ET serie est dans la watchlist
+                            -->
+                            @if((authGateway.isAuth$ | async) && userGateway.isSerieInWatchlist(serie)) {
                             <ui-button-group
-                                (selectedStatusEvent)="changeEpisodeWatchedStatus($event)"></ui-button-group>
+                                (selectedStatusEvent)="changeEpisodeWatchedStatus($event, episode)"></ui-button-group>
+                            }
                             <div class="card-image">
-                              <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
+                                <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">
                             </div>
                             <div class="card-body">
                                 <h3 class="card-title">{{episode.name}}</h3>
                                 <p class="card-text">{{episode.overview}}</p>
                             </div>
                         </div>
+
                     </div>
                     }
                 </div>

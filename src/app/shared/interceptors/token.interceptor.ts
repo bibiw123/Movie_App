@@ -18,6 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
     { endpoint: '/reviews', method: 'POST' },
     { endpoint: '/movies', method: 'ALL' },
     { endpoint: '/series', method: 'ALL' },
+    { endpoint: '/episodes', method: 'ALL' },
     // add other...
   ];
   TMDB_URL = environment.TMDB_API_URL;
@@ -32,7 +33,9 @@ export class TokenInterceptor implements HttpInterceptor {
    * l'API appelée, le endpoint et la méthode
   */
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    console.log('token interceptor', req);
+
+    console.log('La requête passe dans TokenInterceptor', req);
+
     let cloneRequest: HttpRequest<any> = req;
 
     // SI API TMDB
@@ -41,7 +44,6 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     // SI notre API et SI l'url necessite l'authentification
-    console.log(this.isUrlNeedsUserToken(req));
     if (this.isUrlNeedsUserToken(req)) {
       const token = this._authSvc.getTokenFromLocalStorage();
       if (token !== null)
@@ -69,7 +71,6 @@ export class TokenInterceptor implements HttpInterceptor {
         endpoint.includes(item.endpoint) &&
         (item.method === request.method || item.method === 'ALL')
       );
-      console.log('requestIsAnAuthEnpoint:', requestIsAnAuthEnpoint);
       if (requestIsAnAuthEnpoint) {
         return true;
       }

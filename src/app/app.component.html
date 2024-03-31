@@ -1,9 +1,11 @@
 <!-- <app-navbar> -->
 <app-navbar></app-navbar>
 
-<div [style.opacity]="(isLoading$ | async)?1:0" class="loader">
+@if((isLoading$ | async)) {
+<div class="loader">
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
+}
 
 <div class="block-view">
   <router-outlet></router-outlet>
