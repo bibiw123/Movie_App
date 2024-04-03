@@ -26,7 +26,7 @@
                 @else{
 
                 <!-- BOUTON "AJOUTER A LA WATCHLIST" -->
-                <button [disabled]="seasonDetails===undefined 
+                <button [disabled]="seasonDetails===undefined
                 || seasonDetails?.episodes.length===0" (click)="addSerieToWatchListAction(serie)"
                     class="addtowatchlist addtowatchlist-true">
                     Ajouter à ma liste <i class="fa-regular fa-heart"></i>
@@ -103,7 +103,7 @@
                     <div class="col-12 col-lg-6 col-xl-4 col-xxl-3">
                         <!-- Card Episode -->
                         <div class="card">
-                            <!-- 
+                            <!--
                                 Button status s'affichent SI
                                 user est connecté ET serie est dans la watchlist
                             -->
@@ -159,9 +159,9 @@
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Vidéos">
+            <!-- <mat-tab label="Vidéos">
                 Vidéos
-            </mat-tab>
+            </mat-tab> -->
         </mat-tab-group>
 
 

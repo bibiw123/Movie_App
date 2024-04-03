@@ -25,7 +25,7 @@
             </div>
             <div>
                 <label for="email">Email</label>
-                <input type="text" id="email" formControlName="email" placeholder="angelique@gmail.com">
+                <input type="text" id="email" formControlName="email" placeholder="hello@gmail.com">
                 <!-- paragraphe erreur en testant si :  instanceDeFormControl['username'].errors -->
                 @if (registerForm.controls['email'].hasError("required") && isSubmitted) {
                 <p class="error">Le champs est requis</p>
