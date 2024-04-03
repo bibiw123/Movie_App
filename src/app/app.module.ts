@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,7 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
@@ -90,7 +91,8 @@ import { UiStarComponent } from './shared/ui-components/ui-star/ui-star.componen
     MatButtonToggleModule,
     MatIconModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgOptimizedImage,
   ],
 
   providers: [

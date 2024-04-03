@@ -18,9 +18,8 @@ export type MovieModel = {
     genres: GenreModel[];
     date: Date;
     hasVideo: boolean;
-    video?: string | undefined;
+    video?: string;
     status?: number;
-    //videos: any[];
     reviews: Review[];
 }
 

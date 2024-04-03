@@ -3,6 +3,8 @@
     transition-duration: .3s;
     z-index: 999;
     position: relative;
+    border-radius: 7px;
+    z-index: 0;
 }
 
 img {
@@ -14,6 +16,7 @@ img {
 .card:hover {
     transform: scale(1.05);
     cursor: pointer;
+    box-shadow: 0 0px 20px 0px rgba(255, 200, 255, 0.3);
 }
 
 .card .card-overlay {
@@ -22,18 +25,60 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to top, rgb(16 10 10 / 91%), rgba(0, 0, 0, 0), rgba(19, 19, 19, 0.45));
+    background-image: linear-gradient(to top, rgb(16 10 10 / 89%), rgba(0, 0, 0, 0), rgba(19, 19, 19, 0.546));
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 1;
-    transition-duration: .3s;
+    transition-duration: .5s;
+    border-radius: 7px;
 }
 
 ui-star {
     position: absolute;
-    bottom: 0;
+    bottom: 3px;
     z-index: 9;
+    left: 3px
+}
+
+.media_type {
+    position: absolute;
+    bottom: 7px;
+    z-index: 9;
+    right: 7px;
+    color: #ffffff61;
+    font-size: 1.25rem;
+}
+
+.card .card-heart-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.8rem;
+    color: rgb(255, 255, 255);
+    z-index: 999;
+    background: transparent;
+    padding: 2px 10px;
+    transition-duration: .2s;
+}
+
+.card .card-heart-btn i.fa-regular {
+    color: rgb(255, 255, 255);
+}
+
+.card .card-heart-btn i.fa-solid {
+    color: rgb(211 144 255 / 85%);
+}
+
+.card .card-heart-btn:hover {
+
+    >i:not(.fa-solid) {
+        color: rgb(236, 174, 255);
+    }
+}
+
+.card button:disable>i {
+    opacity: .2;
 }
 
 h2 {

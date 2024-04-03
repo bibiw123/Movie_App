@@ -108,8 +108,8 @@
                                 user est connecté ET serie est dans la watchlist
                             -->
                             @if((authGateway.isAuth$ | async) && userGateway.isSerieInWatchlist(serie)) {
-                            <ui-button-group
-                                (selectedStatusEvent)="changeEpisodeWatchedStatus($event, episode)"></ui-button-group>
+                            <ui-button-group (selectedStatusEvent)="changeEpisodeWatchedStatus($event, episode)">
+                            </ui-button-group>
                             }
                             <div class="card-image">
                                 <img [src]="getFullImageUrl(episode.still_path)" [alt]="episode.title">

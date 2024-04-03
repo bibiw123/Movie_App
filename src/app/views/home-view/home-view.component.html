@@ -1,6 +1,28 @@
-<!-- PARTIE 1: slider -->
+<!-- PARTIE 0: slider -->
 @if(randomSlider.length > 0) {
 <ui-slider [items]="randomSlider"></ui-slider>
+}
+
+<!-- PARTIE 1: User WatchList suggestions films et series-->
+@if(suggestions && suggestions.length > 0) {
+<section id="movies">
+    <div class="container">
+        <h2 class="label">Suggestion de votre liste</h2>
+        <div class="row">
+            @for (item of suggestions; track item.tmdb_id) {
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 g-3">
+                @if(isMovie(item)) {
+                <ui-card [routerLink]="['/movies', item.tmdb_id]" [item]="item"></ui-card>
+                }
+                @if(isSerie(item)) {
+                <ui-card [routerLink]="['tv', item.tmdb_id]" [item]="item"></ui-card>
+                }
+            </div>
+            }
+
+        </div>
+    </div>
+</section>
 }
 
 
@@ -11,7 +33,7 @@
         <div class="row">
 
             @for (itemMovie of movies; track itemMovie.tmdb_id) {
-            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-lg-4 col-xl-2 g-3">
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-2 g-3">
                 <ui-card [routerLink]="['/movies', itemMovie.tmdb_id]" [item]="itemMovie"></ui-card>
             </div>
             }
@@ -27,7 +49,7 @@
         <div class="row">
 
             @for (itemSerie of series; track itemSerie.tmdb_id) {
-            <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-4 col-lg-2 g-3">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 g-3">
                 <ui-card [routerLink]="['/tv', itemSerie.tmdb_id]" [item]="itemSerie"></ui-card>
             </div>
             }

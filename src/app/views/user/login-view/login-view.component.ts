@@ -56,10 +56,10 @@ export class LoginViewComponent {
     }
   }
 
-  loginFred() {
+  loginFatiha() {
     this.loginForm.setValue({
-      email: 'fred2@gmail.com',
-      password: 'Fred-2024#'
+      email: 'fatiha@gmail.com',
+      password: 'Fatiha-2024#'
     });
     this.onSubmitLoginForm();
   }

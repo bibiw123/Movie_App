@@ -18,8 +18,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
-    console.log('La requête passe dans ErroInterceptor', req);
-
     return next.handle(req).pipe(
       tap({
         error: (err) => {

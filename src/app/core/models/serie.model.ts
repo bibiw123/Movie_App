@@ -48,7 +48,6 @@ export type TvShowModel = {
     video: any[];
     reviews: Review[];
     seasons: SeasonModel[];
-    status: number | undefined;
     episodes?: any[];
 }
 
@@ -71,8 +70,7 @@ export class TvShowModelMapper {
             date: tvshow.first_air_date,
             video: tvshow.videos?.results ? tvshow.videos?.results : [],
             reviews: [],
-            seasons: tvshow?.seasons?.map((season: any) => season.id_tmdb = season.id) ? tvshow?.seasons : [],
-            status: tvshow.status
+            seasons: tvshow?.seasons?.map((season: any) => season.id_tmdb = season.id) ? tvshow?.seasons : []
         }
     }
 }

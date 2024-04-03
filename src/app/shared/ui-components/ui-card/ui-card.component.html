@@ -1,11 +1,30 @@
 <div class="card">
+    <div [style.opacity]="isLoading?1:0 && this" class="loader">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <!-- Si Image poster du film ou Serie-->
     @if(item.image_portrait) {
     <img [src]="getFullImageUrl(item.image_portrait)" alt="" />
     }
     @else {
-    <img src="https://place-hold.it/500x750/a903e9/fff?text=image non disponible&fontsize=25&bold"
-        [alt]="'Pas dìmage disponible: ' + item.titre">
+    <!-- Si pas d'image, afficher un placeholder -->
+    <img src="https://place-hold.it/500x750/a903e9/fff?text=image non disponible&fontsize=25&bold">
     }
+
+    <!-- button ajouter/supprimer le film de ma liste -->
+    @if(authGateway.isAuth$ |async) {
+    <button [disabled]="isLoading" (click)="addOrRemoveMediaToWatchlistAction(item, $event)" class="card-heart-btn">
+        <i [class.fa-solid]="isMediaInWatchList" class="fa-regular fa-heart"></i>
+    </button>
+    }
+
+    <!-- Note du film -->
     <ui-star [score]="item.score"></ui-star>
+
+    <!-- icone du type de média -->
+    <i *ngIf="type === 'movie'" class="media_type fa-solid fa-film"></i>
+    <i *ngIf="type === 'serie'" class="media_type fa-solid fa-tv"></i>
+
+    <!-- Overlay-->
     <div class="card-overlay"></div>
 </div>

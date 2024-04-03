@@ -17,8 +17,12 @@
 
             @if(userGateway.user$ | async; as user) {
             <div class="toolbar">
+
+                <!-- si le film est dans la watchlist on affiche les boutons de STATUS -->
+                @if(isInWatchList) {
                 <ui-button-group [status]="movieStatus"
                     (selectedStatusEvent)="changeMovieWatchedStatus($event)"></ui-button-group>
+                }
 
                 <!-- BOUTON "RETIRER A LA WATCHLIST" -->
                 @if(userGateway.isMovieInWatchlist(movie)) {

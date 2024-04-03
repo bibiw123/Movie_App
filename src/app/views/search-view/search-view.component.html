@@ -5,34 +5,25 @@
 
     <!-- Afficher les resultats -->
     <section class="row">
-        @for(result of results$ | async; track result.id) {
+        @if(results.length > 0) {
+        @for(result of results; track result.tmdb_id) {
         <div class="animate__animated animate__fadeIn col-12 col-sm-6 col-md-3 col-lg-2 g-4">
 
-            @switch (result.media_type) {
-            @case ('movie') {
-            <ui-card [routerLink]="['/movies', result.id]" [item]="result"></ui-card>
-            }
-            @case ('tv') {
-            <ui-card [routerLink]="['/tv', result.id]" [item]="result"></ui-card>
-            }
-            @case ('person') {
-            <ui-card [routerLink]="['/person', result.id]" [item]="result"></ui-card>
-            }
+            <!-- card si c'est un film -->
+            <ui-card *ngIf="isMovie(result)" type="movie" [routerLink]="['/movies', result.tmdb_id]"
+                [item]="result"></ui-card>
 
-            }
+            <!-- card si c'est une série -->
+            <ui-card *ngIf="isSerie(result)" type="serie" [routerLink]="['/tv', result.tmdb_id]"
+                [item]="result"></ui-card>
 
-
-        </div>
-        <!-- Template d'affichage si pas de résultat -->
-        } @empty() {
-        <div class="d-flex justify-content-center">
-            <!-- <p>En attente de votre saisie...</p>-->
+            <!-- card si c'est un people -->
+            <ui-card *ngIf="!isSerie(result) && !isMovie(result)" type="person" [item]="result"></ui-card>
 
         </div>
         }
-
+        }
     </section>
-
-
+    <!-- FIN Template d'affichage résultat -->
 
 </div>

@@ -5,6 +5,7 @@ import { EpisodeModel, SeasonModel, TvShowModel } from "../models/serie.model"
 
 export type SerieDTO = {
     first_air_date: Date,
+    id: number,
     id_tmdb: number,
     poster_path: string,
     last_air_date?: Date | undefined,
@@ -40,6 +41,38 @@ export type PostSerieDTO = Omit<SerieDTO, 'id'>
 export type SerieResponseDTO = SerieDTO;
 
 export class SerieDTOMapper {
+
+    static mapToSerieModel(serie: SerieDTO): TvShowModel {
+        return {
+            api_id: serie.id,
+            tmdb_id: serie.id_tmdb,
+            titre: serie.title,
+            resume: serie.overview,
+            episode_count: serie.number_of_episodes,
+            date: serie.first_air_date,
+            image_landscape: '',
+            image_portrait: serie.poster_path,
+            last_air_date: serie.last_air_date,
+            created_by: undefined,
+            credits: undefined,
+            episode_runtime: undefined,
+            video: [],
+            reviews: [],
+            seasons: []
+            // serie.seasons.map(season => {
+            //     return {
+            //         id_tmdb: season.id_tmdb,
+            //         poster_path: season.poster_path,
+            //         season_number: season.season_number,
+            //         overview: season.overview,
+            //         // episodes: season.episodes
+            //     }
+            // })
+            ,
+            score: serie.score,
+            genres: serie.genres
+        }
+    }
 
     static mapFromSerieModel(serie: TvShowModel): PostSerieDTO {
         return {

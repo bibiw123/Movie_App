@@ -4,7 +4,9 @@
 
     @if(isMenuOpened) {
     <ul>
-
+        <li (click)="selectItemAction({id:-1, name:'Tous'})" [class.selected]="selectedGenre?.id===0" class="item">
+            Tous
+        </li>
         @for(item of items; track item.id) {
         <li (click)="selectItemAction(item)" [class.selected]="item.id===selectedGenre?.id" class="item">
             {{item.name}}

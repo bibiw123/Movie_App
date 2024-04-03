@@ -35,3 +35,73 @@ a.user:hover img.avatar {
     box-shadow: 0 0 3px 4px rgb(181 135 248 / 75%);
     filter: hue-rotate(2deg);
 }
+
+nav.navbar-mobile {
+    display: none;
+    height: 100vh;
+    background: rgb(29 28 31);
+}
+
+.navbar-mobile .navbar-content {
+    justify-content: center;
+
+}
+
+.navbar-mobile .navbar-content div,
+.navbar-mobile .navbar-content div ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 40px;
+
+    li {
+        margin-bottom: 35px;
+
+        i {
+            display: none;
+        }
+
+        a {
+            font-size: 1.8rem;
+        }
+
+    }
+}
+
+.burger-btn {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 1.5rem;
+    z-index: 999;
+    display: none;
+}
+
+.user-mobile-btn {
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+    z-index: 999;
+    display: none;
+    color: #917db8;
+    background: transparent;
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 992px) {
+    .navbar-desktop {
+        display: none;
+    }
+
+    .burger-btn,
+    .user-mobile-btn {
+        display: block;
+    }
+
+    nav.navbar-mobile.nav-opened {
+        display: block
+    }
+}

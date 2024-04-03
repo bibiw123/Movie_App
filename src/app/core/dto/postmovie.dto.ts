@@ -12,9 +12,10 @@ type MovieDTO = {
     overview: string,
     score: number,
     genres: GenreModel[],
-    comments: CommentDTO[]
+    comments: CommentDTO[],
+    status: number
 }
-export type PostMovieDTO = Omit<MovieDTO, 'id' | 'comments'>
+export type PostMovieDTO = Omit<MovieDTO, 'id' | 'comments' | 'status'>
 export type MovieResponseDTO = MovieDTO;
 
 export class MovieDTOMapper {
@@ -33,7 +34,6 @@ export class MovieDTOMapper {
     }
 
     static mapToMovieModel(movie: MovieResponseDTO): MovieModel {
-        console.log(movie)
         return {
             api_id: movie.id ? movie.id : 0,
             tmdb_id: movie.id_tmdb,
@@ -48,7 +48,8 @@ export class MovieDTOMapper {
             date: movie.release_date,
             hasVideo: false,
             video: undefined,
-            reviews: []
+            reviews: [],
+            status: movie.status ? movie.status : 0,
         }
     }
 

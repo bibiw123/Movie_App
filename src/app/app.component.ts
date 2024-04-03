@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthGateway } from './core/ports/auth.gateway';
-import { Observable, combineLatest, debounceTime, fromEvent, interval, tap, throttle } from 'rxjs';
+import { Observable, combineLatest, debounceTime, fromEvent } from 'rxjs';
 import { LoaderService } from './shared/services/loader.service';
 
 @Component({

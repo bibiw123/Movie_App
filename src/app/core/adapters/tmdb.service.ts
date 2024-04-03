@@ -14,9 +14,6 @@ import { TMDBGateway } from '../ports/tmdb.gateway';
 })
 export class TMDBService implements TMDBGateway {
 
-  moviesPageNumber = 1;
-  seriesPageNumber = 5;
-
   private TMDB_URL: string = environment.TMDB_API_URL;
 
   /* STORE movies : BehaviorSubject _movies$ */
@@ -31,6 +28,12 @@ export class TMDBService implements TMDBGateway {
   private _searchResults$ = new BehaviorSubject<SearchModel[]>([]);
   public searchResults$ = this._searchResults$.asObservable();
 
+  // data
+  moviesPageNumber = 1;
+  seriesPageNumber = 1;
+  movieGenreSelected: number = 0;
+  seriesGenreSelected: number = 0;
+
 
   constructor(private http: HttpClient) { }
 
@@ -39,11 +42,16 @@ export class TMDBService implements TMDBGateway {
    * endpoint : /discover/movie
    * role : récupérer les films à découvrir
    * @returns @Observable<MovieModel>
+   * @param genre number
    */
-  getMoviesFromApi(): Observable<MovieModel[]> {
-    if (this._movies$.getValue().length === 0) {
+  getMoviesFromApi(genre?: number): Observable<MovieModel[]> {
+    genre ? this.movieGenreSelected = genre : this.movieGenreSelected = -1;
+    // si la liste est vide ou si un genre est sélectionné : faire la requête HTTP
+    if (this._movies$.getValue().length === 0 || genre) {
       const ENDPOINT = `/discover/movie`;
-      let options = { params: { language: 'fr' } }
+      let options: any = { params: { language: 'fr' } }
+      // ajouter un filtre genre si un genre est sélectionné
+      if (genre && genre !== -1) options.params['with_genres'] = genre;
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) => response.results
@@ -69,7 +77,10 @@ export class TMDBService implements TMDBGateway {
       ? this.moviesPageNumber++
       : this.moviesPageNumber = pageNumber;
     const ENDPOINT = `/discover/movie`;
-    let options = { params: { language: 'fr', page: this.moviesPageNumber } }
+    let options: any = { params: { language: 'fr', page: this.moviesPageNumber } }
+    // ajouter un filtre genre si un genre est sélectionné
+    if (this.movieGenreSelected !== 0)
+      options.params['with_genres'] = this.movieGenreSelected;
     this.http.get(this.TMDB_URL + ENDPOINT, options)
       .pipe(
         map((response: any) =>
@@ -92,11 +103,16 @@ export class TMDBService implements TMDBGateway {
    * endpoint : /discover/tv
    * role : récupérer les séries à découvrir
    * @returns @Observable<TvShowModel[]>
+   * @param genre number
    */
-  getTvShowFromApi(): Observable<TvShowModel[]> {
-    if (this._tv$.getValue().length === 0) {
+  getTvShowFromApi(genre?: number): Observable<TvShowModel[]> {
+    genre ? this.movieGenreSelected = genre : this.movieGenreSelected = -1;
+    // si la liste est vide ou si un genre est sélectionné : faire la requête HTTP
+    if (this._tv$.getValue().length === 0 || genre) {
       const ENDPOINT = `/discover/tv`;
-      let options = { params: { language: 'fr', page: this.seriesPageNumber } }
+      let options: any = { params: { language: 'fr', page: this.seriesPageNumber } }
+      // ajouter un filtre genre si un genre est sélectionné
+      if (genre && genre !== -1) options.params['with_genres'] = genre;
       this.http.get(this.TMDB_URL + ENDPOINT, options)
         .pipe(
           map((response: any) =>
@@ -150,7 +166,7 @@ export class TMDBService implements TMDBGateway {
   * queryParam: append_to_response=videos,credits
   * @returns @Observable<TvShowModel>
   */
-  getOneTvShowFromApi(id: string): Observable<TvShowModel> {
+  getOneTvShowFromApi(id: number): Observable<TvShowModel> {
     const ENDPOINT = `/tv/${id}`;
     let options = {
       params: {
@@ -170,7 +186,7 @@ export class TMDBService implements TMDBGateway {
    * @param serieId
    * @param seasonNumber
    */
-  getEpisodesFromApi(serieId: number, seasonNumber: number): any {
+  getEpisodesFromApi(serieId: number, seasonNumber: number): Observable<any> {
     const ENDPOINT = `/tv/${serieId}/season/${seasonNumber}`;
     let options = {
       params: {
@@ -216,7 +232,8 @@ export class TMDBService implements TMDBGateway {
     let options = {
       params: {
         language: 'fr',
-        query: userSearchText
+        query: userSearchText,
+        append_to_response: 'videos,credits'
       }
     }
     return this.http.get(this.TMDB_URL + ENDPOINT, options)

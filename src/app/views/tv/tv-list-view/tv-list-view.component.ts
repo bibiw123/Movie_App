@@ -11,19 +11,26 @@ import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
 })
 export class TvListViewComponent {
 
+  // Observable tvshows$ (source de données des séries)
+  // on s'y abonne dans le template HTML (tvshows$ | async)
   tvshows$: Observable<TvShowModel[]> = this._TmdbGateway.tv$;
   genres: Genre[] = genresTv;
 
   constructor(private _TmdbGateway: TMDBGateway) { }
 
   ngOnInit() {
+    // Récupération de la liste des series de TMDB
     this._TmdbGateway.getTvShowFromApi();
   }
 
   selectGenre(genre: Genre) {
-    console.log(genre)
+    // Récupération des séries en fonction du genre sélectionné
+    this._TmdbGateway.getTvShowFromApi(genre.id);
   }
 
+  /**
+   * Role: récupérer les 20 séries suivantes
+   */
   findNextMoviesAction() {
     this._TmdbGateway.getNextTvShowFromApi()
   }

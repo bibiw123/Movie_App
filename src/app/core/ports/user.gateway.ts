@@ -9,13 +9,13 @@ export abstract class UserGateway {
   abstract user$: Observable<any>
   abstract setUser$(user: UserModel | null): void
   abstract createUserModelAfterLogin(user: SimpleUser): Observable<UserModel | undefined>
-  abstract getUser(): UserModel
+  abstract getUser(): UserModel | undefined
 
   abstract fetchWatchlistMovies(): Observable<MovieModel[]>
   abstract fetchWatchlistSeries(): Observable<any>
 
   abstract postMovie(movie: MovieModel): void;
-  abstract deleteMovie(movie: any): void;
+  abstract deleteMovie(movieId: number): void;
   abstract PostMovieStatusChange(movie: MovieModel, status: 0 | 1 | 2 | 3): Observable<any>;
 
   abstract postSerie(serie: TvShowModel): Observable<TvShowModel>;

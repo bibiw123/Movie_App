@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Genre } from '../../data/genres.data';
-import { SeasonModel } from '../../../core/models/serie.model';
+import { TMDBGateway } from '../../../core/ports/tmdb.gateway';
+
 
 @Component({
   selector: 'ui-dropdown',
@@ -13,6 +14,8 @@ export class DropdownComponent {
 
   isMenuOpened: boolean = false;
   selectedGenre!: Genre | undefined;
+
+  constructor(private TMDBGateway: TMDBGateway) { }
 
   openCloseMenu() {
     this.isMenuOpened = !this.isMenuOpened;

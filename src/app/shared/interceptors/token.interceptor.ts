@@ -34,8 +34,6 @@ export class TokenInterceptor implements HttpInterceptor {
   */
   intercept(req: HttpRequest<any>, next: HttpHandler) {
 
-    console.log('La requête passe dans TokenInterceptor', req);
-
     let cloneRequest: HttpRequest<any> = req;
 
     // SI API TMDB

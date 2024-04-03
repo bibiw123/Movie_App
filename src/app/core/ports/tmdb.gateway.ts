@@ -6,19 +6,19 @@ import { SearchModel } from "../models/search.model";
 /*
     Dans le cadre de l'architecture port/adapter (clean architecture)
     Le service TMDBService implémente cette classe APIExternalMoviesGateway
-
-    Le principe :          PORT                ADAPTER 1
-    |COMPONENT| =====>   |Gateway|  =====>  |TMDBService|
-                      (abstractClass)       (Service Concret)
-
-                                              OU ADAPTER 2
-                                    =====>  |OtherService|
-                                            (Service Concret)
-
-                                              OU ADAPTER 3
-                                    =====>  |OtherService|
-                                            (Service Concret)
-
+                                      
+    Le principe :          PORT       *            ADAPTER 1
+    |COMPONENT| =====>   |Gateway|    *  =====>  |TMDBService|
+      invoque         (abstractClass) *          (Service Concret implements Gateway)
+                                      *
+       A P P L I C A T I O N          *          OU ADAPTER 2
+                                      *  =====>  |OtherService|
+                                      *          (Service Concret implements Gateway)
+                                      *
+                                      *          OU ADAPTER 3
+                                      *  =====>  |OtherService|
+                                      *          (Service Concret implements Gateway)
+                                      *
 
 */
 export abstract class TMDBGateway {
@@ -27,15 +27,18 @@ export abstract class TMDBGateway {
     abstract tv$: Observable<TvShowModel[]>;
     abstract searchResults$: Observable<SearchModel[]>;
     // movies
-    abstract getMoviesFromApi(): Observable<MovieModel[]>;
+    abstract getMoviesFromApi(genre?: number): Observable<MovieModel[]>;
     abstract getNextMoviesFromApi(pageNumber?: number): Observable<MovieModel[]>
     abstract getMovieFromApi(id: string): Observable<MovieModel>
     // series
-    abstract getTvShowFromApi(): Observable<TvShowModel[]>;
+    abstract getTvShowFromApi(genre?: number): Observable<TvShowModel[]>;
     abstract getNextTvShowFromApi(): Observable<TvShowModel[]>;
-    abstract getOneTvShowFromApi(id: string): Observable<TvShowModel>;
-    abstract getEpisodesFromApi(serieId: number, seasonNumber: number): any;
+    abstract getOneTvShowFromApi(id: number): Observable<TvShowModel>;
+    abstract getEpisodesFromApi(serieId: number, seasonNumber: number): Observable<any>;
     // search
     abstract search(userSearchText: string): Observable<any>
+    // genres
+    abstract movieGenreSelected: number;
+    abstract seriesGenreSelected: number;
 
 }

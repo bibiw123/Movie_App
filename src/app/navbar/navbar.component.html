@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar navbar-desktop">
     <div class="container">
         <div class="navbar-content">
 
@@ -51,17 +51,63 @@
 
                 </ul>
             </div>
-
-
         </div>
-
-        <!-- <button (click)="openNav()" class="burger-btn"><i class="fa-solid fa-bars"></i></button> -->
-        <!-- <nav [class.nav-opened]="isMenuOpened"> -->
-
-        <!-- Button close nav mobile -->
-        <!-- <button (click)="closeNav()" class="close-nav-btn"><i class="fa-solid fa-xmark"></i></button> -->
-
-
-        <!-- </nav> -->
     </div>
-</nav>
+</nav> <!-- fin navbar desktop -->
+
+
+
+
+<!-- BURGER menu mobile-->
+<button (click)="openOrCloseNav()" class="burger-btn">
+    <i [class.fa-close]="isMenuOpened" class="fa-solid fa-bars"></i>
+</button>
+
+<!-- bouton USER si on est connecté -->
+@if(isAuth$|async){
+<button [matMenuTriggerFor]="menu" class="user-mobile-btn">
+    <img class="avatar" [src]="'https://api.dicebear.com/8.x/adventurer/svg?seed='+user?.username" alt="">
+</button>
+}
+@else {
+<!-- bouton USER si on n' est PASconnecté-->
+<button (click)="navigateToUserList()" class="user-mobile-btn">
+    <i class="fa-solid fa-user"></i>
+</button>
+}
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="watchlist">Ma liste</button>
+    <button mat-menu-item>Compte</button>
+    <button mat-menu-item>Préférences</button>
+    <button (click)="logoutAction()" mat-menu-item>Déconnexion</button>
+</mat-menu>
+
+<!-- navbar mobile-->
+<nav class="navbar navbar-mobile nav-opened" [class.nav-opened]="isMenuOpened">
+    <div class="container">
+        <div class="navbar-content">
+            <div>
+                <a (click)="navigateTo('')" class="logo">
+                    <img src="assets/logo11.png" alt="" />
+                </a>
+                <ul>
+                    <li><a (click)="navigateTo('')" routerLink="/" routerLinkActive='active'
+                            [routerLinkActiveOptions]="{exact:true}">Accueil</a>
+                    </li>
+                    <li><a (click)="navigateTo('movies')" routerLink="/movies" routerLinkActive='active'>Films</a></li>
+                    <li><a (click)="navigateTo('tv')" routerLink="/tv" routerLinkActive='active'>Séries</a></li>
+                    <li>
+                        <a (click)="navigateTo('watchlist')" routerLinkActive='active'>Ma liste</a>
+                    </li>
+                    <li>
+                        <a (click)="navigateTo('search')" routerLink="/search" routerLinkActive='active'>Recherche</a>
+                    </li>
+                    <li>
+                        <a (click)="navigateTo('login')" routerLink="/login" routerLinkActive='active'>Connexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav> <!-- FIN navbar mobile-->

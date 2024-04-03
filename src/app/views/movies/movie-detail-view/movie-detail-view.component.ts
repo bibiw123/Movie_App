@@ -17,6 +17,7 @@ export class MovieDetailViewComponent implements OnInit {
   movie$!: Observable<MovieModel>
   movie!: MovieModel
   movieStatus: number = 0;
+  isInWatchList: boolean = false;
 
   constructor(
     public location: Location,
@@ -36,9 +37,15 @@ export class MovieDetailViewComponent implements OnInit {
     this.movie$.subscribe(movie => {
       this.movie = movie;
       console.log(this.movie);
-      let myMovie = this.userGateway.getUser().watchList.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
-      this.movieStatus = myMovie ? myMovie.status ? myMovie.status : 0 : 0;
+      let myMovie = this.userGateway.getUser()?.watchList?.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
+      this.isInWatchList = myMovie ? true : false;
+      this.movieStatus = myMovie?.status ? myMovie.status : 0;
       console.log(this.movieStatus);
+    })
+
+    this.userGateway.user$.subscribe(user => {
+      const foundMovie = user.watchList.movies.find((movie: any) => movie.tmdb_id === this.movie.tmdb_id);
+      foundMovie ? this.isInWatchList = true : this.isInWatchList = false;
     })
 
 
@@ -58,9 +65,9 @@ export class MovieDetailViewComponent implements OnInit {
   }
 
   removeMovieToWatchListAction(movie: MovieModel) {
-    const userWatchList = this.userGateway.getUser().watchList.movies
-    const foundMovie = userWatchList.find(item => item.tmdb_id === movie.tmdb_id)
-    if (foundMovie) this.userGateway.deleteMovie(foundMovie.api_id)
+    const userWatchList = this.userGateway.getUser()?.watchList.movies
+    const foundMovie = userWatchList?.find(item => item.tmdb_id === movie.tmdb_id)
+    if (foundMovie && foundMovie.api_id) this.userGateway.deleteMovie(foundMovie.api_id)
   }
 
   changeMovieWatchedStatus(event: 0 | 1 | 2 | 3) {
@@ -68,7 +75,7 @@ export class MovieDetailViewComponent implements OnInit {
     this.movieStatus = event;
     let user = this.userGateway.getUser();
     let movie = this.movie;
-    let foundMovieInWatchList = user.watchList.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
+    let foundMovieInWatchList = user?.watchList.movies.find(movie => movie.tmdb_id === this.movie.tmdb_id);
     if (foundMovieInWatchList) {
       movie.api_id = foundMovieInWatchList.api_id;
     }

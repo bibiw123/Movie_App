@@ -8,7 +8,8 @@ import { MovieModel } from '../models/movie.model';
 import { MovieDTOMapper, MovieResponseDTO, PostMovieDTO } from '../dto/postmovie.dto';
 import { AlertService } from '../../shared/services/alert.service';
 import { EpisodeModel, TvShowModel } from '../models/serie.model';
-import { PostSerieDTO, SerieDTOMapper } from '../dto/postserie.dto';
+import { PostSerieDTO, SerieDTOMapper, SerieResponseDTO } from '../dto/postserie.dto';
+import { TMDBGateway } from '../ports/tmdb.gateway';
 
 
 @Injectable({
@@ -16,7 +17,10 @@ import { PostSerieDTO, SerieDTOMapper } from '../dto/postserie.dto';
 })
 export class UserService implements UserGateway {
 
-  constructor(private http: HttpClient, private alert: AlertService) { }
+  constructor(
+    private http: HttpClient,
+    private alert: AlertService,
+    private TMDBGateway: TMDBGateway) { }
   apiurl = environment.API_URL;
 
   /***************************************
@@ -49,7 +53,6 @@ export class UserService implements UserGateway {
     userWatchList$
       .pipe(
         map(apiResponse => {
-          console.log('apiResponse:', apiResponse);
           return new UserModel(user)
             .setWatchListMovies(apiResponse[0])
             .setWatchListSeries(apiResponse[1])
@@ -57,6 +60,7 @@ export class UserService implements UserGateway {
       )
       .subscribe((userLoggedIn: UserModel) => {
         console.log('created user after login:', userLoggedIn)
+        // mettre à jour le store _user$
         this._user$.next(userLoggedIn);
       })
     return this._user$.asObservable()
@@ -67,8 +71,8 @@ export class UserService implements UserGateway {
    * Role: getter pour récupérer le user dans le STORE
    * @returns UserModel
   */
-  getUser(): UserModel {
-    return this._user$.getValue() as UserModel
+  getUser(): UserModel | undefined {
+    return this._user$.getValue() as UserModel | undefined
   }
 
   /**
@@ -156,7 +160,6 @@ export class UserService implements UserGateway {
    * @param movie MovieModel
    */
   PostMovieStatusChange(movie: MovieModel, status: 0 | 1 | 2 | 3): Observable<any> {
-    console.log('movie:', movie);
     const endpoint = '/movies/' + movie.api_id;
     let options = { params: { status } }
     return this.http.patch(this.apiurl + endpoint, null, options)
@@ -189,7 +192,7 @@ export class UserService implements UserGateway {
     return this.http.get(this.apiurl + endpoint)
       .pipe(map((apiResponse: any) =>
         apiResponse.map(
-          (movie: MovieResponseDTO) => MovieDTOMapper.mapToMovieModel(movie)
+          (serie: SerieResponseDTO) => SerieDTOMapper.mapToSerieModel(serie)
         )
       ))
   }
@@ -197,13 +200,59 @@ export class UserService implements UserGateway {
   /**
     * endpoint: [POST] /series
     * Role: poster une série  dans la watchlist du user
+    * @returns Observable<TvShowModel>
     * @param serie TvShowModel
+    * 
+    * NB: Cette méthode est plus complexe que postMovie car le backend attend une structure de données
+    * STEP 1: 2 HTTP Requests en parallèle à TMDB
+    * (récupérer les détails de la série + récupérer les détails de la saison 1)
+    * 
+    * STEP 2: 1 HTTP Request en cascade (poster la série à l'API)
+    * STEP 3: 1 HTTP Request en cascade (poster les épisodes saison 1 à l'API)
+    *
+    * STEP 4: mettre à jour le store _user$
     */
-  postSerie(serie: TvShowModel): Observable<any> {
-    const endpoint = '/series';
-    const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel(serie)
-    return this.http.post(this.apiurl + endpoint, serieDTO)
+  postSerie(serie: TvShowModel): Observable<TvShowModel> {
+    let newSerieToAddInWatchlist!: TvShowModel;
+    const TMDBRequests = forkJoin([
+      this.TMDBGateway.getOneTvShowFromApi(serie.tmdb_id),
+      this.TMDBGateway.getEpisodesFromApi(serie.tmdb_id, 1)
+    ]);
+    // STEP 1: on lance 2 requests en parallèle à TMDB
+    return TMDBRequests
+      .pipe(
+        // STEP 2: [POST] API /series (poster la série)
+        switchMap(([serieDetailFromTMDB, firstSeasonFromTMDB]) => {
+          newSerieToAddInWatchlist = structuredClone(serieDetailFromTMDB);
+          newSerieToAddInWatchlist.seasons[0].episodes = firstSeasonFromTMDB.episodes;
+          const endpoint = '/series';
+          const serieDTO: PostSerieDTO = SerieDTOMapper.mapFromSerieModel(newSerieToAddInWatchlist);
+          return this.http.post(this.apiurl + endpoint, serieDTO)
+        }),
+        // STEP 3: [POST] API /episodes/{seasonTMDBId} (poster les épisodes saison 1)
+        switchMap((serieApiResponse: any) => {
+          newSerieToAddInWatchlist.api_id = serieApiResponse.id;
+          const { seasons } = newSerieToAddInWatchlist;
+          const seasonTMDBId = seasons[0].id_tmdb;
+          const episodes = seasons[0].episodes;
+          return this.postEpisodes(newSerieToAddInWatchlist, episodes, seasonTMDBId, 0)
+        }),
+        // STEP 4: mettre à jour le store _user$
+        tap(() => {
+          let user = this._user$.getValue();
+          const foundSerieInWatchlist = user?.watchList.series.find(item => serie.tmdb_id === item.tmdb_id);
+          // si serie n'est pas dans la watchList, on l'ajoute et on set le store _user$
+          if (user?.watchList && !foundSerieInWatchlist) {
+            user.watchList.series = [newSerieToAddInWatchlist, ...user.watchList.series];
+            // mettre à jour le store _user$
+            this._user$.next(user);
+            this.alert.show('Série ajoutée à ma liste')
+          }
+        })
+      )
   }
+
+
 
   /**
    * endpoint: [POST] /episodes/:seasonTMDBId
@@ -220,46 +269,35 @@ export class UserService implements UserGateway {
     const episodesDTO = episodes.map((episode: EpisodeModel) => {
       return SerieDTOMapper.mapFromEpisodeModel(episode)
     })
-    return this.http.post(this.apiurl + endpoint, episodesDTO, options).pipe(
-      tap((apiResponse: any) => {
-        let user: UserModel | undefined = this._user$.getValue();
-        if (user?.watchList) {
-          const serieInWatchlist = user.watchList.series.find(item => serie.tmdb_id === item.tmdb_id)
-          // si serie n'est pas dans la watchList, on l'ajoute et on set le store _user$
-          if (serieInWatchlist === undefined) {
-            user.watchList.series = [serie, ...user.watchList.series]
-            this._user$.next(user)
-            this.alert.show('Série ajoutée à ma liste')
-          }
-          // sinon, on met à jour le statut de l'épisode
-          else {
-            console.log('serieInWatchlist:', serieInWatchlist);
-            const season = serieInWatchlist.seasons?.find(season => season.id_tmdb === seasonTMDBId);
-            console.log('season:', season);
-            const episodes = season?.episodes;
-            if (season && !episodes) {
-              season.episodes = []
+    return this.http.post(this.apiurl + endpoint, episodesDTO, options)
+      .pipe(
+        tap((apiResponse: any) => {
+          let user = this._user$.getValue();
+          if (user?.watchList) {
+            const serieInWatchlist = user.watchList.series.find(item => serie.tmdb_id === item.tmdb_id);
+            // si la série est dans la watchlist
+            if (serieInWatchlist) {
+              const season = serieInWatchlist.seasons?.find(season => season.id_tmdb === seasonTMDBId);
+              const episodes = season?.episodes;
+              // si la saison n'a pas d'épisodes, on assigne un tableau vide à season.episodes
+              if (season && !episodes) {
+                season.episodes = []
+              }
+              if (episodes) {
+                // on met à jour le statut de l'épisode
+                episodes.forEach((episode: any) => {
+                  const episodeToUpdate = apiResponse.find((apiEpisode: any) => apiEpisode.id_tmdb === episode.id_tmdb);
+                  if (episodeToUpdate) {
+                    episode.status = episodeToUpdate.status;
+                    console.log('episodeToUpdate:', episodeToUpdate);
+                  }
+                })
+              }
+              this.alert.show('Statut de l\'épisode mis à jour', 'info')
             }
-            if (episodes) {
-              // on met à jour le statut de l'épisode
-              episodes.forEach((episode: any) => {
-                const episodeToUpdate = apiResponse
-                  .find((apiEpisode: any) => apiEpisode.id_tmdb === episode.id_tmdb);
-                if (episodeToUpdate) {
-                  episode.status = episodeToUpdate.status;
-                  console.log('episodeToUpdate:', episodeToUpdate);
-                }
-              })
-            }
-            console.log('updated serieInWatchlist:', serieInWatchlist);
-            this.alert.show('Statut de l\'épisode mis à jour', 'info')
           }
-
-        }
-      }
+        })
       )
-    )
-
   }
 
 

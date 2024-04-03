@@ -29,7 +29,9 @@ export class MovieListViewComponent {
   }
 
   selectGenre(genre: Genre) {
-    // Request TMDV /movie/
+    // Request TMDB /movie/?with_genres=genre.id
+    console.log('genre', genre);
+    this._TmdbGateway.getMoviesFromApi(genre.id);
   }
 
   findNextMoviesAction(pageNumber?: number) {
